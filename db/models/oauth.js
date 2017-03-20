@@ -29,6 +29,7 @@ const OAuth = db.define('oauths', {
 
 // OAuth.V2 is a default argument for the OAuth.setupStrategy method - it's our callback function that will execute when the user has successfully logged in
 OAuth.V2 = (accessToken, refreshToken, profile, done) =>
+
   OAuth.findOrCreate({
     where: {
       provider: profile.provider,
@@ -36,12 +37,12 @@ OAuth.V2 = (accessToken, refreshToken, profile, done) =>
     }
   })
   .spread(oauth => {
-    debug(profile)
-    debug('provider:%s will log in user:{name=%s uid=%s}',
-      profile.provider,
-      profile.displayName,
-      profile.id
-    )
+    // debug(profile)
+    // debug('provider:%s will log in user:{name=%s uid=%s}',
+    //   profile.provider,
+    //   profile.displayName,
+    //   profile.id
+    // )
     oauth.profileJson = profile
     oauth.accessToken = accessToken
 
@@ -54,8 +55,12 @@ OAuth.V2 = (accessToken, refreshToken, profile, done) =>
     })
   })
   .then(({ oauth, user }) => user ||
+    // console.log(profile)
     User.create({
       name: profile.displayName,
+      firstName: profile.name.givenName,
+      lastName: profile.name.familyName,
+      email: profile.emails[0].value
     })
     .then(createdUser => db.Promise.props({
       user,

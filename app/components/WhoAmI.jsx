@@ -1,9 +1,11 @@
 import React from 'react'
 
 export const WhoAmI = ({ user, logout }) => (
+
   <div className="whoami">
-    <span className="whoami-user-name">{user && user.name}</span>
-    <button className="logout" onClick={logout}>Logout</button>
+  	<h1 className="header">WHO AM I?</h1>
+    <span className="whoami-user-name">You are logged in as {user && user.firstName} {user.lastName} </span>
+    <button className="logout btn btn-primary" onClick={logout}>Logout</button>
   </div>
 )
 

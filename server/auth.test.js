@@ -3,7 +3,7 @@
 const request = require('supertest')
 const {expect} = require('chai')
 const db = require('APP/db')
-const User = require('APP/db/models/user')
+const Users = require('APP/db/models/user')
 const app = require('./start')
 
 const alice = {
@@ -17,7 +17,7 @@ describe('/api/auth', () => {
   afterEach('Clear the tables', () => db.truncate({ cascade: true }))
 
   beforeEach('create a user', () =>
-    User.create({
+    Users.create({
       email: alice.username,
       password: alice.password
     })

@@ -7,7 +7,9 @@ const passport = require('passport')
 
 const User = require('APP/db/models/user')
 const OAuth = require('APP/db/models/oauth')
-const auth = require('express').Router() // eslint-disable-line new-cap
+const auth = require('express').Router()
+
+const LocalStrategy = require('passport-local').Strategy;
 
 
 /*************************
@@ -21,7 +23,7 @@ const auth = require('express').Router() // eslint-disable-line new-cap
  *
  *   FACEBOOK_CLIENT_ID=abcd FACEBOOK_CLIENT_SECRET=1234 npm start
  *
- * Or, better, you can create a ~/.$your_app_name.env.json file in
+ * Or, better, you can create a ~/.$superfriend.env.json file in
  * your home directory, and set them in there:
  *
  * {
@@ -55,8 +57,8 @@ OAuth.setupStrategy({
   provider: 'google',
   strategy: require('passport-google-oauth').OAuth2Strategy,
   config: {
-    clientID: env.GOOGLE_CLIENT_ID,
-    clientSecret: env.GOOGLE_CLIENT_SECRET,
+    clientID: '824500946475-cd5a40df47msqrflg6d53sojp9qbqhlu.apps.googleusercontent.com',
+    clientSecret: '4HeIyN2Y-J6vwWjPCZWnWcEK',
     callbackURL: `${app.baseUrl}/api/auth/login/google`,
   },
   passport
@@ -99,22 +101,24 @@ passport.deserializeUser(
 )
 
 // require.('passport-local').Strategy => a function we can use as a constructor, that takes in a callback
-passport.use(new (require('passport-local').Strategy)(
-  (email, password, done) => {
-    debug('will authenticate user(email: "%s")', email)
-    User.findOne({where: {email}})
+passport.use(new LocalStrategy(
+  (username, password, done) => {
+    // debug('will authenticate user(email: "%s")', username)
+    User.findOne({where: {
+      email: username}})
       .then(user => {
+        console.log(user)
         if (!user) {
-          debug('authenticate user(email: "%s") did fail: no such user', email)
+          // debug('authenticate user(email: "%s") did fail: no such user', username)
           return done(null, false, { message: 'Login incorrect' })
         }
         return user.authenticate(password)
           .then(ok => {
             if (!ok) {
-              debug('authenticate user(email: "%s") did fail: bad password')
+              // debug('authenticate user(email: "%s") did fail: bad password')
               return done(null, false, { message: 'Login incorrect' })
             }
-            debug('authenticate user(email: "%s") did ok: user.id=%d', email, user.id)
+            // debug('authenticate user(email: "%s") did ok: user.id=%d', username, user.id)
             done(null, user)
           })
       })
@@ -124,15 +128,40 @@ passport.use(new (require('passport-local').Strategy)(
 
 auth.get('/whoami', (req, res) => res.send(req.user))
 
+// SIGNUP
+auth.post('/signup', function (req, res, next) {
+
+  console.log('HIT SIGNUP: ', req.body)
+
+  User.findOrCreate({
+    where: {
+      email: req.body.email
+    },
+    defaults: {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      password: req.body.password
+    }
+  })
+  .spread((user, created) => {
+    if (created) {
+      console.log(user)
+      // passport.authenticate('local', { successRedirect: '/api/auth/login/local' })
+    } else {
+      res.sendStatus(401)
+    }
+  }) // how I get this to log me in automaticall...
+})
+
 // POST requests for local login:
-auth.post('/login/local', passport.authenticate('local', { successRedirect: '/' }))
+auth.post('/login/local', passport.authenticate('local', { successRedirect: '/login' }))
 
 // GET requests for OAuth login:
 // Register this route as a callback URL with OAuth provider
 auth.get('/login/:strategy', (req, res, next) =>
   passport.authenticate(req.params.strategy, {
     scope: 'email',
-    successRedirect: '/',
+    successRedirect: '/login',
     // Specify other config here, such as "scope"
   })(req, res, next)
 )
