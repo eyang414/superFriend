@@ -5,10 +5,14 @@
 const bcrypt = require('bcryptjs')
 const Sequelize = require('sequelize')
 const db = require('APP/db')
+const Contact = require('./contact')
 
 const User = db.define('users', {
- 
-  name: Sequelize.STRING,
+
+  username: {
+    type: Sequelize.STRING,
+    unique: true
+  },
 
   email: {
     type: Sequelize.STRING,
@@ -16,6 +20,28 @@ const User = db.define('users', {
 			isEmail: true,
 			notEmpty: true,
 		}
+  },
+
+  phoneNumber: {
+    type: Sequelize.STRING,
+    validate: {
+      hasTenNumbers: (value) => {
+        if (value.length !== 7){
+          throw new Error("Please insert a 7-digit phone number");
+        }
+      }
+    }
+  },
+
+  isUser: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+
+  imageUrl: {
+    type: Sequelize.STRING,
+    isUrl: true
   },
 
   firstName: {
@@ -68,5 +94,8 @@ function setEmailAndPassword(user) {
 	  })
   )
 }
+
+User.belongsToMany(User, { as: 'Friend', through: Contact})
+
 
 module.exports = User
