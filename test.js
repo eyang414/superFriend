@@ -1,19 +1,19 @@
-const iMessage = require('imessage');
-const AddressBook = require('./AddressBook');
+const iMessage = require('imessage')
+const AddressBook = require('./AddressBook')
 
-const ab = new AddressBook();
-const im = new iMessage();
+const ab = new AddressBook()
+const im = new iMessage()
 
-console.log('AB', ab);
-console.log('IM', im);
+console.log("MESSAGES")
 
-// im.getMessages(false, true, (error, messages) => {
-//   console.log(messages);
-// });
+im.getMessages(false, true, (error, messages) => {
+  if (error) { console.error(error) }
+  console.log(messages);
+})
+
+console.log("CONTACTS")
 
 ab.getContacts((error, contacts) => {
-  if (error) {
-  	console.error(error)
-  }
+  if (error) { console.error(error) }
   console.log(contacts);
 })
