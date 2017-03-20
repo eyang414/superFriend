@@ -12,5 +12,8 @@ console.log('IM', im);
 // });
 
 ab.getContacts((error, contacts) => {
+  if (error) {
+  	console.error(error)
+  }
   console.log(contacts);
 })
