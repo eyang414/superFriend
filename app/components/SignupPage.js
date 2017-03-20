@@ -82,15 +82,13 @@ class SignupPage extends Component {
 		    	value={ this.state.password }
 		    	onChange={ this.handleChange }
 		    />
-
+		  
 		    <input
 		      className="btn btn-primary"
 		      type="submit"
 		      value="Submit"
 		    />
-		    
 		  </form>
-
 		</div>
 		)
 	}
