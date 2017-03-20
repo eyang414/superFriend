@@ -146,7 +146,10 @@ auth.post('/signup', function (req, res, next) {
   .spread((user, created) => {
     if (created) {
       console.log(user)
-      // passport.authenticate('local', { successRedirect: '/api/auth/login/local' })
+      req.login(user, function (err){
+        if (err) next(err)
+        else res.json(user)
+      })
     } else {
       res.sendStatus(401)
     }

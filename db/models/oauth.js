@@ -66,7 +66,7 @@ OAuth.V2 = (accessToken, refreshToken, profile, done) =>
       user,
       _setOauthUser: oauth.setUser(createdUser)
     }))
-    .then(({user}) => user) // eslint-disable-line no-shadow
+    .then(({createdUser}) => createdUser) // eslint-disable-line no-shadow
   )
   .then(user => done(null, user))
   .catch(done)
