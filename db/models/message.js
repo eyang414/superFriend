@@ -15,7 +15,21 @@ const Message = db.define('message', {
     type: Sequelize.INTEGER,
     allowNull: false
   }
-})
+}, {
+    classMethods: {
+      getAllFrom: function (senderId) {
+        return Message.findAll({
+          where: { senderId: senderId }
+        })
+      },
+      getAllTo: function (recipientId) {
+        return Message.findAll({
+          where: { recipientId: recipientId }
+        })
+      }
+    }
+  }
+)
 
 module.exports = Message
 
