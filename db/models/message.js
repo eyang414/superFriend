@@ -2,15 +2,20 @@
 
 const Sequelize = require('sequelize')
 const db = require('APP/db')
-const Contact = require('./contact')
 
 const Message = db.define('message', {
   content: {
-    type: Sequelize.TEXT,
+    type: Sequelize.TEXT
+  },
+  senderId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  recipientId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   }
 })
-
-Message.belongsTo(Contact)
 
 module.exports = Message
 

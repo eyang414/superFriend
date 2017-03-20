@@ -5,7 +5,6 @@
 const bcrypt = require('bcryptjs')
 const Sequelize = require('sequelize')
 const db = require('APP/db')
-const Contact = require('./contact')
 
 const User = db.define('users', {
 
@@ -94,6 +93,5 @@ function setEmailAndPassword(user) {
 	  })
   )
 }
-
 
 module.exports = User
