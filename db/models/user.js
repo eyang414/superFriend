@@ -95,7 +95,5 @@ function setEmailAndPassword(user) {
   )
 }
 
-User.belongsToMany(User, { as: 'Friend', through: Contact})
-
 
 module.exports = User
