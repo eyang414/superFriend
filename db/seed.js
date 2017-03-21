@@ -35,12 +35,40 @@ db.didSync
       where: {username: 'ak123'}
     })
     .then( (ourUser) => {
-      console.log(ourUser)
-
       for (let i=0; i<=29; i++){
         ourUser.addFriend(i)
       }
+
+      Message.findAll()
+      .then((allMessages) => {
+
+        for (let i=0; i<100; i++){
+
+          let randomUserId = Math.floor(Math.random()*30)
+          if (randomUserId === ourUser.id || randomUserId === 0) randomUserId = 1
+
+          allMessages[i].update({sender_id: ourUser.id})
+          allMessages[i].update({recipient_id: randomUserId})
+        }
+        for (let i=101; i<200; i++){
+
+          let randomUserId = Math.floor(Math.random()*30)
+          if (randomUserId === ourUser.id || randomUserId === 0) randomUserId = 1
+
+          allMessages[i].update({recipient_id: ourUser.id})
+          allMessages[i].update({sender_id: randomUserId})
+        }
+      })
     })
+
+    // Message.findAll()
+    // .then((allMessages) => {
+    //   console.log(allMessages[0]);
+    //
+    //   for (let i=0; i<100; i++){
+    //     allMessages[i].addSender[]
+    //   }
+    // })
 
 
 

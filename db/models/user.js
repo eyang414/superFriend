@@ -38,6 +38,12 @@ const User = db.define('users', {
     defaultValue: false
   },
 
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+
   imageUrl: {
     type: Sequelize.STRING,
     isUrl: true

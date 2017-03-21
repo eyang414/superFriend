@@ -12,7 +12,8 @@ OAuth.belongsTo(User)
 User.hasOne(OAuth)
 
 User.hasMany(User, { as: 'Friend' })
-Message.belongsTo(User, { as: 'Sender' })
-Message.belongsTo(User, { as: 'Recipient' })
+
+Message.belongsTo(User, { as: 'Sender', constraints: false })
+Message.belongsTo(User, { as: 'Recipient', constraints: false })
 
 module.exports = { User, Message, OAuth }
