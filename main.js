@@ -1,11 +1,13 @@
 'use strict'
 const expressApp = require('./server/start')
+const seed = require('./db/seed')
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const url = require('url')
 require('electron-reload')(__dirname, {
   ignored: /node_modules|[\/\\]\.|resources/
 })
+
 
 //////////////////
 // WINDOW
@@ -43,6 +45,7 @@ const createWindow = () => {
 // Create the window when the app is ready
 app.on('ready', () => {
   expressApp()
+  seed()
   createWindow()
 })
 
