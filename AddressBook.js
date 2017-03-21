@@ -23,12 +23,17 @@ function AddressBook(opts) {
  * Must find the unique folder that holds the user's address book
  * Then find the filename ending in abcddb (should only be one)
  */
-const pathToAddressBookDir = fs.readdirSync(path.join(HOME, `/Library/Application Support/AddressBook/Sources`));
+const pathToAddressBookDir = fs.readdirSync(path.join(HOME, `/Library/Application Support/AddressBook/Sources`))
+  .filter(paths => {
+    return paths[1] !== '.'
+  })[0];
+
 const pathToAddressBookDB = fs.readdirSync(path.join(HOME, `/Library/Application Support/AddressBook/Sources/${pathToAddressBookDir}`))
-.filter((path) => {
-    return path.slice(-6) === 'abcddb';
+.filter((paths) => {
+    return paths.slice(-6) === 'abcddb';
 })[0];
 
+console.log(pathToAddressBookDir)
 AddressBook.OSX_EPOCH = 978307200;
 AddressBook.DB_PATH = path.join(HOME, `/Library/Application Support/AddressBook/Sources/${pathToAddressBookDir}/${pathToAddressBookDB}`);
 
