@@ -24,7 +24,6 @@ router.get('/', function (req, res, next) {
   		}]
 	})
 	.then(contacts => {
-		console.log(contacts)
 		res.json(contacts)
 	})
 	.catch(next)
