@@ -6,14 +6,6 @@ const db = require('APP/db')
 const Message = db.define('message', {
   content: {
     type: Sequelize.TEXT
-  },
-  senderId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  recipientId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
   }
 }, {
     classMethods: {
@@ -32,6 +24,3 @@ const Message = db.define('message', {
 )
 
 module.exports = Message
-
-
-
