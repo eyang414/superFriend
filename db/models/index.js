@@ -6,7 +6,14 @@
 
 const User = require('./user')
 const OAuth = require('./oauth')
+const Message = require('./message')
 
 OAuth.belongsTo(User)
 User.hasOne(OAuth)
-module.exports = {User}
+
+User.hasMany(User, { as: 'Friend' })
+
+Message.belongsTo(User, { as: 'Sender', constraints: false })
+Message.belongsTo(User, { as: 'Recipient', constraints: false })
+
+module.exports = { User, Message, OAuth }

@@ -145,8 +145,10 @@ auth.post('/signup', function (req, res, next) {
   })
   .spread((user, created) => {
     if (created) {
-      console.log(user)
-      // passport.authenticate('local', { successRedirect: '/api/auth/login/local' })
+      req.login(user, function (err){
+        if (err) next(err)
+        else res.json(user)
+      })
     } else {
       res.sendStatus(401)
     }
@@ -160,7 +162,7 @@ auth.post('/login/local', passport.authenticate('local', { successRedirect: '/lo
 // Register this route as a callback URL with OAuth provider
 auth.get('/login/:strategy', (req, res, next) =>
   passport.authenticate(req.params.strategy, {
-    scope: 'email',
+    scope: ['email', 'profile', 'https://www.googleapis.com/auth/gmail.modify'],
     successRedirect: '/login',
     // Specify other config here, such as "scope"
   })(req, res, next)

@@ -2,17 +2,25 @@
 
 const Sequelize = require('sequelize')
 const db = require('APP/db')
-const Contact = require('./contact')
 
 const Message = db.define('message', {
   content: {
-    type: Sequelize.TEXT,
+    type: Sequelize.TEXT
   }
-})
-
-Message.belongsTo(Contact)
+}, {
+    classMethods: {
+      getAllFrom: function (senderId) {
+        return Message.findAll({
+          where: { senderId: senderId }
+        })
+      },
+      getAllTo: function (recipientId) {
+        return Message.findAll({
+          where: { recipientId: recipientId }
+        })
+      }
+    }
+  }
+)
 
 module.exports = Message
-
-
-

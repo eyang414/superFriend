@@ -5,7 +5,6 @@
 const bcrypt = require('bcryptjs')
 const Sequelize = require('sequelize')
 const db = require('APP/db')
-const Contact = require('./contact')
 
 const User = db.define('users', {
 
@@ -24,16 +23,22 @@ const User = db.define('users', {
 
   phoneNumber: {
     type: Sequelize.STRING,
-    validate: {
-      hasTenNumbers: (value) => {
-        if (value.length !== 7){
-          throw new Error("Please insert a 7-digit phone number");
-        }
-      }
-    }
+    // validate: {
+    //   hasTenNumbers: (value) => {
+    //     if (value.length !== 7){
+    //       throw new Error("Please insert a 7-digit phone number");
+    //     }
+    //   }
+    // } there is an issue with seed data having international phone numbers
   },
 
   isUser: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+
+  isAdmin: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: false
@@ -94,8 +99,5 @@ function setEmailAndPassword(user) {
 	  })
   )
 }
-
-User.belongsToMany(User, { as: 'Friend', through: Contact})
-
 
 module.exports = User
