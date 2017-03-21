@@ -18,10 +18,9 @@ const AppContainer = props => (
           <Link className="navbar-brand" to="/email"><img id="logo" src= {logo} /></Link>
         </div>
         <div id="nav-items" className="collapse navbar-collapse">
-          <ul className="nav navbar-nav">
+          <ul className="nav navbar-nav navbar-right">
             <li><Link to="/login">Login</Link></li>
             <li><Link to="/contacttable">Contacts</Link></li>
-
           </ul>
         </div>
       </div>
