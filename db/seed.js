@@ -27,6 +27,7 @@ const seedMessages = () => db.Promise.map(dummyMessages, messages => db.model('m
 //   .finally(() => db.close())
 
 db.didSync
+
   .then(() => db.sync({force: true}))
   .then( () => Promise.all([seedUsers(), seedMessages()]) )
   .then((seededStuff) => {

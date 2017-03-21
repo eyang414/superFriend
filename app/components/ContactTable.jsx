@@ -21,13 +21,12 @@ return (
           <th>Last Spoke</th>
           <th>Last Message</th>
         </tr>
-      {/* add some shit */}
+           {/* add some shit */}
         </tbody>
       </table>
     </div>
   );
 }
-
 
 
 export default ContactTable;
