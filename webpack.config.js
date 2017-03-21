@@ -24,6 +24,10 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx', '.json', '*']
   },
+  node: {
+    fs: 'empty'
+  },
+  target: 'electron-main',
   module: {
     rules: [{
       test: /\.jsx?$/,
