@@ -1,7 +1,7 @@
 'use strict'; // eslint-disable-line semi
 
 const app = require('APP')
-const {env} = app
+const env = process.env
 const debug = require('debug')(`${app.name}:auth`)
 const passport = require('passport')
 
