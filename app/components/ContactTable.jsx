@@ -5,9 +5,10 @@ import { fetchContacts } from '../reducers/contacts-reducer';
 
 const ContactTable = (props) => {
 
-  console.log('these are the contact props', props)
-
-  // const contacts = props.contacts;
+  
+  const contacts = props.contacts.allContacts;
+  console.log('these are the contact props', contacts)
+  
 return (
   // const contactStats = contacts.map(function(contact){
   	<div className="container">
