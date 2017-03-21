@@ -7,9 +7,11 @@ const passport = require('passport')
 
 //get all contacts for a given user
 router.get('/', function (req, res, next){
+	console.log('reqbody is ', req.body);
+
 	User.findAll({
 		where: {
-			user_id: 26
+			user_id: req.session.passport.user
 		}, 
 		include: [{
     	model: User,
@@ -17,7 +19,6 @@ router.get('/', function (req, res, next){
   		}]
 	})
 	.then(contacts => {
-		console.log(contacts);
 		res.json(contacts);
 	})
 	.catch(next)
