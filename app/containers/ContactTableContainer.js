@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 
 
 const mapStateToProps = (state) => {
+	console.log(state)
   return {
-    contacts: state.allContacts,
+    contacts: state.contacts,
   }
 }
 

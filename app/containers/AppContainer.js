@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+const logo = '/superfriend-logo.PNG';
+
 const AppContainer = props => (
 
   <div>
@@ -13,7 +15,7 @@ const AppContainer = props => (
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
           </button>
-          <Link className="navbar-brand" to="/email">SuperFriend</Link>
+          <Link className="navbar-brand" to="/email"><img id="logo" src= {logo} /></Link>
         </div>
         <div id="nav-items" className="collapse navbar-collapse">
           <ul className="nav navbar-nav">
@@ -24,7 +26,7 @@ const AppContainer = props => (
         </div>
       </div>
     </div>
-    <div className="container content">
+    <div className="content">
       { props.children }
     </div>
     <hr />

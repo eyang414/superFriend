@@ -6,3 +6,15 @@ input {
 
 .header {
   margin-top: 60px; }
+
+.navbar {
+	background-color: #FFF;
+}
+
+#logo {
+  height: 60px; }
+
+.content {
+	background-color: rgba(254,179,2,0.7)
+;
+}

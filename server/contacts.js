@@ -13,12 +13,12 @@ router.get('/', function (req, res, next){
 		}, 
 		include: [{
     	model: User,
-    	as: 'Friends'
+    	as: 'Friend'
   		}]
 	})
 	.then(contacts => {
-		console.log(contacts[0]);
-		res.json(contacts[0].Friends)
+		console.log(contacts);
+		res.json(contacts);
 	})
 	.catch(next)
 })
