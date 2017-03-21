@@ -3,6 +3,29 @@ const router = express.Router()
 const User = require('../db/models/user')
 const passport = require('passport')
 
+// iMESSAGE DB:
+
+//get all contacts for a given user
+router.get('/', function (req, res, next){
+	User.findAll({
+		where: {
+			user_id: 26
+		}, 
+		include: [{
+    	model: User,
+    	as: 'Friends'
+  		}]
+	})
+	.then(contacts => {
+		console.log(contacts[0]);
+		res.json(contacts[0].Friends)
+	})
+	.catch(next)
+})
+
+/// GMAIL:
+
+
 // PASSPORT
 // var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
@@ -59,21 +82,5 @@ const passport = require('passport')
 // });
 
 
-// iMESSAGE DB:
-
-router.get('/', function (req, res, next){
-	console.log('Here in the get contacts route', req.session)
-	User.findAll({
-		where: {
-			user_id: req.session.passport.user
-		}
-	})
-	.then(contacts => {
-		res.json(contacts)
-	})
-	.catch(next)
-})
-
-/// GMAIL:
 
 module.exports = router
