@@ -25,7 +25,7 @@ function AddressBook(opts) {
  */
 const pathToAddressBookDir = fs.readdirSync(path.join(HOME, `/Library/Application Support/AddressBook/Sources`))
   .filter(paths => {
-    return paths[1] !== '.'
+    return paths[0] !== '.'
   })[0];
 
 const pathToAddressBookDB = fs.readdirSync(path.join(HOME, `/Library/Application Support/AddressBook/Sources/${pathToAddressBookDir}`))
