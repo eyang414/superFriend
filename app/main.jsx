@@ -12,9 +12,10 @@ import SignupPage from './components/SignupPage'
 import LoginPage from './components/LoginPage'
 import ContactTableContainer from './containers/ContactTableContainer'
 
-const onAppEnter = function(){
-	fetchContacts()(store.dispatch)
-};
+const onContactTableContainerEnter = function () {
+	console.log("FETCHING CONTACTS")
+	store.dispatch(fetchContacts())
+}
 
 //or do we do:
 //const onUserAccountEnter = function(nextRouterState){
@@ -27,7 +28,7 @@ render(
 	      <Route path="/" component={AppContainer}>
 	        <Route path="/login" component={LoginPage} />
 	        <Route path="/signup" component={SignupPage} />
-	        <Route path="/contacttable" component={ContactTableContainer} />
+					<Route path="/contacttable" component={ContactTableContainer} onEnter={onContactTableContainerEnter}/>
 	      </Route>
 	    </Router>
   	</Provider>,

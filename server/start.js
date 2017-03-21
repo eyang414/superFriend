@@ -2,6 +2,7 @@
 
 const expressApp = () => {
   const express = require('express')
+  const session = require('express-session')
   const bodyParser = require('body-parser')
   const {resolve} = require('path')
   const passport = require('passport')
@@ -45,6 +46,7 @@ const expressApp = () => {
     .use(bodyParser.json())
 
     // Authentication middleware
+    .use(session())
     .use(passport.initialize())
     .use(passport.session())
 

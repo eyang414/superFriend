@@ -6,19 +6,26 @@ const passport = require('passport')
 // iMESSAGE DB:
 
 //get all contacts for a given user
-router.get('/', function (req, res, next){
+router.get('/', function (req, res, next) {
+
+	// If no user, send empty array
+	if (!req.user.id) {
+		res.json([])
+		return
+	}
+
 	User.findAll({
 		where: {
-			user_id: 26
-		}, 
+			user_id: req.user.id
+		},
 		include: [{
     	model: User,
     	as: 'Friend'
   		}]
 	})
 	.then(contacts => {
-		console.log(contacts);
-		res.json(contacts);
+		console.log(contacts)
+		res.json(contacts)
 	})
 	.catch(next)
 })
