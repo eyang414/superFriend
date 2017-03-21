@@ -5,7 +5,8 @@ const debugDB = require('debug')(`${app.name}:db`) // DEBUG=your_app_name:db
 const chalk = require('chalk')
 const Sequelize = require('sequelize')
 
-const name = (process.env.DATABASE_NAME || app.name) +
+// Hardcoded for now. Need to get Electron working better with Node process.env
+const name = (process.env.DATABASE_NAME || 'superfriend') +
   (app.isTesting ? '_test' : '')
 
 const url = process.env.DATABASE_URL || `postgres://localhost:5432/${name}`
