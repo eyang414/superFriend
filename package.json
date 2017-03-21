@@ -54,6 +54,7 @@
     "electron-reload": "^1.1.0",
     "enzyme": "^2.5.1",
     "express": "^4.14.0",
+    "express-session": "^1.15.1",
     "finalhandler": "^1.0.0",
     "googleapis": "^18.0.0",
     "imessage": "^0.1.5",

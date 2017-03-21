@@ -107,7 +107,7 @@ passport.use(new LocalStrategy(
     User.findOne({where: {
       email: username}})
       .then(user => {
-        console.log(user)
+        // console.log(user)
         if (!user) {
           // debug('authenticate user(email: "%s") did fail: no such user', username)
           return done(null, false, { message: 'Login incorrect' })
