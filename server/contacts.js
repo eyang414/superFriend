@@ -29,6 +29,29 @@ router.get('/', function (req, res, next) {
 	.catch(next)
 })
 
+router.get('/${id}', function (req, res, next) {
+
+	// If no user, send empty array
+	if (!req.user.id) {
+		res.json([])
+		return
+	}
+
+	User.findAll({
+		where: {
+			user_id: req.user.id
+		},
+		include: [{
+    	model: User,
+    	as: 'Friend'
+  		}]
+	})
+	.then(contacts => {
+		res.json(contacts)
+	})
+	.catch(next)
+})
+
 /// GMAIL:
 
 
