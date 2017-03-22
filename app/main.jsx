@@ -17,6 +17,10 @@ const onContactTableContainerEnter = function () {
 	store.dispatch(fetchContacts())
 }
 
+const onContactProfileEnter = function () {
+	console.log("FETCHING THIS CONTACT")
+	store.dispatch(fetchContact())
+}
 //or do we do:
 //const onUserAccountEnter = function(nextRouterState){
 // 	fetchContacts(nextRouterState.params.userId)(store.dispatch)
