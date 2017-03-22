@@ -22,7 +22,7 @@ const seed = () => {
         where: {username: 'ak123'}
       })
       .then( (ourUser) => {
-        for (let i=0; i<=29; i++){
+        for (let i=0; i<=30; i++){
           ourUser.addFriend(i)
         }
 

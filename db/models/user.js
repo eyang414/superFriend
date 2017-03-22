@@ -23,9 +23,9 @@ const User = db.define('users', {
 
   ZFULLNUMBER: {
     type: Sequelize.STRING,
-    // set: (number) => {
-    //   this.setDataValue('ZFULLNUMBER', parseInt(number.replace(/[^0-9]/g, ''), 10).toString().slice(-10))
-    // }
+    set: function(number) {
+      this.setDataValue('ZFULLNUMBER', parseInt(number.replace(/[^0-9]/g, ''), 10).toString().slice(-10))
+      }
   },
 
   isUser: {
@@ -45,7 +45,7 @@ const User = db.define('users', {
     isUrl: true
   },
 
-    ZFIRSTNAME: {
+  ZFIRSTNAME: {
     type: Sequelize.STRING,
     allowNull: true,
     validate: {
