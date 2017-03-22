@@ -12,7 +12,7 @@ let ourUser
 const loadContacts = (stateClient) => {
 
 //Look below for a commented-out, non-dev code that will replace everything inside this function
-  User.findOne({
+  return User.findOne({
     where: {username: 'ak123'}
   })
   .then((foundUser) => {

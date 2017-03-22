@@ -8,6 +8,7 @@ const db = require('APP/db')
 const User = require('./db/models/user')
 
 const loadContacts = require('./util/loadContacts')
+const loadMessages = require('./util/loadMessages')
 
 // console.log("MESSAGES")
 //
@@ -23,5 +24,10 @@ const loadContacts = require('./util/loadContacts')
 //   console.log(contacts);
 // })
 
-
+// Load all contacts, then associate messages to contacts
 loadContacts()
+  .then(() => {
+  let pleaseWork = {}
+  loadMessages(pleaseWork)
+  })
+.catch(console.error)
