@@ -45,7 +45,7 @@ const User = db.define('users', {
     isUrl: true
   },
 
-    ZFIRTNAME: {
+    ZFIRSTNAME: {
     type: Sequelize.STRING,
     allowNull: true,
     validate: {
