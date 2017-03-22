@@ -21,15 +21,11 @@ const User = db.define('users', {
 		}
   },
 
-  phoneNumber: {
+  ZFULLNUMBER: {
     type: Sequelize.STRING,
-    // validate: {
-    //   hasTenNumbers: (value) => {
-    //     if (value.length !== 7){
-    //       throw new Error("Please insert a 7-digit phone number");
-    //     }
-    //   }
-    // } there is an issue with seed data having international phone numbers
+    // set: (number) => {
+    //   this.setDataValue('ZFULLNUMBER', parseInt(number.replace(/[^0-9]/g, ''), 10).toString().slice(-10))
+    // }
   },
 
   isUser: {
@@ -49,7 +45,7 @@ const User = db.define('users', {
     isUrl: true
   },
 
-  firstName: {
+    ZFIRTNAME: {
     type: Sequelize.STRING,
     allowNull: true,
     validate: {
@@ -57,7 +53,7 @@ const User = db.define('users', {
     }
   },
 
-  lastName: {
+  ZLASTNAME: {
     type: Sequelize.STRING,
     allowNull: true,
     validate: {
