@@ -24,7 +24,7 @@ const User = db.define('users', {
   ZFULLNUMBER: {
     type: Sequelize.STRING,
     set: function(number) {
-      this.setDataValue('ZFULLNUMBER', parseInt(number.replace(/[^0-9]/g, ''), 10).toString().slice(-10))
+      this.setDataValue('ZFULLNUMBER', number.replace(/[^0-9]/g, '').slice(-10))
       }
   },
 

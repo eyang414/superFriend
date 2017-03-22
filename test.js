@@ -1,19 +1,27 @@
 const iMessage = require('imessage')
-const AddressBook = require('./AddressBook')
+const AddressBook = require('./util/AddressBook')
 
 const ab = new AddressBook()
 const im = new iMessage()
 
-console.log("MESSAGES")
+const db = require('APP/db')
+const User = require('./db/models/user')
 
-im.getMessages(false, true, (error, messages) => {
-  if (error) { console.error(error) }
-  console.log(messages);
-})
+const loadContacts = require('./util/loadContacts')
 
-console.log("CONTACTS")
+// console.log("MESSAGES")
+//
+// im.getMessages(false, true, (error, messages) => {
+//   if (error) { console.error(error) }
+//   console.log(messages);
+// })
+//
+// console.log("CONTACTS")
+//
+// ab.getContacts((error, contacts) => {
+//   if (error) { console.error(error) }
+//   console.log(contacts);
+// })
 
-ab.getContacts((error, contacts) => {
-  if (error) { console.error(error) }
-  console.log(contacts);
-})
+
+loadContacts()

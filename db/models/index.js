@@ -11,7 +11,7 @@ const Message = require('./message')
 OAuth.belongsTo(User)
 User.hasOne(OAuth)
 
-User.hasMany(User, { as: 'Friend' })
+User.hasMany(User, { as: 'Friend', constraints: false })
 
 Message.belongsTo(User, { as: 'Sender', constraints: false })
 Message.belongsTo(User, { as: 'Recipient', constraints: false })
