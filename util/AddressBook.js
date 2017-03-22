@@ -1,3 +1,5 @@
+/* eslint-disable semi */
+
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const Q = require('q');
@@ -33,11 +35,13 @@ const pathToAddressBookDB = fs.readdirSync(path.join(HOME, `/Library/Application
     return paths.slice(-6) === 'abcddb';
 })[0];
 
-console.log(pathToAddressBookDir)
 AddressBook.OSX_EPOCH = 978307200;
 AddressBook.DB_PATH = path.join(HOME, `/Library/Application Support/AddressBook/Sources/${pathToAddressBookDir}/${pathToAddressBookDB}`);
 
 AddressBook.prototype.connect = function() {
+
+
+
   const deferred = Q.defer();
 
   const db = new sqlite3.Database(
@@ -72,7 +76,7 @@ AddressBook.prototype.getContacts = function(string, cb) {
     let where = "";
     // Maybe dangerous, check SQLlite doc
     if (string && string != "") where = " WHERE id LIKE '%"+string+"%'";
-    db.all("SELECT DISTINCT ZABCDRECORD.ZFIRSTNAME, ZABCDRECORD.ZLASTNAME, ZABCDPHONENUMBER.ZFULLNUMBER FROM ZABCDRECORD LEFT JOIN ZABCDPOSTALADDRESS on ZABCDRECORD.Z_PK = ZABCDPOSTALADDRESS.ZOWNER LEFT JOIN ZABCDNOTE ON ZABCDRECORD.Z_PK = ZABCDNOTE.ZCONTACT LEFT JOIN ZABCDPHONENUMBER ON ZABCDRECORD.Z_PK = ZABCDPHONENUMBER.ZOWNER LEFT JOIN ZABCDRELATEDNAME ON ZABCDRECORD.Z_PK = ZABCDRELATEDNAME.ZOWNER LEFT JOIN ZABCDURLADDRESS ON ZABCDRECORD.Z_PK = ZABCDURLADDRESS.ZOWNER;" + where, cb);
+    return db.all("SELECT DISTINCT ZABCDRECORD.ZFIRSTNAME, ZABCDRECORD.ZLASTNAME, ZABCDPHONENUMBER.ZFULLNUMBER FROM ZABCDRECORD LEFT JOIN ZABCDPOSTALADDRESS on ZABCDRECORD.Z_PK = ZABCDPOSTALADDRESS.ZOWNER LEFT JOIN ZABCDNOTE ON ZABCDRECORD.Z_PK = ZABCDNOTE.ZCONTACT LEFT JOIN ZABCDPHONENUMBER ON ZABCDRECORD.Z_PK = ZABCDPHONENUMBER.ZOWNER LEFT JOIN ZABCDRELATEDNAME ON ZABCDRECORD.Z_PK = ZABCDRELATEDNAME.ZOWNER LEFT JOIN ZABCDURLADDRESS ON ZABCDRECORD.Z_PK = ZABCDURLADDRESS.ZOWNER;" + where, cb);
   });
 };
 
@@ -81,5 +85,14 @@ AddressBook.prototype.disconnect = function() {
     db.close();
   });
 };
+
+AddressBook.prototype.fetchContacts = function() {
+  return new Promise((resolve, reject) => {
+    this.getContacts((error, contacts) => {
+      if(error) return reject(error)
+      resolve(contacts)
+    })
+  })
+}
 
 module.exports = AddressBook;
