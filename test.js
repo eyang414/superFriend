@@ -8,6 +8,7 @@ const db = require('APP/db')
 const User = require('./db/models/user')
 
 const loadContacts = require('./util/loadContacts')
+const loadMessages = require('./util/loadMessages')
 
 // console.log("MESSAGES")
 //
@@ -18,10 +19,23 @@ im.getMessages(false, true, (error, messages) => {
 //
 // console.log("CONTACTS")
 //
+
 // ab.getContacts((error, contacts) => {
 //   if (error) { console.error(error) }
-//   console.log(contacts);
+//   for (let i = contacts.length - 1; i; i--) {
+//     console.log(contacts[i])
+//   }
 // })
 
 
+
 // loadContacts()
+
+// Load all contacts, then associate messages to contacts
+// loadContacts()
+//   .then(() => {
+//   let pleaseWork = {}
+//   loadMessages(pleaseWork)
+//   })
+// .catch(console.error)
+
