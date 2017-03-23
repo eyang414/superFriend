@@ -6,10 +6,13 @@ import {connect, Provider } from 'react-redux'
 
 import store from './store'
 import {fetchContacts} from './actions/contacts'
+import {fetchContact} from './actions/contacts'
+
 
 import AppContainer from './containers/AppContainer'
 import SignupPage from './components/SignupPage'
 import LoginPage from './components/LoginPage'
+import ContactProfile from './components/ContactProfile'
 import ContactTableContainer from './containers/ContactTableContainer'
 
 const onContactTableContainerEnter = function () {
@@ -32,7 +35,8 @@ render(
 	      <Route path="/" component={AppContainer}>
 	        <Route path="/login" component={LoginPage} />
 	        <Route path="/signup" component={SignupPage} />
-					<Route path="/contacttable" component={ContactTableContainer} onEnter={onContactTableContainerEnter}/>
+			<Route path="/contacttable" component={ContactTableContainer} onEnter={onContactTableContainerEnter} />
+			<Route path="/contacttable/:id" component={ContactProfile} onEnter={onContactProfileEnter}/>
 	      </Route>
 	    </Router>
   	</Provider>,
