@@ -8,31 +8,18 @@ const db = require('APP/db')
 
 const User = db.define('users', {
 
-  username: {
-    type: Sequelize.STRING,
-    unique: true
-  },
 
   email: {
     type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
     validate: {
 			isEmail: true,
 			notEmpty: true,
 		}
   },
 
-  phoneNumber: {
-    type: Sequelize.STRING,
-    // validate: {
-    //   hasTenNumbers: (value) => {
-    //     if (value.length !== 7){
-    //       throw new Error("Please insert a 7-digit phone number");
-    //     }
-    //   }
-    // } there is an issue with seed data having international phone numbers
-  },
-
-  isUser: {
+  isAdmin: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: false
@@ -43,20 +30,12 @@ const User = db.define('users', {
     isUrl: true
   },
 
-  firstName: {
+  ZFIRSTNAME: {
     type: Sequelize.STRING,
-    allowNull: true,
-    validate: {
-      notEmpty: true
-    }
   },
 
-  lastName: {
+  ZLASTNAME: {
     type: Sequelize.STRING,
-    allowNull: true,
-    validate: {
-      notEmpty: true
-    }
   },
 
   // We support oauth, so users may or may not have passwords.

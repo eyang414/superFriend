@@ -9,8 +9,39 @@ const Gmail = require('node-gmail-api')
 const Promise = require('bluebird')
 const simpleParser = require('mailparser').simpleParser
 
+// iMESSAGE DB:
 
-const OAuth2 = google.auth.OAuth2;
+// //get all contacts for a given user
+// router.get('/', function (req, res, next) {
+
+// 	// If no user, send empty array
+// 	if (!req.user.id) {
+// 		res.json([])
+// 		return
+// 	}
+
+// 	User.findAll({
+// 		where: {
+// 			user_id: req.user.id
+// 		},
+// 		include: [{
+//     	model: User,
+//     	as: 'Friend'
+//   		}]
+// 	})
+// 	.then(contacts => {
+// 		res.json(contacts)
+// 	})
+// 	.catch(next)
+// })
+
+// router.get('/:id', function (req, res, next) {
+
+// 	User.findById(req.params.id)
+// 	.then(contact => res.json(contact))
+// 	.catch(next)
+// })
+
 
 // iMESSAGE DB / get all contacts
 

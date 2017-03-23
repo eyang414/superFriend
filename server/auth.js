@@ -1,7 +1,7 @@
 'use strict'; // eslint-disable-line semi
 
 const app = require('APP')
-const {env} = app
+const env = process.env
 const debug = require('debug')(`${app.name}:auth`)
 const passport = require('passport')
 
@@ -107,7 +107,7 @@ passport.use(new LocalStrategy(
     User.findOne({where: {
       email: username}})
       .then(user => {
-        console.log(user)
+        // console.log(user)
         if (!user) {
           // debug('authenticate user(email: "%s") did fail: no such user', username)
           return done(null, false, { message: 'Login incorrect' })
