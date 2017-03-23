@@ -162,11 +162,10 @@ auth.post('/login/local', passport.authenticate('local', { successRedirect: '/lo
 // Register this route as a callback URL with OAuth provider
 auth.get('/login/:strategy', (req, res, next) =>
   passport.authenticate(req.params.strategy, {
-    scope: ['email', 'profile', 'https://www.googleapis.com/auth/gmail.modify'],
+    scope: ['email', 'profile', 'https://www.googleapis.com/auth/gmail.modify', 'https://www.googleapis.com/auth/gmail.compose'],
     successRedirect: '/login',
     // Specify other config here, such as "scope"
-  })(req, res, next)
-)
+  })(req, res, next))
 
 auth.post('/logout', (req, res, next) => {
   req.logout()
