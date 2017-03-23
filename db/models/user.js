@@ -27,7 +27,8 @@ const User = db.define('users', {
 
   imageUrl: {
     type: Sequelize.STRING,
-    isUrl: true
+    isUrl: true,
+    defaultValue: 'https://qph.ec.quoracdn.net/main-qimg-3b0b70b336bbae35853994ce0aa25013-c'
   },
 
   ZFIRSTNAME: {
