@@ -27,11 +27,7 @@ iMessage.prototype.getMessagesFromId = function(id, string, cb) {
 // START DOING THINGS
 //////////////////////
 
-
-let ourUser
-
-
-const fetchMessages = (stateUser) => {
+const fetchMessages = () => {
   return new Promise((resolve, reject) => {
     im.getMessages(false, true, (error, messages) => {
       if (error) { return reject(error) }
@@ -40,57 +36,47 @@ const fetchMessages = (stateUser) => {
   })
 }
 
-const loadMessages = (stateUser) => {
+/**
+ * Loads the currently logged in user's messages and associates the sender_id and recipient_id
+ * @param {Object} stateClient the currently logged in user from state.auth.user
+ */
+const loadMessages = (stateClient) =>
+  fetchMessages()
+    .then(messages => {
+      messages.forEach(message => {
+        Message.create({
+          content: message.text,
+          date: message.date,
+          is_sender: message.is_sender,
+          ZFULLNUMBER: message.id
+        })
+          .then(createdMessage => {
 
-  //Look below for a commented-out, non-dev code that will replace everything inside this function
-  return User.findOne({
-    where: {username: 'ak123'}
-  })
-  .then((foundUser) => {
-    ourUser = foundUser
-  })
-  .then(() => {
+            // STATE USER IS SENDER
+            if (createdMessage.is_sender) {
 
-            // THIS IS THE REAL STUFF
-            fetchMessages()
-              .then(messages => {
-                const promises = []
-                messages.forEach(message => {
-                  Message.create({
-                    content: message.text,
-                    date: message.date,
-                    is_sender: message.is_sender,
-                    ZFULLNUMBER: message.id
-                  })
-                    .then(createdMessage => {
-                      stateUser = ourUser
-                      // STATE USER IS SENDER
-                      if (createdMessage.is_sender) {
+              createdMessage.update({ sender_id: stateClient.id })
 
-                        createdMessage.update({ sender_id: stateUser.id })
-
-                        User.findOne({where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER}})
-                          .then(foundUser => {
-                            if (foundUser) {
-                              createdMessage.update({recipient_id: foundUser.id})
-                            }
-                        })
-
-                      } else {
-                        // STATE USER IS RECIPIENT
-                        createdMessage.update({ recipient_id: stateUser.id })
-
-                        User.findOne({ where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER } })
-                          .then(foundUser => {
-                            if (foundUser) {
-                              createdMessage.update({ sender_id: foundUser.id })
-                            }
-                        })
-                      }
-                })
+              User.findOne({where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER}})
+                .then(foundUser => {
+                  if (foundUser) {
+                    createdMessage.update({recipient_id: foundUser.id})
+                  }
               })
-            })
+
+            } else {
+              // STATE USER IS RECIPIENT
+              createdMessage.update({ recipient_id: stateClient.id })
+
+              User.findOne({ where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER } })
+                .then(foundUser => {
+                  if (foundUser) {
+                    createdMessage.update({ sender_id: foundUser.id })
+                  }
+              })
+            }
+    })
   })
-}
+})
 
 module.exports = loadMessages

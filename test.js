@@ -19,15 +19,18 @@ const loadMessages = require('./util/loadMessages')
 //
 // console.log("CONTACTS")
 //
+
 // ab.getContacts((error, contacts) => {
 //   if (error) { console.error(error) }
-//   console.log(contacts);
+//   for (let i = contacts.length - 1; i; i--) {
+//     console.log(contacts[i])
+//   }
 // })
 
 // Load all contacts, then associate messages to contacts
-loadContacts()
-  .then(() => {
-  let pleaseWork = {}
-  loadMessages(pleaseWork)
-  })
-.catch(console.error)
+// loadContacts()
+//   .then(() => {
+//   let pleaseWork = {}
+//   loadMessages(pleaseWork)
+//   })
+// .catch(console.error)
