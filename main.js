@@ -49,7 +49,9 @@ app.on('ready', () => {
   expressApp()
   seed()
   createWindow()
-  childProcess.exec('node ./util/sync')
+  childProcess.exec('node ./util/sync', {maxBuffer: 1024 * 10000000}, (error, something) => {
+    if (error) console.error(error)
+  })
 })
 
 // Quit the app when all windows are closed
@@ -67,4 +69,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-

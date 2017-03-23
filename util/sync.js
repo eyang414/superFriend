@@ -3,4 +3,4 @@ const loadMessages = require('./loadMessages')
 
 
 loadContacts()
-  .then(() => loadMessages())
+loadMessages()
