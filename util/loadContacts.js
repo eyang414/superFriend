@@ -1,6 +1,7 @@
 const AddressBook = require('./AddressBook')
 const db = require('APP/db')
 const User = require('../db/models/user')
+const iMessageContacts = require('../db/models/iMessageContacts')
 
 const ab = new AddressBook()
 
@@ -17,7 +18,7 @@ const loadContacts = (stateClient) => {
 
     contacts.forEach((elem) => {
       if (elem.ZFULLNUMBER) {
-        User.findOrCreate(
+        iMessageContacts.findOrCreate(
           {
             defaults: { ZFIRSTNAME: elem.ZFIRSTNAME, ZLASTNAME: elem.ZLASTNAME, ZFULLNUMBER: elem.ZFULLNUMBER },
             where: { ZFULLNUMBER: elem.ZFULLNUMBER.replace(/[^0-9]/g, '').slice(-10) }
