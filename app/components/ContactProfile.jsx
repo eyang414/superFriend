@@ -31,13 +31,9 @@ const ContactProfile = (props) => {
       </div>
 
     </div>
+  </div>
 
   );
 }
 
-
-
-
-export default SingleContactPage;
 export default ContactProfile;
-
