@@ -8,30 +8,15 @@ const db = require('APP/db')
 
 const User = db.define('users', {
 
-  username: {
-    type: Sequelize.STRING,
-    unique: true
-  },
 
   email: {
     type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
     validate: {
 			isEmail: true,
 			notEmpty: true,
 		}
-  },
-
-  ZFULLNUMBER: {
-    type: Sequelize.STRING,
-    set: function(number) {
-      this.setDataValue('ZFULLNUMBER', number.replace(/[^0-9]/g, '').slice(-10))
-      }
-  },
-
-  isUser: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false
   },
 
   isAdmin: {
@@ -47,18 +32,10 @@ const User = db.define('users', {
 
   ZFIRSTNAME: {
     type: Sequelize.STRING,
-    allowNull: true,
-    validate: {
-      notEmpty: true
-    }
   },
 
   ZLASTNAME: {
     type: Sequelize.STRING,
-    allowNull: true,
-    validate: {
-      notEmpty: true
-    }
   },
 
   // We support oauth, so users may or may not have passwords.

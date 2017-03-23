@@ -11,10 +11,10 @@ const loadContacts = require('./util/loadContacts')
 
 // console.log("MESSAGES")
 //
-// im.getMessages(false, true, (error, messages) => {
-//   if (error) { console.error(error) }
-//   console.log(messages);
-// })
+im.getMessages(false, true, (error, messages) => {
+  if (error) { console.error(error) }
+  console.log(messages);
+})
 //
 // console.log("CONTACTS")
 //
@@ -24,4 +24,4 @@ const loadContacts = require('./util/loadContacts')
 // })
 
 
-loadContacts()
+// loadContacts()

@@ -7,11 +7,16 @@
 const User = require('./user')
 const OAuth = require('./oauth')
 const Message = require('./message')
+const iMessageContacts = require('./iMessageContacts')
+const gmailContacts = require('./gmailContacts')
 
 OAuth.belongsTo(User)
 User.hasOne(OAuth)
 
-User.hasMany(User, { as: 'Friend', constraints: false })
+User.hasMany(iMessageContacts, {as: 'Friend'})
+User.hasMany(gmailContacts, {as: 'Friend'})
+
+iMessageContacts.belongsTo(gmailContacts, {as: 'gmail'})
 
 Message.belongsTo(User, { as: 'Sender', constraints: false })
 Message.belongsTo(User, { as: 'Recipient', constraints: false })

@@ -10,7 +10,7 @@ const SingleContactPage = (props) => {
   // const contactStats = contacts.map(function(contact){
   	<div className="container">
     <h1 className="header">LOREM IPSUM</h1>
-    <div className="profile-img"><img src="http://lorempixel.com/300/300/people/"></div>
+    <div className="profile-img"><img src="http://lorempixel.com/300/300/people/" /></div>
   	  <table className="table">
         <tbody>
         <tr>
@@ -27,4 +27,3 @@ const SingleContactPage = (props) => {
 
 
 export default SingleContactPage;
-
