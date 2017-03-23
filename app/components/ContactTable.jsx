@@ -22,7 +22,7 @@ const ContactTable = (props) => {
     if (contact.id !== contact.user_id){
       return (
         <tr key = {contact.id}>
-        <td> <Link to={`/${contact.id}`} ><img className="thumbnail" src = {thumbImage}></img></Link></td>
+        <td> <Link to={`/contacttable/${contact.id}`} ><img className="thumbnail" src = {thumbImage}></img></Link></td>
         <td><h5>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</h5></td>
         <td></td>
         <td></td>
