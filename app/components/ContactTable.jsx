@@ -1,11 +1,15 @@
+
+
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchContacts } from '../reducers/contacts-reducer';
-
+import { fetchMessages } from '../reducers/messages-reducer';
 const ContactTable = (props) => {
 
   const contacts = props.contacts.allContacts;
+  console.log('these are just the props', props);
   console.log('these are the contact props', contacts)
   let contactRows = contacts.map(function(contact){
 
