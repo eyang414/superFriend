@@ -12,10 +12,10 @@ const loadMessages = require('./util/loadMessages')
 
 // console.log("MESSAGES")
 //
-im.getMessages(false, true, (error, messages) => {
-  if (error) { console.error(error) }
-  console.log(messages);
-})
+// im.getMessages(false, true, (error, messages) => {
+//   if (error) { console.error(error) }
+//   console.log(messages);
+// })
 //
 // console.log("CONTACTS")
 //
@@ -32,10 +32,11 @@ im.getMessages(false, true, (error, messages) => {
 // loadContacts()
 
 // Load all contacts, then associate messages to contacts
+
 // loadContacts()
+loadMessages()
 //   .then(() => {
 //   let pleaseWork = {}
 //   loadMessages(pleaseWork)
 //   })
 // .catch(console.error)
-

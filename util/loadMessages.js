@@ -1,7 +1,6 @@
 const iMessage = require('imessage')
 const db = require('APP/db')
 const User = require('../db/models/user')
-const iMessageContacts = require('../db/models/iMessageContacts')
 const Message = require('../db/models/message')
 
 const im = new iMessage()
@@ -45,6 +44,7 @@ const loadMessages = (stateClient) =>
   fetchMessages()
     .then(messages => {
       messages.forEach(message => {
+        console.log(message)
         Message.create({
           content: message.text,
           date: message.date,
@@ -58,7 +58,7 @@ const loadMessages = (stateClient) =>
 
               createdMessage.update({ sender_id: stateClient.id })
 
-              iMessageContacts.findOne({where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER}})
+              User.findOne({where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER}})
                 .then(contact => {
                   if (contact) {
                     createdMessage.update({recipient_id: contact.id})
@@ -69,7 +69,7 @@ const loadMessages = (stateClient) =>
               // STATE USER IS RECIPIENT
               createdMessage.update({ recipient_id: stateClient.id })
 
-              iMessageContacts.findOne({ where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER } })
+              User.findOne({ where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER } })
                 .then(contact => {
                   if (contact) {
                     createdMessage.update({ sender_id: contact.id })

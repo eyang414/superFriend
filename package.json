@@ -2,7 +2,7 @@
   "name": "superfriend",
   "version": "0.0.1",
   "description": "Where we stalk your friends",
-  "main": "main.js",
+  "main": "server/start.js",
   "scripts": {
     "validate": "check-node-version --node '>= 6.7.0'",
     "setup": "./bin/setup",
