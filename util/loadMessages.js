@@ -44,7 +44,7 @@ const loadMessages = (stateClient) =>
   fetchMessages()
     .then(messages => {
       messages.forEach(message => {
-        console.log(message)
+
         Message.create({
           content: message.text,
           date: message.date,

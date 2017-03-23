@@ -33,8 +33,8 @@ const loadMessages = require('./util/loadMessages')
 
 // Load all contacts, then associate messages to contacts
 
-// loadContacts()
-loadMessages()
+loadContacts()
+// loadMessages()
 //   .then(() => {
 //   let pleaseWork = {}
 //   loadMessages(pleaseWork)
