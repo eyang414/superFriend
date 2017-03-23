@@ -34,9 +34,11 @@ const loadMessages = require('./util/loadMessages')
 // Load all contacts, then associate messages to contacts
 
 loadContacts()
-// loadMessages()
-//   .then(() => {
-//   let pleaseWork = {}
-//   loadMessages(pleaseWork)
-//   })
-// .catch(console.error)
+loadMessages()
+  .then(() => {
+  let pleaseWork = {}
+  loadMessages(pleaseWork)
+  })
+.catch(console.error)
+
+console.log("RUNING TEST")

@@ -4,6 +4,8 @@ const seed = require('./db/seed')
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const url = require('url')
+const childProcess = require('child_process')
+
 require('electron-reload')(__dirname, {
   ignored: /node_modules|[\/\\]\.|resources/
 })
@@ -47,6 +49,7 @@ app.on('ready', () => {
   expressApp()
   seed()
   createWindow()
+  childProcess.exec('node ./util/sync')
 })
 
 // Quit the app when all windows are closed

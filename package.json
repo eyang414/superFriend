@@ -2,7 +2,7 @@
   "name": "superfriend",
   "version": "0.0.1",
   "description": "Where we stalk your friends",
-  "main": "main.js",
+  "main": "server/start.js",
   "scripts": {
     "validate": "check-node-version --node '>= 6.7.0'",
     "setup": "./bin/setup",
@@ -51,6 +51,7 @@
     "concurrently": "^3.4.0",
     "cookie-session": "^2.0.0-alpha.1",
     "electron": "^1.6.2",
+    "electron-builder": "^16.2.1",
     "electron-reload": "^1.1.0",
     "enzyme": "^2.5.1",
     "express": "^4.14.0",
@@ -61,6 +62,8 @@
     "imessage": "^0.1.5",
     "mailparser": "^2.0.2",
     "node-gmail-api": "^0.6.0",
+    "node-gyp": "^3.6.0",
+    "node-pre-gyp": "^0.6.34",
     "node-sass": "^4.5.1",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
@@ -80,7 +83,8 @@
     "request": "^2.81.0",
     "sequelize": "^3.24.6",
     "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "sqlite3": "^3.1.8"
   },
   "devDependencies": {
     "babel": "^6.23.0",
