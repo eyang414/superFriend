@@ -1,14 +1,14 @@
-const iMessage = require('imessage')
-const AddressBook = require('./util/AddressBook')
-
-const ab = new AddressBook()
-const im = new iMessage()
-
-const db = require('APP/db')
-const User = require('./db/models/user')
+// const iMessage = require('imessage')
+// const AddressBook = require('./util/AddressBook')
+//
+// const ab = new AddressBook()
+// const im = new iMessage()
+//
+// const db = require('APP/db')
+// const User = require('./db/models/user')
 
 const loadContacts = require('./util/loadContacts')
-const loadMessages = require('./util/loadMessages')
+// const loadMessages = require('./util/loadMessages')
 
 // console.log("MESSAGES")
 //
@@ -34,11 +34,11 @@ const loadMessages = require('./util/loadMessages')
 // Load all contacts, then associate messages to contacts
 
 loadContacts()
-loadMessages()
-  .then(() => {
-  let pleaseWork = {}
-  loadMessages(pleaseWork)
-  })
-.catch(console.error)
+// loadMessages()
+//   .then(() => {
+//   let pleaseWork = {}
+//   loadMessages(pleaseWork)
+//   })
+// .catch(console.error)
 
 console.log("RUNING TEST")

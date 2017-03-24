@@ -9,7 +9,7 @@ const google = require('googleapis')
 const Gmail = require('node-gmail-api')
 const Promise = require('bluebird')
 const simpleParser = require('mailparser').simpleParser
-const childProcess = require('child_process')
+const exec = require('child_process').exec
 
 
 // const loadContacts = require('../util/loadContacts')
@@ -36,19 +36,29 @@ router.get('/', function (req, res, next){
 router.get('/sync', (req, res, next) => {
 
 
-	const child = childProcess.exec('node ./util/sync', {maxBuffer: 1024 * 10000000}, (error, something) => {
-	  if (error) console.error(error)
+	const child = exec('node util/sync.js', (error, stdout, stderr) => {
+		if (error) console.error(error)
 	})
 
-//This child.on function will first run the child function which uploads iMessage contacts and messages to our database
-//Afterwards, it will update the database with associations.
+
+	// const child = childProcess.exec('node ./util/sync', {maxBuffer: 1024 * 10000000}, (error, something) => {
+	//   if (error) console.error(error)
+	// })
+	// exec('node ./util/sync', {maxBuffer: 1024 * 10000000}, (error, something) => {
+	//   if (error) console.error(error)
+	// })
+
+// This child.on function will first run the child function which uploads iMessage contacts and messages to our database
+// Afterwards, it will update the database with associations.
 	child.on('close', () => {
+
 		User.findAll(
 			{
 				where: {user_id: null}
 			}
 		)
 		.then((yourContacts) => {
+
 			yourContacts.forEach((elem) => {
 				elem.update({user_id: req.user.id})
 			})
