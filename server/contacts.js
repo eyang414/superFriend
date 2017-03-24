@@ -27,17 +27,30 @@ router.get('/', function (req, res, next){
 		}
 	})
 	.then(contacts => {
-		res.json(contacts)
-	})
-	.catch(next)
-})
 
+		const newContacts = contacts.map( contact => {
+			return contact.getMessages()
+			.then(messageArray => {
+				contact.dataValues.latestMessage = messageArray[0]
+				return contact
+			})
+		})
+		return Promise.all(newContacts)
+	})
+	.then((modifiedContacts) => {
+		console.log("MODIFIED CONTACTS", modifiedContacts)
+		res.json(modifiedContacts)
+	})
+	.catch(console.error)
+})
 
 router.get('/sync', (req, res, next) => {
 
 
-	const child = exec('node util/sync.js', (error, stdout, stderr) => {
+
+	const child = exec('node util/sync.js', {maxBuffer: 1024 * 10000000}, (error, stdout, stderr) => {
 		if (error) console.error(error)
+
 	})
 
 
@@ -104,9 +117,6 @@ router.get('/sync', (req, res, next) => {
 });
 
 router.get('/messages/all', function (req, res, next) {
-
-	console.log('REQ.USER: ', req.user)
-	console.log('REQ.SESSIONS.PASSPORT: ', req.session.passport.user)
 
 	User.findById(req.session.passport.user)
 	.then(user => {
@@ -261,9 +271,16 @@ router.get('/gmail/:id', function(req, res, next){
 })
 
 router.get('/:id', (req, res) => {
+	let contact = null
+
 	return User.findById(req.params.id)
-		.then(user => {
-		res.json(user)
+		.then(foundContact => {
+			contact = foundContact
+			return contact.getMessages()
+		})
+		.then(contactMessages => {
+			contact.dataValues.latestMessage = contactMessages[0]
+			res.json(contact)
 		})
 	.catch(console.error)
 })
