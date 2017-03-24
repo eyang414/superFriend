@@ -42,6 +42,18 @@ router.get('/messages/all', function (req, res, next) {
 
 })
 
+router.get('/messages/latest/:contactId', function (req, res, next) {
+
+	User.findById(req.params.contactId)
+	.then(contact => {
+		return contact.getMessages()
+	})
+	.then(contactMessageswithUser => {
+		console.log("CONTACT MESSAGES", contactMessageswithUser[0])
+		res.json(contactMessageswithUser[0].content)
+	})
+})
+
 
 router.get('/gmail', function(req, res, next){
 
@@ -179,50 +191,6 @@ router.get('/:id', (req, res) => {
 	.catch(console.error)
 })
 
-// router.get('/getusers', function(req, res, next){
-
-// 	Oauth.findOne({
-// 		where: {user_id: req.user.id}
-// 	})
-// 	.then(authUser => {
-
-// 		let gmail = new Gmail(authUser.accessToken)
-// 		let messages = gmail.messages('label:inbox', {
-// 			max: 3,
-// 			fields: ['payload']
-// 		})
-
-// 		console.log(messages)
-
-// 		let senderArray = []
-
-// 		messages.on('data', function(response){
-
-// 			// console.log(response.payload.headers)
-// 			const headerArray = response.payload.headers
-
-// 			function findSender (array) {
-// 				return array.name === "From"
-// 			}
-
-// 			let emails = headerArray.find(findSender).value
-// 			console.log(emails)
-
-// 			senderArray.push(emails)
-
-
-// 		})
-
-// 		// if(senderArray.length === )
-// 		// return senderArray
-// 	})
-// 	.then(sender => {
-// 		res.json({
-// 			"message": "This is the sender array hopefully",
-// 			"sender": sender
-// 		})
-// 	})
-// })
 
 
 module.exports = router
