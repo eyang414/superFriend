@@ -1,12 +1,27 @@
+
+
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchContacts } from '../reducers/contacts-reducer';
+import { fetchMessages } from '../reducers/messages-reducer';
+import axios from 'axios'
 
 const ContactTable = (props) => {
 
-  const contacts = props.contacts.allContacts;
-  console.log('these are the contact props', contacts)
+  const contacts = props.contacts.allContacts;  
+  const messages = props.messages.messages;
+
+
+
+
+
+
+
+
+
+  console.log('these are the messages props', messages)
   let contactRows = contacts.map(function(contact){
 
     const thumbImage = "http://lorempixel.com/80/80/people/" //-->thumbnail placeholder for now
@@ -18,14 +33,21 @@ const ContactTable = (props) => {
     const instaIcon = "/images/insta-icon.png"
     const vchatIcon = "/images/vchat-icon.png"
 
-    // console.log(contact);
+    messages.forEach(message => {
+      if(message.sender_id === contact.id || message.recipient_id === contact.id) {
+        if(!contact.message) {
+          contact.message = message.content
+        }
+      }
+    })
+
     if (contact.id !== contact.user_id){
       return (
         <tr key = {contact.id}>
         <td> <Link to={`/contacttable/${contact.id}`} ><img className="thumbnail" src = {thumbImage}></img></Link></td>
-        <td><h5>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</h5></td>
+        <td><h5>{contact.ZFIRSTNAME} {contact.ZLASTNAME} {contact.id}</h5></td>
         <td></td>
-        <td></td>
+        <td>{contact.message}</td>
         <td>
           <img className="icon" src={textIcon}></img>
           <img className="icon" src={callIcon}></img>
@@ -36,15 +58,19 @@ const ContactTable = (props) => {
         </tr>
       )}
     });
-    
-  
+
+    const superSyncClick = () => {
+      console.log('SUPER SYYYNC')
+      axios.get('/api/contacts/sync')
+    }
+
 return (
   // const contactStats = contacts.map(function(contact){
   	<div className="container">
     <h1 className="header">Your Contacts</h1>
     <div className="contact-table-buttons">
     <button className="btn btn-primary">Edit Contacts</button>
-    <button className="btn btn-primary">SuperSync</button>
+    <button onClick={superSyncClick} className="btn btn-primary">SuperSync</button>
     </div>
   	  <table className="table">
         <tbody>
@@ -65,4 +91,3 @@ return (
 
 
 export default ContactTable;
-
