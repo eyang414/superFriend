@@ -5,6 +5,7 @@
 const bcrypt = require('bcryptjs')
 const Sequelize = require('sequelize')
 const db = require('APP/db')
+const Messages = require('./message')
 
 const User = db.define('users', {
 
@@ -79,7 +80,42 @@ const User = db.define('users', {
           else resolve(result)
         })
       )
+    },
+
+    getMessages() {
+
+      return Messages.findAll({
+        where: {
+          // sender_id: this.id,
+          $or: {
+            sender_id: this.id,
+            recipient_id: this.id
+          }
+        },
+        order: 'date DESC'
+      })
+    },
+
+    getSentMessages() {
+
+      return Messages.findAll({
+        where: {
+          sender_id: this.id
+        },
+        order: 'date DESC'
+      })
+    },
+
+    getReceivedMessages() {
+
+      return Messages.findAll({
+        where: {
+          recipient_id: this.id
+        },
+        order: 'date DESC'
+      })
     }
+
   }
 })
 

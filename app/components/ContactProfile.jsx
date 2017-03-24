@@ -1,19 +1,32 @@
 import React from 'react';
+import axios from 'axios'
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchContacts } from '../reducers/contacts-reducer';
 import { fetchMessages } from '../reducers/messages-reducer';
 
-
 const ContactProfile = (props) => {
   const contacts = props.contacts.allContacts;  
   const messages = props.messages.messages;
   console.log('these are the props', props)
-
+  
   return (
   // const contactStats = contacts.map(function(contact){
 
-  	
+  	<div className="container">
+    <h1 className="header">LOREM IPSUM</h1>
+    <button onClick={() => {axios.get('/api/contacts/messages')} }>CLICK ME</button>
+    <div className="profile-img"><img src="http://lorempixel.com/300/300/people/" /></div>
+  	  <table className="table">
+        <tbody>
+        <tr>
+          <th>Last Spoke</th>
+          <th>Last Message</th>
+          <th>Reach Out</th>
+        </tr>
+        </tbody>
+      </table>
+      
     <div className="container">
       <div className="col">
         <h1 className="header">You and X</h1>
@@ -30,3 +43,6 @@ const ContactProfile = (props) => {
 }
 
 export default ContactProfile;
+
+
+

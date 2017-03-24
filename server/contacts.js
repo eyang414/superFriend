@@ -9,44 +9,12 @@ const Gmail = require('node-gmail-api')
 const Promise = require('bluebird')
 const simpleParser = require('mailparser').simpleParser
 
-// iMESSAGE DB:
-
-// //get all contacts for a given user
-// router.get('/', function (req, res, next) {
-
-// 	// If no user, send empty array
-// 	if (!req.user.id) {
-// 		res.json([])
-// 		return
-// 	}
-
-// 	User.findAll({
-// 		where: {
-// 			user_id: req.user.id
-// 		},
-// 		include: [{
-//     	model: User,
-//     	as: 'Friend'
-//   		}]
-// 	})
-// 	.then(contacts => {
-// 		res.json(contacts)
-// 	})
-// 	.catch(next)
-// })
-
-// router.get('/:id', function (req, res, next) {
-
-// 	User.findById(req.params.id)
-// 	.then(contact => res.json(contact))
-// 	.catch(next)
-// })
-
 
 // iMESSAGE DB / get all contacts
 
 router.get('/', function (req, res, next){
 	console.log('Here in the get contacts route', req.session)
+
 	User.findAll({
 		where: {
 			user_id: req.session.passport.user
@@ -58,12 +26,29 @@ router.get('/', function (req, res, next){
 	.catch(next)
 })
 
+router.get('/messages', function(req, res, next){
+	console.log('REQ.USER: ', req.user)
+	console.log('REQ.SESSIONS.PASSPORT: ', req.session.passport.user)
+
+	User.findById(req.session.passport.user)
+	.then(user => {
+		return user.getMessages()
+	})
+	.then(userMessages => {
+		console.log("USER MESSAGES", userMessages)
+		res.json(userMessages)
+	})
+
+})
+
 
 router.get('/gmail', function(req, res, next){
 
 	// Find User
 	Oauth.findOne({
-		where: {user_id: req.user.id}
+		where: {
+			user_id: req.user.id
+		}
 	})
 	.then(authUser => {
 
