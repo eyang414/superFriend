@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 const mapStateToProps = (state) => {
 	console.log(state)
   return {
-  	errythang: state,
+  	messages: state.messages,
     contacts: state.contacts,
   }
 }
