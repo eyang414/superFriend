@@ -12,22 +12,6 @@ const ContactProfile = (props) => {
 
   return (
   // const contactStats = contacts.map(function(contact){
-
-  	<div className="container">
-      <h1 className="header">LOREM IPSUM</h1>
-      <button onClick={() => { axios.get('/api/contacts/messages/all') }}>CLICK ME</button>
-      {/*<button onClick={() => { console.log("clicked")} }>CLICK ME</button>*/}
-      <div className="profile-img"><img src="http://lorempixel.com/300/300/people/" /></div>
-      <table className="table">
-        <tbody>
-          <tr>
-            <th>Last Spoke</th>
-            <th>Last Message</th>
-            <th>Reach Out</th>
-          </tr>
-        </tbody>
-      </table>
-
       <div className="container">
         <div className="col">
           <h1 className="header">You and X</h1>
@@ -37,7 +21,6 @@ const ContactProfile = (props) => {
           <h3>It's been X days/weeks since you last checked in with Person.</h3>
         </div>
       </div>
-    </div>
   );
 }
 
