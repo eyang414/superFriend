@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../db/models/user')
+const Message = require('../db/models/message')
 const Oauth = require('../db/models/oauth')
 // const passport = require('passport')
 const axios = require('axios')
@@ -64,10 +65,63 @@ router.get('/', function (req, res, next){
 })
 
 router.get('/sync', (req, res, next) => {
-	childProcess.exec('node ./util/sync', {maxBuffer: 1024 * 10000000}, (error, something) => {
+
+
+	const child = childProcess.exec('node ./util/sync', {maxBuffer: 1024 * 10000000}, (error, something) => {
 	  if (error) console.error(error)
 	})
-	// loadMessages()
+
+//This child.on function will first run the child function which uploads iMessage contacts and messages to our database
+//Afterwards, it will update the database with associations.
+	child.on('close', () => {
+		User.findAll(
+			{
+				where: {user_id: null}
+			}
+		)
+		.then((yourContacts) => {
+			yourContacts.forEach((elem) => {
+				elem.update({user_id: req.user.id})
+			})
+		})
+		.catch(console.error)
+
+		Message.findAll(
+			{
+				where: {sender_id: null}
+			}
+		)
+		.then((yourMessages) => {
+			yourMessages.forEach((elem) => {
+				User.findOne({
+					where: {ZFULLNUMBER: elem.ZFULLNUMBER}
+				})
+				.then((foundUser) => {
+					if(foundUser){
+						if(elem.is_sender){
+							elem.update({
+								sender_id: req.user.id,
+								recipient_id: foundUser.id
+							})
+						}
+						else{
+							elem.update({
+								sender_id: foundUser.id,
+								recipient_id: req.user.id
+							})
+						}
+					}
+				})
+				.catch(console.error)
+			})
+			console.log('suuupersyyyyync complete')
+		})
+		.then(() => {
+			res.redirect('/')
+		})
+		.catch(console.error)
+	})
+
 });
 
 
