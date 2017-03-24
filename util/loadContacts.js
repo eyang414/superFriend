@@ -12,17 +12,17 @@ const ab = new AddressBook()
 const loadContacts = (stateClientId) => {
 
 
-    return ab.fetchContacts()
+  return ab.fetchContacts()
     .then((contacts) => {
 
-
-      contacts.forEach((elem) => {
+      console.log("========== FINISHED GETTING CONTACTS ===========")
+      return Promise.all(contacts.map((elem) => {
 
         if (elem.ZFULLNUMBER) {
-          User.findOrCreate(
+          return User.findOrCreate(
             {
-              defaults: {ZFIRSTNAME: elem.ZFIRSTNAME, ZLASTNAME: elem.ZLASTNAME, ZFULLNUMBER: elem.ZFULLNUMBER},
-              where: {ZFULLNUMBER: elem.ZFULLNUMBER.replace(/[^0-9]/g, '').slice(-10)}
+              defaults: { ZFIRSTNAME: elem.ZFIRSTNAME, ZLASTNAME: elem.ZLASTNAME, ZFULLNUMBER: elem.ZFULLNUMBER },
+              where: { ZFULLNUMBER: elem.ZFULLNUMBER.replace(/[^0-9]/g, '').slice(-10) }
             }
           )
           // .then((existingContact) => {
@@ -31,11 +31,10 @@ const loadContacts = (stateClientId) => {
           //   // existingContact[0].update(elem)
           // })
         }
-      })
+      }))
     })
-    .catch(console.error)
 
-  }
+}
 //TODO: inlude emails into the contacts raw sql query from AddressBook.js
 //TODO: write some TESTS testestestestestestest
 

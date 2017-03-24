@@ -47,7 +47,7 @@ const createWindow = () => {
 // Create the window when the app is ready
 app.on('ready', () => {
   expressApp()
-  // seed()
+  seed()
   // exec('node util/sync', (error, stdout, stderr) => {
   //   console.log(stdout, stderr)
   //   if (error) console.error(error)
