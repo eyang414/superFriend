@@ -13,7 +13,7 @@ import {fetchMessages} from './actions/messages'
 import AppContainer from './containers/AppContainer'
 import SignupPage from './components/SignupPage'
 import LoginPage from './components/LoginPage'
-import ContactProfile from './components/ContactProfile'
+import ContactProfileContainer from './containers/ContactProfileContainer'
 import ContactTableContainer from './containers/ContactTableContainer'
 
 const onContactTableContainerEnter = function () {
@@ -22,14 +22,10 @@ const onContactTableContainerEnter = function () {
 	store.dispatch(fetchMessages())
 }
 
-const onContactProfileEnter = function () {
+const onContactProfileContainerEnter = function (nextRouterState) {
 	console.log("FETCHING THIS CONTACT")
-	store.dispatch(fetchContact())
+	store.dispatch(fetchContact(nextRouterState.params.id))
 }
-//or do we do:
-//const onUserAccountEnter = function(nextRouterState){
-// 	fetchContacts(nextRouterState.params.userId)(store.dispatch)
-// }
 
 render(
 	<Provider store={store}>
@@ -38,7 +34,7 @@ render(
 	        <Route path="/login" component={LoginPage} />
 	        <Route path="/signup" component={SignupPage} />
 			<Route path="/contacttable" component={ContactTableContainer} onEnter={onContactTableContainerEnter} />
-			<Route path="/contacttable/:id" component={ContactProfile} onEnter={onContactProfileEnter}/>
+			<Route path="/contacttable/:id" component={ContactProfileContainer} onEnter={onContactProfileContainerEnter}/>
 	      </Route>
 	    </Router>
   	</Provider>,

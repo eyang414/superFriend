@@ -3,4 +3,5 @@ const loadMessages = require('./loadMessages')
 
 
 loadContacts()
-loadMessages()
+.then(() => loadMessages())
+.catch(console.error)
