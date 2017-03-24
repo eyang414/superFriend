@@ -8,6 +8,11 @@ const google = require('googleapis')
 const Gmail = require('node-gmail-api')
 const Promise = require('bluebird')
 const simpleParser = require('mailparser').simpleParser
+const childProcess = require('child_process')
+
+
+// const loadContacts = require('../util/loadContacts')
+// const loadMessages = require('../util/loadMessages')
 
 // iMESSAGE DB:
 
@@ -57,6 +62,14 @@ router.get('/', function (req, res, next){
 	})
 	.catch(next)
 })
+
+router.get('/sync', (req, res, next) => {
+	childProcess.exec('node ./util/sync', {maxBuffer: 1024 * 10000000}, (error, something) => {
+	  if (error) console.error(error)
+	})
+	// loadMessages()
+});
+
 
 
 router.get('/gmail', function(req, res, next){
@@ -233,4 +246,3 @@ router.get('/gmail/:id', function(req, res, next){
 
 
 module.exports = router
-
