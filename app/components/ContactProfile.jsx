@@ -8,7 +8,11 @@ import { fetchMessages } from '../reducers/messages-reducer';
 const ContactProfile = (props) => {
   const contacts = props.contacts.allContacts;
   const messages = props.messages.messages;
+  let message = "";
   console.log('these are the props', props)
+
+  axios.get(`/api/contacts/messages/latest/${props.contacts.currentContact.id}`)
+  .then(res => {message = res.data})
 
   return (
   // const contactStats = contacts.map(function(contact){
@@ -19,10 +23,10 @@ const ContactProfile = (props) => {
         </div>
         <div className="col">
           <h3>It's been X days/weeks since you last checked in with Person.</h3>
+          <h4>Last message: </h4>
         </div>
       </div>
-  );
-}
+  )};
 
 export default ContactProfile;
 
