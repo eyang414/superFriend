@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 
 const mapStateToProps = (state) => {
-	console.log(state)
   return {
   	messages: state.messages,
     contacts: state.contacts
+
   }
 }
 

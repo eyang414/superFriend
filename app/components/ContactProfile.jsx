@@ -8,8 +8,18 @@ import { fetchMessages } from '../reducers/messages-reducer';
 const ContactProfile = (props) => {
   const contacts = props.contacts.allContacts;
   const messages = props.messages.messages;
-  let message = "";
+  // function cleanDate(d) {return new Date(+d.replace(/\/Date\((\d+)\)\//, '$1'))}
+  let latestMessage = props.contacts.currentContact.latestMessage;
+  // let date = cleanDate(props.contacts.currentContact.date);
+  function sentOrReceived(latestMessage){
+    if (latestMessage.isSender===0){
+      return "received"
+    }else{
+      return "sent"
+    }
+  }
   console.log('these are the props', props)
+  console.log('this is the latest message', latestMessage)
 
   axios.get(`/api/contacts/messages/latest/${props.contacts.currentContact.id}`)
   .then(res => {message = res.data})
@@ -23,7 +33,7 @@ const ContactProfile = (props) => {
         </div>
         <div className="col">
           <h3>It's been X days/weeks since you last checked in with Person.</h3>
-          <h4>Last message: </h4>
+          <h4>Last message: "{latestMessage && latestMessage.content}", {latestMessage && latestMessage.date}</h4>
         </div>
       </div>
   )};
