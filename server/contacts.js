@@ -21,14 +21,27 @@ router.get('/', function (req, res, next){
 		}
 	})
 	.then(contacts => {
-		res.json(contacts)
+
+		const newContacts = contacts.map( contact => {
+			return contact.getMessages()
+			.then(messageArray => {
+				contact.latestMessage = messageArray[0]
+				return contact
+			})
+		})
+		return Promise.all(newContacts)
 	})
-	.catch(next)
+	.then((modifiedContacts) => {
+		console.log("MODIFIED CONTACTS", modifiedContacts)
+		res.json(modifiedContacts)
+	})
+	.catch(console.error)
 })
+	
 
 router.get('/messages', function(req, res, next){
-	console.log('REQ.USER: ', req.user)
-	console.log('REQ.SESSIONS.PASSPORT: ', req.session.passport.user)
+	// console.log('REQ.USER: ', req.user)
+	// console.log('REQ.SESSIONS.PASSPORT: ', req.session.passport.user)
 
 	User.findById(req.session.passport.user)
 	.then(user => {

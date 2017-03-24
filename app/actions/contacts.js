@@ -1,4 +1,4 @@
-import axios from 'axios';
+  import axios from 'axios';
 
 /* -----------------    ACTIONS     ------------------ */
 export const GET_CONTACTS = 'GET_CONTACTS';
