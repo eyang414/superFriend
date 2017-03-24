@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchContacts } from '../reducers/contacts-reducer';
 import { fetchMessages } from '../reducers/messages-reducer';
+import axios from 'axios'
+
 const ContactTable = (props) => {
 
   const contacts = props.contacts.allContacts;  
@@ -56,15 +58,19 @@ const ContactTable = (props) => {
         </tr>
       )}
     });
-    
-  
+
+    const superSyncClick = () => {
+      console.log('SUPER SYYYNC')
+      axios.get('/api/contacts/sync')
+    }
+
 return (
   // const contactStats = contacts.map(function(contact){
   	<div className="container">
     <h1 className="header">Your Contacts</h1>
     <div className="contact-table-buttons">
     <button className="btn btn-primary">Edit Contacts</button>
-    <button className="btn btn-primary">SuperSync</button>
+    <button onClick={superSyncClick} className="btn btn-primary">SuperSync</button>
     </div>
   	  <table className="table">
         <tbody>
@@ -85,4 +91,3 @@ return (
 
 
 export default ContactTable;
-
