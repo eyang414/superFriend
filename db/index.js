@@ -28,7 +28,9 @@ require('./models')
 
 // sync the db, creating it if necessary
 function sync(force = app.isTesting, retries = 0, maxRetries = 5) {
-  return db.sync({force: true})
+
+  //PLEASE do Not change this to force: true.  If you do, the SuperSync button wont work. -Eric
+  return db.sync({force: false})
     .then(() => debugDB(`Synced models to db ${url}`))
     .catch(fail => {
       // Don't do this auto-create nonsense in prod, or

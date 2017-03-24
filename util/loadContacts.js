@@ -1,5 +1,5 @@
 const AddressBook = require('./AddressBook')
-const db = require('APP/db')
+const db = require('APP/db/models')
 const User = require('../db/models/user')
 
 const ab = new AddressBook()
@@ -11,9 +11,13 @@ const ab = new AddressBook()
 
 const loadContacts = (stateClientId) => {
 
+
     return ab.fetchContacts()
     .then((contacts) => {
+
+
       contacts.forEach((elem) => {
+
         if (elem.ZFULLNUMBER) {
           User.findOrCreate(
             {
@@ -22,13 +26,14 @@ const loadContacts = (stateClientId) => {
             }
           )
           // .then((existingContact) => {
-          //   stateClientId.addFriend(existingContact[0])
-          //   existingContact[0].update(elem)
+          //   console.log('you created a guy',existingContact[0])
+          //   // stateClientId.addFriend(existingContact[0])
+          //   // existingContact[0].update(elem)
           // })
-          .catch(console.error)
         }
       })
     })
+    .catch(console.error)
 
   }
 //TODO: inlude emails into the contacts raw sql query from AddressBook.js
