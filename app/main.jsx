@@ -7,6 +7,7 @@ import {connect, Provider } from 'react-redux'
 import store from './store'
 import {fetchContacts} from './actions/contacts'
 import {fetchContact} from './actions/contacts'
+import {fetchMessages} from './actions/messages'
 
 
 import AppContainer from './containers/AppContainer'
@@ -18,6 +19,7 @@ import ContactTableContainer from './containers/ContactTableContainer'
 const onContactTableContainerEnter = function () {
 	console.log("FETCHING CONTACTS")
 	store.dispatch(fetchContacts())
+	store.dispatch(fetchMessages())
 }
 
 const onContactProfileEnter = function () {

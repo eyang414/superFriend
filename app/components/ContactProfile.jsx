@@ -1,10 +1,13 @@
 import React from 'react';
+import axios from 'axios'
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchContacts } from '../reducers/contacts-reducer';
-import axios from 'axios'
+import { fetchMessages } from '../reducers/messages-reducer';
 
 const ContactProfile = (props) => {
+  const contacts = props.contacts.allContacts;  
+  const messages = props.messages.messages;
   console.log('these are the props', props)
   
   return (
@@ -23,6 +26,7 @@ const ContactProfile = (props) => {
         </tr>
         </tbody>
       </table>
+      
     <div className="container">
       <div className="col">
         <h1 className="header">You and X</h1>
@@ -33,7 +37,7 @@ const ContactProfile = (props) => {
       </div>
 
     </div>
-  </div>
+
 
   );
 }
