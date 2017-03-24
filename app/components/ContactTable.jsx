@@ -18,7 +18,7 @@ const ContactTable = (props) => {
     const instaIcon = "/images/insta-icon.png"
     const vchatIcon = "/images/vchat-icon.png"
 
-    console.log(contact);
+    // console.log(contact);
     if (contact.id !== contact.user_id){
       return (
         <tr key = {contact.id}>
