@@ -31,7 +31,7 @@ router.get('/', function (req, res, next){
 		const newContacts = contacts.map( contact => {
 			return contact.getMessages()
 			.then(messageArray => {
-				contact.latestMessage = messageArray[0]
+				contact.dataValues.latestMessage = messageArray[0]
 				return contact
 			})
 		})
@@ -258,9 +258,16 @@ router.get('/gmail/:id', function(req, res, next){
 })
 
 router.get('/:id', (req, res) => {
+	let contact = null
+
 	return User.findById(req.params.id)
-		.then(user => {
-		res.json(user)
+		.then(foundContact => {
+			contact = foundContact
+			return contact.getMessages()
+		})
+		.then(contactMessages => {
+			contact.dataValues.latestMessage = contactMessages[0]
+			res.json(contact)
 		})
 	.catch(console.error)
 })
