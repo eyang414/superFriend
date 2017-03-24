@@ -58,7 +58,7 @@ const loadMessages = (stateClient) => {
                   Message.create({
                     content: message.text,
                     date: message.date,
-                    is_sender: message.is_sender,
+                    is_sender: message.is_sent,
                     ZFULLNUMBER: message.id
                   })
                     .then(createdMessage => {
