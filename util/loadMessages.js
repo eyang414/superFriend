@@ -40,44 +40,56 @@ const fetchMessages = () => {
  * Loads the currently logged in user's messages and associates the sender_id and recipient_id
  * @param {Object} stateClient the currently logged in user from state.auth.user
  */
-const loadMessages = (stateClient) =>
-  fetchMessages()
-    .then(messages => {
-      messages.forEach(message => {
+const loadMessages = (stateClient) => {
 
-        Message.create({
-          content: message.text,
-          date: message.date,
-          is_sender: message.is_sender,
-          ZFULLNUMBER: message.id
-        })
-          .then(createdMessage => {
-
-            // STATE USER IS SENDER
-            if (createdMessage.is_sender) {
-
-              createdMessage.update({ sender_id: stateClient.id })
-
-              User.findOne({where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER}})
-                .then(contact => {
-                  if (contact) {
-                    createdMessage.update({recipient_id: contact.id})
-                  }
-              })
-
-            } else {
-              // STATE USER IS RECIPIENT
-              createdMessage.update({ recipient_id: stateClient.id })
-
-              User.findOne({ where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER } })
-                .then(contact => {
-                  if (contact) {
-                    createdMessage.update({ sender_id: contact.id })
-                  }
-              })
-            }
-    })
+  return User.findOne({
+    where: { username: 'ak123' }
   })
-})
+    .then((foundUser) => {
+      ourUser = foundUser
+
+    })
+    .then(() => {
+
+            return fetchMessages()
+              .then(messages => {
+                messages.forEach(message => {
+
+                  Message.create({
+                    content: message.text,
+                    date: message.date,
+                    is_sender: message.is_sender,
+                    ZFULLNUMBER: message.id
+                  })
+                    .then(createdMessage => {
+
+                      // STATE USER IS SENDER
+                      if (createdMessage.is_sender) {
+
+                        createdMessage.update({ sender_id: stateClient.id })
+
+                        User.findOne({ where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER } })
+                          .then(contact => {
+                            if (contact) {
+                              createdMessage.update({ recipient_id: contact.id })
+                            }
+                          })
+
+                      } else {
+                        // STATE USER IS RECIPIENT
+                        createdMessage.update({ recipient_id: stateClient.id })
+
+                        User.findOne({ where: { ZFULLNUMBER: createdMessage.ZFULLNUMBER } })
+                          .then(contact => {
+                            if (contact) {
+                              createdMessage.update({ sender_id: contact.id })
+                            }
+                          })
+                      }
+                    })
+                })
+              })
+    })
+}
 
 module.exports = loadMessages
