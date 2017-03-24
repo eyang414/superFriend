@@ -26,7 +26,8 @@ router.get('/', function (req, res, next){
 	.catch(next)
 })
 
-router.get('/messages', function(req, res, next){
+router.get('/messages/all', function (req, res, next) {
+
 	console.log('REQ.USER: ', req.user)
 	console.log('REQ.SESSIONS.PASSPORT: ', req.session.passport.user)
 
@@ -170,6 +171,13 @@ router.get('/gmail/:id', function(req, res, next){
 	})
 })
 
+router.get('/:id', (req, res) => {
+	return User.findById(req.params.id)
+		.then(user => {
+		res.json(user)
+		})
+	.catch(console.error)
+})
 
 // router.get('/getusers', function(req, res, next){
 
