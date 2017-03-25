@@ -165,7 +165,7 @@ router.get('/gmail', function(req, res, next){
 			}
 		})
 		.then(allMails => {
-			console.log(allMails)
+			console.log('ALL MAILS OBJECT :', allMails)
 
 			const emailPromises = allMails.data.messages.map( message => {
 				return axios.get(`https://www.googleapis.com/gmail/v1/users/me/messages/${message.id}/?format=metadata`, {
@@ -175,6 +175,7 @@ router.get('/gmail', function(req, res, next){
 				})
 			})
 			return Promise.all(emailPromises)
+			// need to pass down the next page token
 		})
 		.then(emailsArray => {
 

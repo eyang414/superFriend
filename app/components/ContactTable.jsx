@@ -14,13 +14,6 @@ const ContactTable = (props) => {
   const messages = props.messages.messages;
 
 
-
-
-
-
-
-
-
   console.log('these are the messages props', messages)
   let contactRows = contacts.map(function(contact){
 
