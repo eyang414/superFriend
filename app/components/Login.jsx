@@ -11,13 +11,14 @@ export const Login = ({ login }) => (
     evt.preventDefault()
     login(evt.target.username.value, evt.target.password.value)
   } }>
+
     <input id="username" className="form-control mr-sm-1" placeholder="Username" name="username" value="ak123@ak123.com"/>
     <input id="password" className="form-control mr-sm-1" placeholder="Password" name="password" type="password" value="1234"/>
     <input
-    id="loginbtn"
-    className="btn btn-primary" 
-    type="submit"
-    value="Login"
+      id="loginbtn"
+      className="btn btn-primary" 
+      type="submit"
+      value="Login"
     />
   </form>
 

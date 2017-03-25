@@ -16,7 +16,7 @@ const Message = db.define('message', {
       }
   },
   is_sender: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.INTEGER
   },
   date: {
     type: Sequelize.STRING,

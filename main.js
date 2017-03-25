@@ -4,6 +4,8 @@ const seed = require('./db/seed')
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const url = require('url')
+const exec = require('child_process').exec
+
 require('electron-reload')(__dirname, {
   ignored: /node_modules|[\/\\]\.|resources/
 })
@@ -46,6 +48,13 @@ const createWindow = () => {
 app.on('ready', () => {
   expressApp()
   seed()
+  // exec('node util/sync', (error, stdout, stderr) => {
+  //   console.log(stdout, stderr)
+  //   if (error) console.error(error)
+  // })
+  // childProcess.exec('node ./util/sync', {maxBuffer: 1024 * 10000000}, (error, something) => {
+  //   if (error) console.error(error)
+  // })
   createWindow()
 })
 
@@ -64,4 +73,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-

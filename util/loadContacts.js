@@ -1,47 +1,40 @@
 const AddressBook = require('./AddressBook')
-const db = require('APP/db')
+const db = require('APP/db/models')
 const User = require('../db/models/user')
 
 const ab = new AddressBook()
-let ourUser
 
 //This function is going to be used for the SYNC Contacts button.
 //It will create new contacts if they didn't already exist, will also UPDATE them if anything was changed
 
+//stateClient is probably null right now because this file isnt connected to the state AND the state is never passed into this function
 
-const loadContacts = (stateClient) => {
+const loadContacts = (stateClientId) => {
 
-//Look below for a commented-out, non-dev code that will replace everything inside this function
-  User.findOne({
-    where: {username: 'ak123'}
-  })
-  .then((foundUser) => {
-    ourUser = foundUser
 
-  })
-  .then(() => {
-
-    ab.fetchContacts()
+  return ab.fetchContacts()
     .then((contacts) => {
-      contacts.forEach((elem) => {
+
+      console.log("========== FINISHED GETTING CONTACTS ===========")
+      return Promise.all(contacts.map((elem) => {
+
         if (elem.ZFULLNUMBER) {
-          User.findOrCreate(
+          return User.findOrCreate(
             {
-              defaults: {ZFIRSTNAME: elem.ZFIRSTNAME, ZLASTNAME: elem.ZLASTNAME, ZFULLNUMBER: elem.ZFULLNUMBER},
-              where: {ZFULLNUMBER: elem.ZFULLNUMBER.replace(/[^0-9]/g, '').slice(-10)}
+              defaults: { ZFIRSTNAME: elem.ZFIRSTNAME, ZLASTNAME: elem.ZLASTNAME, ZFULLNUMBER: elem.ZFULLNUMBER },
+              where: { ZFULLNUMBER: elem.ZFULLNUMBER.replace(/[^0-9]/g, '').slice(-10) }
             }
           )
-          .then((existingContact) => {
-            ourUser.addFriend(existingContact[0])
-            existingContact[0].update(elem)
-          })
-          .catch(console.error)
+          // .then((existingContact) => {
+          //   console.log('you created a guy',existingContact[0])
+          //   // stateClientId.addFriend(existingContact[0])
+          //   // existingContact[0].update(elem)
+          // })
         }
-      })
+      }))
     })
-  })
 
-  }
+}
 //TODO: inlude emails into the contacts raw sql query from AddressBook.js
 //TODO: write some TESTS testestestestestestest
 
