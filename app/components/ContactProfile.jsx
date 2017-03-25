@@ -9,7 +9,9 @@ const ContactProfile = (props) => {
   const contacts = props.contacts.allContacts;
   const messages = props.messages.messages;
   // function cleanDate(d) {return new Date(+d.replace(/\/Date\((\d+)\)\//, '$1'))}
+  let currentContact = props.contacts.currentContact;
   let latestMessage = props.contacts.currentContact.latestMessage;
+  // let latestMessageDate = new Date(parseInt(latestMessage.date));
   // let date = cleanDate(props.contacts.currentContact.date);
   function sentOrReceived(latestMessage){
     if (latestMessage.isSender===0){
@@ -18,22 +20,26 @@ const ContactProfile = (props) => {
       return "sent"
     }
   }
-  console.log('these are the props', props)
-  console.log('this is the latest message', latestMessage)
+
+  // console.log('this was when it was send', latestMessageDate)
 
   axios.get(`/api/contacts/messages/latest/${props.contacts.currentContact.id}`)
   .then(res => {message = res.data})
 
+  console.log('these are the props', props)
+  console.log('this is the currentContact', currentContact)
+  console.log('this is the latest message', latestMessage)
+  // console.log('this is the  date', props.contacts.currentContact.latestMessage.date)
+
   return (
-  // const contactStats = contacts.map(function(contact){
       <div className="container">
         <div className="col">
-          <h1 className="header">You and X</h1>
+          <h1 className="header">You and {currentContact.ZFIRSTNAME} {currentContact.ZLASTNAME}</h1>
           <img className="profile-img" src="http://lorempixel.com/300/300/people/"></img>
         </div>
         <div className="col">
-          <h3>It's been X days/weeks since you last checked in with Person.</h3>
-          <h4>Last message: "{latestMessage && latestMessage.content}", {latestMessage && latestMessage.date}</h4>
+          <h3>It's been X days/weeks since you last checked in with {currentContact.ZFIRSTNAME}.</h3>
+          <h4>Last message: "{latestMessage && latestMessage.content}"</h4>
         </div>
       </div>
   )};

@@ -46,7 +46,7 @@ router.get('/', function (req, res, next){
 
 router.get('/sync', (req, res, next) => {
 
-	const child = exec('node util/sync.js', {maxBuffer: 1024 * 10000000}, (error, stdout, stderr) => {
+	const child = exec('node util/sync.js', {maxBuffer: 1024 * 100000000000000000}, (error, stdout, stderr) => {
 		if (error) console.error(error)
 		// stdout.on('data', (data) => {console.log(data)})
 
@@ -70,7 +70,7 @@ router.get('/sync', (req, res, next) => {
 // This child.on function will first run the child function which uploads iMessage contacts and messages to our database
 // Afterwards, it will update the database with associations.
 	child.on('close', () => {
-
+		// console.log('finished syncing!!!!!!!!!!!!!')
 		User.findAll(
 			{
 				where: {user_id: null}
@@ -90,6 +90,7 @@ router.get('/sync', (req, res, next) => {
 			}
 		)
 		.then((yourMessages) => {
+			console.log('you are in the Message.findAll part')
 			yourMessages.forEach((elem) => {
 				User.findOne({
 					where: {ZFULLNUMBER: elem.ZFULLNUMBER}
