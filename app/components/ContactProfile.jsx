@@ -8,6 +8,7 @@ import { fetchMessages } from '../reducers/messages-reducer';
 const ContactProfile = (props) => {
 
   const messages = props.messages.messages;
+
   const currentContact = props.contacts.currentContact;
 
   function cleanDate(d) {
@@ -16,6 +17,8 @@ const ContactProfile = (props) => {
 
   let latestMessage = null;
 
+  let currentContact = props.contacts.currentContact;
+
   function sentOrReceived(latestMessage){
     if (latestMessage.isSender===0){
       return "received"
@@ -23,10 +26,11 @@ const ContactProfile = (props) => {
       return "sent"
     }
   }
-  // console.log('these are the props', props)
+
 
   axios.get(`/api/contacts/messages/latest/${props.contacts.currentContact.id}`)
   .then(res => {message = res.data})
+
 
 if (currentContact && currentContact.latestMessage){
   latestMessage = props.contacts.currentContact.latestMessage;
@@ -36,10 +40,11 @@ if (currentContact && currentContact.latestMessage){
   console.log(Date());
 
 }
+
   return (
-  // const contactStats = contacts.map(function(contact){
       <div className="container">
         <div className="col">
+
           <h1 className="header">You and {currentContact.ZFIRSTNAME}</h1>
           <img className="profile-img" src="http://lorempixel.com/300/300/people/"></img>
         </div>

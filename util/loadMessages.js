@@ -56,7 +56,11 @@ const loadMessages = (stateClient) => {
                       ZFULLNUMBER: message.id
                     }
                   })
-                  return Message.bulkCreate(modifiedMessages)
+
+
+                  console.log('========= set up a batch to get loaded =======')
+                  Message.bulkCreate(modifiedMessages)
+
                 }
                 // return Promise.all(messages.map(message => {
 
@@ -91,5 +95,6 @@ const loadMessages = (stateClient) => {
                 // }))
               })
 }
+
 
 module.exports = loadMessages

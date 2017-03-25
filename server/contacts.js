@@ -46,7 +46,9 @@ router.get('/', function (req, res, next){
 
 router.get('/sync', (req, res, next) => {
 
-	const child = exec('node util/sync.js', {maxBuffer: 1024 * 1000000000000}, (error, stdout, stderr) => {
+
+	const child = exec('node util/sync.js', {maxBuffer: 1024 * 100000000000000000}, (error, stdout, stderr) => {
+
 		if (error) console.error(error)
 		// stdout.on('data', (data) => {console.log(data)})
 
@@ -70,7 +72,7 @@ router.get('/sync', (req, res, next) => {
 // This child.on function will first run the child function which uploads iMessage contacts and messages to our database
 // Afterwards, it will update the database with associations.
 	child.on('close', () => {
-
+		// console.log('finished syncing!!!!!!!!!!!!!')
 		User.findAll(
 			{
 				where: {user_id: null}
@@ -90,6 +92,7 @@ router.get('/sync', (req, res, next) => {
 			}
 		)
 		.then((yourMessages) => {
+			console.log('you are in the Message.findAll part')
 			yourMessages.forEach((elem) => {
 				User.findOne({
 					where: {ZFULLNUMBER: elem.ZFULLNUMBER}
@@ -165,7 +168,7 @@ router.get('/gmail', function(req, res, next){
 			}
 		})
 		.then(allMails => {
-			console.log(allMails)
+			console.log('ALL MAILS OBJECT :', allMails)
 
 			const emailPromises = allMails.data.messages.map( message => {
 				return axios.get(`https://www.googleapis.com/gmail/v1/users/me/messages/${message.id}/?format=metadata`, {
@@ -175,6 +178,7 @@ router.get('/gmail', function(req, res, next){
 				})
 			})
 			return Promise.all(emailPromises)
+			// need to pass down the next page token
 		})
 		.then(emailsArray => {
 
@@ -217,6 +221,25 @@ router.get('/gmail', function(req, res, next){
 			next(error)
 		})
 	})
+})
+
+router.get('/googleprofile/:id', (req, res, next) => {
+
+	Oauth.findOne({
+	    where: {user_id: req.user.id}
+	})
+	.then(authUser => {
+
+	    return axios.get(`https://www.googleapis.com/plus/v1/people/me`, {
+			headers: {
+				Authorization: 'Bearer ' + authUser.accessToken
+			}
+	    })
+	})
+	.then(profile => {
+		res.json(profile)
+	})
+	.catch(next)
 })
 
 
