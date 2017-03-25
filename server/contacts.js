@@ -90,29 +90,34 @@ router.get('/sync', (req, res, next) => {
 			}
 		)
 		.then((yourMessages) => {
-			console.log('you are in the Message.findAll part')
-			yourMessages.forEach((elem) => {
-				User.findOne({
-					where: {ZFULLNUMBER: elem.ZFULLNUMBER}
-				})
-				.then((foundUser) => {
-					if(foundUser){
-						if(elem.is_sender){
-							elem.update({
-								sender_id: req.user.id,
-								recipient_id: foundUser.id
-							})
+			console.log('here is yourMessages.length', yourMessages.length)
+			for (let i=0;i<1000;i+=100){
+				let yourMessagesPortion = yourMessages.slice(i, i+100)
+				yourMessagesPortion.forEach((elem) => {
+					User.findOne({
+						where: {ZFULLNUMBER: elem.ZFULLNUMBER}
+					})
+					.then((foundUser) => {
+						if(foundUser){
+							if(elem.is_sender){
+								elem.update({
+									sender_id: req.user.id,
+									recipient_id: foundUser.id
+								})
+							}
+							else{
+								elem.update({
+									sender_id: foundUser.id,
+									recipient_id: req.user.id
+								})
+							}
 						}
-						else{
-							elem.update({
-								sender_id: foundUser.id,
-								recipient_id: req.user.id
-							})
-						}
-					}
+					})
+					.catch(console.error)
 				})
-				.catch(console.error)
-			})
+				console.log('======= finished an iteration=====', i)
+			}
+
 			console.log('suuupersyyyyync complete')
 		})
 		.then(() => {
