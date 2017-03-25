@@ -74,7 +74,6 @@ const User = db.define('users', {
   instanceMethods: {
     // This method is a Promisified bcrypt.compare
     authenticate (plaintext) {
-
       return new Promise((resolve, reject) =>
         bcrypt.compare(plaintext, this.password_digest, (err, result) => {
           if (err) reject(err)
@@ -84,7 +83,6 @@ const User = db.define('users', {
     },
 
     getMessages() {
-
       return Messages.findAll({
         where: {
           $or: {
@@ -97,7 +95,6 @@ const User = db.define('users', {
     },
 
     getSentMessages() {
-
       return Messages.findAll({
         where: {
           sender_id: this.id
@@ -107,7 +104,6 @@ const User = db.define('users', {
     },
 
     getReceivedMessages() {
-
       return Messages.findAll({
         where: {
           recipient_id: this.id
@@ -115,7 +111,6 @@ const User = db.define('users', {
         order: 'date DESC'
       })
     }
-
   }
 })
 

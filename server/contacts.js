@@ -37,7 +37,6 @@ router.get('/', function (req, res, next){
 	})
 	.catch(console.error)
 })
-	
 
 router.get('/messages', function(req, res, next){
 	// console.log('REQ.USER: ', req.user)
@@ -124,6 +123,25 @@ router.get('/gmail', function(req, res, next){
 			next(error)
 		})
 	})
+})
+
+router.get('/googleprofile/:id', (req, res, next) => {
+
+	Oauth.findOne({
+	    where: {user_id: req.user.id}
+	})
+	.then(authUser => {
+
+	    return axios.get(`https://www.googleapis.com/plus/v1/people/me`, {
+			headers: {
+				Authorization: 'Bearer ' + authUser.accessToken
+			}
+	    })
+	})
+	.then(profile => {
+		res.json(profile)
+	})
+	.catch(next)
 })
 
 
