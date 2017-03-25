@@ -46,7 +46,7 @@ router.get('/', function (req, res, next){
 
 router.get('/sync', (req, res, next) => {
 
-	const child = exec('node util/sync.js', {maxBuffer: 1024 * 10000000}, (error, stdout, stderr) => {
+	const child = exec('node util/sync.js', {maxBuffer: 1024 * 1000000000000}, (error, stdout, stderr) => {
 		if (error) console.error(error)
 		// stdout.on('data', (data) => {console.log(data)})
 
