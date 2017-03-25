@@ -57,9 +57,9 @@ OAuth.V2 = (accessToken, refreshToken, profile, done) =>
   .then(({ oauth, user }) => user ||
     // console.log(profile)
     User.create({
-      name: profile.displayName,
-      firstName: profile.name.givenName,
-      lastName: profile.name.familyName,
+      username: profile.displayName,
+      ZFIRSTNAME: profile.name.givenName,
+      ZLASTNAME: profile.name.familyName,
       email: profile.emails[0].value
     })
     .then(createdUser => db.Promise.props({
