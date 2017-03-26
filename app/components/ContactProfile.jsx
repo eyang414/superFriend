@@ -24,6 +24,12 @@ const ContactProfile = (props) => {
   axios.get(`/api/contacts/messages/latest/${props.contacts.currentContact.id}`)
   .then(res => {message = res.data})
 
+  // axios.get(`/api/contacts/messages/latest/${props.contacts.currentContact.id}`)
+  // .then(res => {message = res.data})
+  // Display all messages from a single user
+  // Move this action creator and reducer into a single file...
+  
+
   return (
   // const contactStats = contacts.map(function(contact){
       <div className="container">

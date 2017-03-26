@@ -90,7 +90,7 @@ const User = db.define('users', {
             recipient_id: this.id
           }
         },
-        order: 'date DESC'
+        order: 'date ASC'
       })
     },
 
@@ -99,7 +99,7 @@ const User = db.define('users', {
         where: {
           sender_id: this.id
         },
-        order: 'date DESC'
+        order: 'date ASC'
       })
     },
 

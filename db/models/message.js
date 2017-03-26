@@ -28,6 +28,7 @@ const Message = db.define('message', {
   }
 }, {
     classMethods: {
+
       getAllFrom: function (senderId) {
         return Message.findAll({
           where: { senderId: senderId }

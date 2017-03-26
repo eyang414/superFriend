@@ -10,6 +10,7 @@ import axios from 'axios'
 
 const ContactTable = (props) => {
   console.log('THESE ARE JUST THE PROPS', props)
+  
   const contacts = props.contacts.allContacts;  
   const messages = props.messages.messages;
 

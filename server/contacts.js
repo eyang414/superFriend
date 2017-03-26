@@ -148,6 +148,19 @@ router.get('/messages/latest/:contactId', function (req, res, next) {
 })
 
 
+router.get('/messages/:contactId', function (req, res, next) {
+
+	User.findById(req.params.contactId)
+	.then(contact => {
+		return contact.getMessages()
+	})
+	.then(contactMessageswithUser => {
+		console.log("CONTACT MESSAGES", contactMessageswithUser)
+		res.json(contactMessageswithUser)
+	})
+})
+
+
 router.get('/gmail', function(req, res, next){
 
 	// Find User

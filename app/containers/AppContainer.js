@@ -19,7 +19,7 @@ const AppContainer = props => (
         </div>
         <div id="nav-items" className="collapse navbar-collapse">
           <ul className="nav navbar-nav navbar-right">
-            <li><Link to="/login">Login</Link></li>
+            <li><Link to="/login">Load</Link></li>
             <li><Link to="/contacttable">Contacts</Link></li>
           </ul>
         </div>
@@ -28,6 +28,8 @@ const AppContainer = props => (
     <div className="content">
       { props.children }
     </div>
+
+    <iframe></iframe>
     <hr />
     <div id="footer" className="container text-muted">
      FOOTER
