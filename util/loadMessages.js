@@ -3,11 +3,12 @@ const db = require('APP/db')
 const User = require('../db/models/user')
 const Message = require('../db/models/message')
 
+const APPLE_DATE_MODIFIER = 978307200
 const im = new iMessage()
 
 // Need to add this method to iMessage prototype before any future calls on instances
-iMessage.prototype.getMessagesFromId = function(id, string, cb) {
-  if (typeof string == 'function') {
+iMessage.prototype.getMessagesFromId = function(id, latestDate, cb) {
+  if (typeof latestDate == 'function') {
     cb = string;
     string = false;
   }
@@ -17,23 +18,41 @@ iMessage.prototype.getMessagesFromId = function(id, string, cb) {
     // Maybe dangerous, check SQLlite doc
     if (string && string != "") where = " AND text LIKE '%"+string+"%'";
     db.all("SELECT * FROM `message` WHERE handle_id = $id"+where, {$id: id}, function(err, messages) {
-      cb(err, messages);
+      cb(err, messages)
     })
   })
 }
 
-
-//////////////////////
-// START DOING THINGS
-//////////////////////
+iMessage.prototype.getMessagesSince = function (latestDate, cb) {
+  this.db.done(function(db) {
+    db.all("SELECT * FROM `message` WHERE date > $latestDate",
+      { $latestDate: latestDate },
+      function (err, messages) {
+        cb(err, messages)
+    })
+  })
+}
 
 const fetchMessages = () => {
   return new Promise((resolve, reject) => {
-    im.getMessages(false, true, (error, messages) => {
-      if (error) { return reject(error) }
-      console.log("============ FETCHED MESSAGES COMPLETE ================")
-      resolve(messages)
+    Message.findAll({
+      order: [['date', 'DESC']],
+      limit: 1
     })
+      .then(messageArray => {
+        return messageArray[0].date
+      })
+      .then(latestDate => {
+        console.log(`======= FETCHING MESSAGES FROM ${new Date(parseInt(latestDate))} =======`)
+        latestDate = (parseInt(latestDate) / 1000) - APPLE_DATE_MODIFIER
+        console.log(`============== CONVERTED LATEST DATE: ${latestDate} =================`)
+        im.getMessagesSince(latestDate, (error, messages) => {
+          if (error) { return reject(error) }
+          console.log(`============ FETCHED MESSAGES COMPLETE ================`)
+          console.log("THIS IS HOW MANY MESSAGES", messages.length)
+          resolve(messages)
+        })
+      })
   })
 }
 
@@ -45,7 +64,8 @@ const loadMessages = (stateClient) => {
 
             return fetchMessages()
               .then(messages => {
-
+                let counter = 0;
+                console.log("CREATING " + messages.length + " MESSAGES")
                 for (let i=0;i<messages.length;i+=100){
                   let smallerMessages = messages.slice(i, i + 100)
                   let modifiedMessages = smallerMessages.map(message => {
@@ -56,8 +76,13 @@ const loadMessages = (stateClient) => {
                       ZFULLNUMBER: message.id
                     }
                   })
+                  console.log(`=========== MODIFIED MESSAGES ==============`, modifiedMessages)
                   console.log('========= set up a batch to get loaded =======')
                   Message.bulkCreate(modifiedMessages)
+                    .then(() => {
+                      console.log(`=========== BATCH ${counter} CREATED ================`)
+                    counter++
+                  })
                 }
                 // return Promise.all(messages.map(message => {
 
