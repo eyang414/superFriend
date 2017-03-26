@@ -9,8 +9,8 @@ const seed = () => {
   const dummyUser = require('../dummyData').dummyUser;
   const dummyMessages = require('../dummyData').dummyMessages;
 
-  const seedUsers = () => db.Promise.map(dummyUser, user => db.model('users').create(user))
-  const seedMessages = () => db.Promise.map(dummyMessages, messages => db.model('message').create(messages))
+  const seedUsers = () => db.Promise.map(dummyUser, user => db.model('users').findOrCreate({ defaults: user, where: { ZFULLNUMBER: user.ZFULLNUMBER.replace(/[^0-9]/g, '').slice(-10) } }))
+  const seedMessages = () => db.Promise.map(dummyMessages, message => db.model('message').findOrCreate({ defaults: message, where: { content: message.content } }))
 
   db.didSync
 

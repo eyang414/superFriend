@@ -40,6 +40,7 @@ const fetchMessages = () => {
       limit: 1
     })
       .then(messageArray => {
+        console.log("THIS IS THE LATEST MESSAGE", messageArray[0].content)
         return messageArray[0].date
       })
       .then(latestDate => {
