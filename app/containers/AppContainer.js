@@ -5,7 +5,8 @@ const logo = '/superfriend-logo.PNG';
 
 const AppContainer = props => (
 
-  <div>
+<div>
+  <div className="fixed-wrapper">
     <div className="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div className="container">
         <div className="navbar-header">
@@ -25,6 +26,7 @@ const AppContainer = props => (
         </div>
       </div>
     </div>
+  </div>
     <div className="content">
       { props.children }
     </div>
@@ -36,5 +38,3 @@ const AppContainer = props => (
 );
 
 export default AppContainer;
-
-
