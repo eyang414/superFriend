@@ -55,8 +55,7 @@ const ContactTable = (props) => {
         </td>
         </tr>
       )}
-    });
-
+    })
 
 return (
   // const contactStats = contacts.map(function(contact){
@@ -80,7 +79,5 @@ return (
     </div>
   );
 }
-
-
 
 export default ContactTable;
