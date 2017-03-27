@@ -84,9 +84,11 @@ router.get('/sync', (req, res, next) => {
 		})
 		.catch(console.error)
 
+
+		//maybe ill break it down into two parts, updating based off of is_sender (easy) and then figuring out who the other guy is thorugh the phone number
 		Message.findAll(
 			{
-				where: {sender_id: null}
+				where: {sender_id: null, is_sender: 0}
 			}
 		)
 		.then((yourMessages) => {
@@ -171,7 +173,7 @@ router.get('/gmail', function(req, res, next){
 			}
 		})
 		.then(allMails => {
-			console.log(allMails)
+			console.log('ALL MAILS OBJECT :', allMails)
 
 			const emailPromises = allMails.data.messages.map( message => {
 				return axios.get(`https://www.googleapis.com/gmail/v1/users/me/messages/${message.id}/?format=metadata`, {
@@ -181,6 +183,7 @@ router.get('/gmail', function(req, res, next){
 				})
 			})
 			return Promise.all(emailPromises)
+			// need to pass down the next page token
 		})
 		.then(emailsArray => {
 
@@ -223,6 +226,25 @@ router.get('/gmail', function(req, res, next){
 			next(error)
 		})
 	})
+})
+
+router.get('/googleprofile/:id', (req, res, next) => {
+
+	Oauth.findOne({
+	    where: {user_id: req.user.id}
+	})
+	.then(authUser => {
+
+	    return axios.get(`https://www.googleapis.com/plus/v1/people/me`, {
+			headers: {
+				Authorization: 'Bearer ' + authUser.accessToken
+			}
+	    })
+	})
+	.then(profile => {
+		res.json(profile)
+	})
+	.catch(next)
 })
 
 

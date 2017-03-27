@@ -59,7 +59,7 @@ OAuth.setupStrategy({
   config: {
     clientID: '824500946475-cd5a40df47msqrflg6d53sojp9qbqhlu.apps.googleusercontent.com',
     clientSecret: '4HeIyN2Y-J6vwWjPCZWnWcEK',
-    callbackURL: `${app.baseUrl}/api/auth/login/google`,
+    callbackURL: `http://localhost:1337/api/auth/login/google`,
   },
   passport
 })
@@ -138,8 +138,8 @@ auth.post('/signup', function (req, res, next) {
       email: req.body.email
     },
     defaults: {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
+      ZFIRSTNAME: req.body.firstName,
+      ZLASTNAME: req.body.lastName,
       password: req.body.password
     }
   })
@@ -160,12 +160,14 @@ auth.post('/login/local', passport.authenticate('local', { successRedirect: '/lo
 
 // GET requests for OAuth login:
 // Register this route as a callback URL with OAuth provider
-auth.get('/login/:strategy', (req, res, next) =>
+auth.get('/login/:strategy', (req, res, next) => {
+  console.log('HERE IN GOOGLE ROUTER')
   passport.authenticate(req.params.strategy, {
     scope: ['email', 'profile', 'https://www.googleapis.com/auth/gmail.modify', 'https://www.googleapis.com/auth/gmail.compose'],
     successRedirect: '/login',
     // Specify other config here, such as "scope"
-  })(req, res, next))
+  })(req, res, next)
+})
 
 auth.post('/logout', (req, res, next) => {
   req.logout()
