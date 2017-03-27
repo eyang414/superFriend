@@ -14,7 +14,7 @@ const seed = () => {
 
   db.didSync
 
-    .then(() => db.sync({force: false}))
+    .then(() => db.sync({force: true}))
     .then( () => Promise.all([seedUsers(), seedMessages()]) )
     .then((seededStuff) => {
 

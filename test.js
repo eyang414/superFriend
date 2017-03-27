@@ -6,8 +6,20 @@
 //
 // const db = require('APP/db')
 // const User = require('./db/models/user')
+const Message = require('./db/models/message')
+const Sequelize = require('sequelize')
 
-const loadContacts = require('./util/loadContacts')
+Message.findAll({
+  attributes: { include: [[Sequelize.fn('MAX', Sequelize.col('date')), 'latestDate']] }
+  // order: [['date', 'ASC']],
+  // limit: 1
+})
+.then((messageWithLatestDate) => {
+  console.log('=======here is the messageWithLatestDate========', messageWithLatestDate)
+})
+
+
+// const loadContacts = require('./util/loadContacts')
 // const loadMessages = require('./util/loadMessages')
 
 // console.log("MESSAGES")
@@ -33,7 +45,7 @@ const loadContacts = require('./util/loadContacts')
 
 // Load all contacts, then associate messages to contacts
 
-loadContacts()
+// loadContacts()
 // loadMessages()
 //   .then(() => {
 //   let pleaseWork = {}

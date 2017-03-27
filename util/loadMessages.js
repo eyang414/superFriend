@@ -2,6 +2,7 @@ const iMessage = require('imessage')
 const db = require('APP/db')
 const User = require('../db/models/user')
 const Message = require('../db/models/message')
+const Sequelize = require('sequelize')
 
 const APPLE_DATE_MODIFIER = 978307200
 const im = new iMessage()
@@ -25,8 +26,9 @@ iMessage.prototype.getMessagesFromId = function(id, latestDate, cb) {
 
 iMessage.prototype.getMessagesSince = function (latestDate, cb) {
   this.db.done(function(db) {
-    db.all("SELECT * FROM `message` WHERE date > $latestDate",
-      { $latestDate: latestDate },
+    console.log('here is the latest date', latestDate)
+    db.all("SELECT * FROM `message` JOIN `handle` ON `handle`.ROWID = `message`.handle_id WHERE date > "+latestDate,
+      // { $latestDate: latestDate },
       function (err, messages) {
         cb(err, messages)
     })
@@ -35,25 +37,38 @@ iMessage.prototype.getMessagesSince = function (latestDate, cb) {
 
 const fetchMessages = () => {
   return new Promise((resolve, reject) => {
-    Message.findAll({
-      order: [['date', 'DESC']],
-      limit: 1
-    })
-      .then(messageArray => {
-        console.log("THIS IS THE LATEST MESSAGE", messageArray[0].content)
-        return messageArray[0].date
+    Message.findAll()
+      .then((allMessages) => {
+        const allDates = allMessages.map(elem => elem.date)
+        return Math.max.apply(Math,allDates)
       })
+      /*
+      this one is for Message.findAll then query function
+      // attributes: { include: [[Sequelize.fn('MAX', Sequelize.col('date')), 'latestDate']] }
+
+      this one is for Message.findAll, but only would work if dates were integer
+      // order: [['date', 'ASC']],
+      // limit: 1
+      */
+
+      // .then(messageArray => {
+      //   console.log("THIS IS THE LATEST MESSAGE", messageArray[0].content)
+      //   console.log('here is the latest message date', messageArray[0].date)
+      //   return messageArray[0].date
+      // })
       .then(latestDate => {
-        console.log(`======= FETCHING MESSAGES FROM ${new Date(parseInt(latestDate))} =======`)
+        console.log('========outcome of Message.max: latestDate======', latestDate)
+        // console.log(`======= FETCHING MESSAGES FROM ${new Date(parseInt(latestDate))} =======`)
         latestDate = (parseInt(latestDate) / 1000) - APPLE_DATE_MODIFIER
-        console.log(`============== CONVERTED LATEST DATE: ${latestDate} =================`)
+        // console.log(`============== CONVERTED LATEST DATE: ${latestDate} =================`)
         im.getMessagesSince(latestDate, (error, messages) => {
           if (error) { return reject(error) }
-          console.log(`============ FETCHED MESSAGES COMPLETE ================`)
-          console.log("THIS IS HOW MANY MESSAGES", messages.length)
+          // console.log(`============ FETCHED MESSAGES COMPLETE ================`)
+          // console.log("THIS IS HOW MANY MESSAGES", messages.length)
           resolve(messages)
         })
       })
+      .catch(console.error)
   })
 }
 
@@ -77,10 +92,9 @@ const loadMessages = (stateClient) => {
                       ZFULLNUMBER: message.id
                     }
                   })
-                  console.log(`=========== MODIFIED MESSAGES ==============`, modifiedMessages)
-                  console.log('========= set up a batch to get loaded =======')
                   Message.bulkCreate(modifiedMessages)
                     .then(() => {
+                      console.log(modifiedMessages[12])
                       console.log(`=========== BATCH ${counter} CREATED ================`)
                     counter++
                   })

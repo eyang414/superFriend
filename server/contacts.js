@@ -38,7 +38,6 @@ router.get('/', function (req, res, next){
 		return Promise.all(newContacts)
 	})
 	.then((modifiedContacts) => {
-		console.log("MODIFIED CONTACTS", modifiedContacts)
 		res.json(modifiedContacts)
 	})
 	.catch(console.error)
