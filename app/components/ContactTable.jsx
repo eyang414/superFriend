@@ -14,12 +14,14 @@ function cleanDate(d) {
 }
 
 const ContactTable = (props) => {
-  console.log('THESE ARE JUST THE PROPS', props)
+  // console.log('THESE ARE JUST THE PROPS', props)
   const contacts = props.contacts.allContacts;
   const messages = props.messages.messages;
 
 
-  console.log('these are the messages props', messages)
+  // console.log('these are the messages props', messages)
+
+
   let contactRows = contacts.map(function(contact){
 
     const thumbImage = "http://lorempixel.com/80/80/people/" //-->thumbnail placeholder for now
@@ -30,6 +32,8 @@ const ContactTable = (props) => {
     const emailIcon = "/images/email-icon.png"
     const instaIcon = "/images/insta-icon.png"
     const vchatIcon = "/images/vchat-icon.png"
+
+    console.log(contact.latestMessage);
 
     messages.forEach(message => {
       if(message.sender_id === contact.id || message.recipient_id === contact.id) {
@@ -44,8 +48,8 @@ const ContactTable = (props) => {
         <tr key = {contact.id}>
         <td> <Link to={`/contacttable/${contact.id}`} ><img className="thumbnail" src = {thumbImage}></img></Link></td>
         <td><h5>{contact.ZFIRSTNAME} {contact.ZLASTNAME} {contact.id}</h5></td>
-        <td></td>
-        <td>{contact.message}</td>
+        <td>{contact.latestMessage && cleanDate(contact.latestMessage.date)}</td>
+        <td>{contact.latestMessage && contact.latestMessage.content}</td>
         <td>
           <img className="icon" src={textIcon}></img>
           <img className="icon" src={callIcon}></img>
