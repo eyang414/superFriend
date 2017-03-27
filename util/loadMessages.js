@@ -31,6 +31,7 @@ const fetchMessages = () => {
   return new Promise((resolve, reject) => {
     im.getMessages(false, true, (error, messages) => {
       if (error) { return reject(error) }
+      console.log("============ FETCHED MESSAGES COMPLETE ================")
       resolve(messages)
     })
   })
@@ -44,14 +45,25 @@ const loadMessages = (stateClient) => {
 
             return fetchMessages()
               .then(messages => {
-                messages.forEach(message => {
 
-                  Message.create({
-                    content: message.text,
-                    date: message.date,
-                    is_sender: message.is_sent,
-                    ZFULLNUMBER: message.id
+                for (let i=0;i<messages.length;i+=100){
+                  let smallerMessages = messages.slice(i, i + 100)
+                  let modifiedMessages = smallerMessages.map(message => {
+                    return {
+                      content: message.text,
+                      date: message.date,
+                      is_sender: message.is_sent,
+                      ZFULLNUMBER: message.id
+                    }
                   })
+
+
+                  console.log('========= set up a batch to get loaded =======')
+                  Message.bulkCreate(modifiedMessages)
+
+                }
+                // return Promise.all(messages.map(message => {
+
                     // .then(createdMessage => {
                     //
                     //   // STATE USER IS SENDER
@@ -78,8 +90,11 @@ const loadMessages = (stateClient) => {
                     //       })
                     //   }
                     // })
-                })
+
+
+                // }))
               })
 }
+
 
 module.exports = loadMessages
