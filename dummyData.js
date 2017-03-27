@@ -38,7 +38,7 @@ const dummyMessages = [{"content":"cubilia curae nulla dapibus dolor vel est don
 {"content":"sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius","date":0,"is_sender":1,"ZFULLNUMBER":'777-777-7777'},
 {"content":"curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet","date":0,"is_sender":0,"ZFULLNUMBER":'777-777-7777'},
 {"content":"eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas","date":0,"is_sender":0,"ZFULLNUMBER":'777-777-7777'},
-{"content":"eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec","date":0,"is_sender":0,"ZFULLNUMBER":'777-777-7777'},
+{"content":"eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec","date":508807289,"is_sender":0,"ZFULLNUMBER":'777-777-7777'},
 {"content":"quisque arcu libero rutrum ac lobortis vel dapibus at diam nam tristique tortor","date":0,"is_sender":0,"ZFULLNUMBER":'777-777-7777'},
 {"content":"ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum","date":0,"is_sender":0,"ZFULLNUMBER":'777-777-7777'},
 {"content":"non mi integer ac neque duis bibendum morbi non quam nec dui","date":0,"is_sender":1,"ZFULLNUMBER":'777-777-7777'},

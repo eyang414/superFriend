@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchContacts } from '../reducers/contacts-reducer';
 import { fetchMessages } from '../reducers/messages-reducer';
+var moment = require('moment');
+var duration = require('moment-duration-format');
+moment().format();
 
 const ContactProfile = (props) => {
 
@@ -19,12 +22,15 @@ const ContactProfile = (props) => {
   let dateInt = null;
   let timePassed = null;
   let daysPassed = null;
+  let weeksPassed = null;
+  let messageMoment = null;
+  let currentMoment = moment();
 
   let sentOrReceived = function(latestMessage){
     if (latestMessage.isSender===0){
-      return "received"
+      return "Received: "
     }else{
-      return "sent"
+      return "Sent: "
     }
   }
   // console.log('these are the props', props)
@@ -34,23 +40,13 @@ const ContactProfile = (props) => {
 
 if (currentContact && currentContact.latestMessage){
   latestMessage = props.contacts.currentContact.latestMessage;
-  console.log('this is the latest message', latestMessage)
-  console.log('this is the current contact', currentContact)
-  console.log('this is the date of that message', latestMessage.date);
   dateOfMessage = (cleanDate(latestMessage.date));
+  messageMoment = moment(latestMessage.date,'x').format("dddd, MMMM Do YYYY, h:mm:ss a");
   dateInt = parseInt(latestMessage.date);
   timePassed = new Date().getTime() - dateInt;
-  daysPassed = Math.floor(timePassed/86400000);
 
 
-
-  console.log(dateOfMessage);
-  console.log('this is the raw current date', new Date().getTime());
-  console.log('this is the raw message date', dateInt);
-  console.log(sentOrReceived(latestMessage));
-  console.log('this is the time passed in milliseconds', timePassed);
-  console.log('this is the time passed in days')
-
+  // console.log('the message moment was', messageMoment);
 }
   return (
   // const contactStats = contacts.map(function(contact){
@@ -60,8 +56,9 @@ if (currentContact && currentContact.latestMessage){
           <img className="profile-img" src="http://lorempixel.com/300/300/people/"></img>
         </div>
         <div className="col">
-          <h3>It's been <big>{daysPassed}</big> days since you last checked in with {currentContact.ZFIRSTNAME} {currentContact.ZLASTNAME}.</h3>
-          <h4>Last message: "{latestMessage && latestMessage.content}", {latestMessage && <p>{sentOrReceived(latestMessage)} {dateOfMessage}</p>}</h4>
+          <h3>It's been <big>{moment.duration(timePassed,'milliseconds').format("y [years]:m [months]:w [weeks]:dd [days]:hh [hours]")}</big> since you last checked in with {currentContact.ZFIRSTNAME} {currentContact.ZLASTNAME}.</h3>
+          <h4>Last message: "{latestMessage && latestMessage.content}"</h4>
+          <h4>{latestMessage && <p>{sentOrReceived(latestMessage)} {messageMoment}</p>}</h4>
         </div>
       </div>
   )};
