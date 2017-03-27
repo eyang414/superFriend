@@ -1,6 +1,7 @@
 
 # Ignore all node_modules & bower_components
 node_modules/*
+electronApp/node_modules/*
 bower_components
 
 # ...except the symlink to ourselves.

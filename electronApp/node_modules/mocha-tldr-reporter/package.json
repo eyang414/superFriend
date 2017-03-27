@@ -1,0 +1,26 @@
+{
+  "name": "mocha-tldr-reporter",
+  "version": "1.0.0",
+  "description": "A super low noise mocha reporter (i.e. the \"min\" reporter without the crazy screen clearing)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/herbrandson/mocha-tldr-reporter.git"
+  },
+  "keywords": [
+    "mocha",
+    "reporter"
+  ],
+  "author": "Eric Herbrandson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/herbrandson/mocha-tldr-reporter/issues"
+  },
+  "homepage": "https://github.com/herbrandson/mocha-tldr-reporter",
+  "dependencies": {
+    "mocha": "^2.0.1"
+  }
+}

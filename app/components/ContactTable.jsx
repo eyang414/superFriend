@@ -57,10 +57,6 @@ const ContactTable = (props) => {
       )}
     });
 
-    const superSyncClick = () => {
-      console.log('SUPER SYYYNC')
-      axios.get('/api/contacts/sync')
-    }
 
 return (
   // const contactStats = contacts.map(function(contact){
@@ -68,7 +64,6 @@ return (
     <h1 className="header">Your Contacts</h1>
     <div className="contact-table-buttons">
     <button className="btn btn-primary">Edit Contacts</button>
-    <button onClick={superSyncClick} className="btn btn-primary">SuperSync</button>
     </div>
   	  <table className="table">
         <tbody>
