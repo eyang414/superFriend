@@ -63,8 +63,8 @@ OAuth.V2 = (accessToken, refreshToken, profile, done) =>
       email: profile.emails[0].value
     })
     .then(createdUser => db.Promise.props({
-      user,
-      _setOauthUser: oauth.setUser(createdUser)
+      _setOauthUser: oauth.setUser(createdUser),
+      createdUser
     }))
     .then(({createdUser}) => createdUser) // eslint-disable-line no-shadow
   )

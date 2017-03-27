@@ -10,6 +10,9 @@ bower_components
 public/bundle.js
 public/bundle.js.map
 
+# Temp caches
+.eslintcache
+
 # OS-generated files
 .DS_Store
 .DS_Store?

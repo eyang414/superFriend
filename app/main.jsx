@@ -9,7 +9,6 @@ import {fetchContacts} from './actions/contacts'
 import {fetchContact} from './actions/contacts'
 import {fetchMessages} from './actions/messages'
 
-
 import AppContainer from './containers/AppContainer'
 import SignupPage from './components/SignupPage'
 import LoginPage from './components/LoginPage'
