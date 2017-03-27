@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, browserHistory, IndexRedirect } from 'react-router'
 import {render} from 'react-dom'
 import {connect, Provider } from 'react-redux'
 
@@ -13,8 +13,17 @@ import {fetchMessages} from './actions/messages'
 import AppContainer from './containers/AppContainer'
 import SignupPage from './components/SignupPage'
 import LoginPage from './components/LoginPage'
+import LandingPage from './components/Landing'
 import ContactProfileContainer from './containers/ContactProfileContainer'
 import ContactTableContainer from './containers/ContactTableContainer'
+import Layout from '../util/layout'
+
+const onAppContainerEnter = function () {
+	console.log ("OPENING APP")
+	setTimeout(Layout.resizeFixedWrappers, 10)
+	Layout.addResizeFixedWrappersListener();
+}
+
 
 const onContactTableContainerEnter = function () {
 	console.log("FETCHING CONTACTS")
@@ -30,7 +39,9 @@ const onContactProfileContainerEnter = function (nextRouterState) {
 render(
 	<Provider store={store}>
 	    <Router history={browserHistory}>
-	      <Route path="/" component={AppContainer}>
+	      <Route path="/" component={AppContainer} onEnter={onAppContainerEnter}>
+					<IndexRedirect to = "/home" />
+					<Route path="/home" component={LandingPage} />
 	        <Route path="/login" component={LoginPage} />
 	        <Route path="/signup" component={SignupPage} />
 			<Route path="/contacttable" component={ContactTableContainer} onEnter={onContactTableContainerEnter} />
@@ -40,4 +51,3 @@ render(
   	</Provider>,
   	document.getElementById('main')
 )
-

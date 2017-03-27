@@ -8,9 +8,14 @@ import { fetchContacts } from '../reducers/contacts-reducer';
 import { fetchMessages } from '../reducers/messages-reducer';
 import axios from 'axios'
 
+
+function cleanDate(d) {
+  return new Date(parseInt(d)).toString()
+}
+
 const ContactTable = (props) => {
   console.log('THESE ARE JUST THE PROPS', props)
-  const contacts = props.contacts.allContacts;  
+  const contacts = props.contacts.allContacts;
   const messages = props.messages.messages;
 
 
