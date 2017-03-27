@@ -84,6 +84,7 @@ const loadMessages = (stateClient) => {
                       console.log(`=========== BATCH ${counter} CREATED ================`)
                     counter++
                   })
+                    .catch(console.error)
                 }
                 // return Promise.all(messages.map(message => {
 
