@@ -4,7 +4,7 @@ const request = require('supertest')
 const {expect} = require('chai')
 const db = require('APP/db')
 const Users = require('APP/db/models/user')
-const app = require('./start')
+const app = require('./start').newApp()
 
 const alice = {
   username: 'alice@secrets.org',

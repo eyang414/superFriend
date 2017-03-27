@@ -3,7 +3,7 @@
 const request = require('supertest')
 const {expect} = require('chai')
 const db = require('APP/db')
-const app = require('./start')
+const app = require('./start').newApp()
 
 describe('/api/users', () => {
 

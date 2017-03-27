@@ -1,7 +1,6 @@
 'use strict'; // eslint-disable-line semi
 
 const LiveReloadPlugin = require('webpack-livereload-plugin')
-const eslintFormatterPretty = require('eslint-formatter-pretty')
 const devMode = process.env.NODE_ENV === 'development'
 
 /**
@@ -45,16 +44,6 @@ if (devMode) {
   config.devtool = USE_FAST_SOURCE_MAPS
     ? 'cheap-module-eval-source-map'
     : 'source-map'
-  config.module.rules.unshift({
-    test: /\.jsx?$/,
-    exclude: /(node_modules|bower_components)/,
-    enforce: 'pre',
-    loader: 'eslint-loader',
-    options: {
-      formatter: eslintFormatterPretty,
-      cache: true
-    }
-  })
   config.plugins.push(
     new LiveReloadPlugin({
       appendScriptTag: true
