@@ -54,7 +54,7 @@ const ContactTable = (props) => {
     const emailIcon = "/images/email-icon.png"
     const instaIcon = "/images/insta-icon.png"
     const vchatIcon = "/images/vchat-icon.png"
-    console.log('these are the specific contact props', contact);
+    // console.log('these are the specific contact props', contact);
 
     if(lapsedMs(contact) >= 604800000) {
         overdueClass = "overdue"
@@ -84,7 +84,7 @@ return (
   	<div className="container">
     <h1 className="header">Your Contacts</h1>
     <div className="contact-table-buttons">
-    <button className="btn btn-primary">Edit Contacts</button>
+    <Link to='/editcontacts'><button className="btn btn-primary">Edit Contacts</button></Link>
     </div>
   	  <table className="table">
         <tbody>

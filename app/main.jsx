@@ -20,6 +20,7 @@ import Layout from '../util/layout'
 
 const onAppContainerEnter = function () {
 	console.log ("OPENING APP")
+	console.log ('this is the edit form container', EditContactsFormContainer)
 	setTimeout(Layout.resizeFixedWrappers, 10)
 	Layout.addResizeFixedWrappersListener();
 }

@@ -9,7 +9,7 @@ var duration = require('moment-duration-format');
 moment().format();
 
 const ContactProfile = (props) => {
-
+   console.log('mapping state to props for contact profileeee', state);
   const messages = props.messages.messages;
   const currentContact = props.contacts.currentContact;
 
