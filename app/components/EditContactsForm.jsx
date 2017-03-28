@@ -7,6 +7,18 @@ import { Link } from 'react-router';
 import { fetchContacts } from '../reducers/contacts-reducer';
 import axios from 'axios'
 
+function checkAll(bx){
+    var form = bx.form; //returns reference to entire form object
+    var ischecked = bx.checked;
+    for (var i = 0; i < form.length; ++i) {
+        if (form[i].type == 'checkbox') {
+            form[i].checked = ischecked;
+        }
+    }
+}
+
+var x = document.getElementById("headerCheck").form.id;
+console.log(x);
 
 const AddressBookTable = (props) => {
   // console.log('THESE ARE JUST THE PROPS', props)
@@ -33,7 +45,7 @@ return (
   	  <table className="table" sortable='sortable'>
         <tbody>
         <tr>
-          <th></th>
+          <th><input type="checkbox" id="headerCheck" onclick="checkAll(this)" /></th>
           <th>Name</th>
           <th>Phone Number</th>
         </tr>
