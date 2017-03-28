@@ -1,72 +1,8 @@
 .btn {
-  margin-bottom: 10px;
-  margin-right: 5px;
-  background-color: rgba(254,179,2,1);
-  border-color: rgba(254,179,2,1);
-}
+  margin-bottom: 10px; }
 
 input {
   margin-bottom: 10px; }
-  
+
 .header {
-  padding-top: 20px;
-}
-
-.profile-img {
-  border-radius: 150px;
-  align-content: left;
-}
-
-
-.overdue {
-  color: rgba(250,10,0,0.75)
-}
-
-.icon {
-  height: 20px;
-  margin: 5px;
-}
-
-.content {
-	padding: 10px;
-  background-image: url("/images/crossword.png");
-  align-content: space-between;
-}
-
-.navbar {
-	padding-top: 30px;
-	background-color: rgba(0,0,0,0.8);
-}
-
-.navbar-brand {
-  text-align: center;
-}
-
-.navbar:hover {
-	color: rgba(254,179,2,1);
-}
-
-#logo {
-  height: 100px;
-}
-
-.flex-grid-half {
-  display: flex;
-  justify-content: space-around
-}
-.flex-grid-half .col {
-  width: 48%;
-}
-
-tbody {
-	vertical-align: middle;
-}
-
-tr {
-	vertical-align: middle;
-	align-content: middle;
-}
-
-h1 {
-	font-family: 'Quicksand', sans-serif;
-}
+  margin-top: 60px; }
