@@ -9,7 +9,6 @@ const google = require('googleapis')
 const Gmail = require('node-gmail-api')
 const Promise = require('bluebird')
 const simpleParser = require('mailparser').simpleParser
-const exec = require('child_process').exec
 
 
 // const loadContacts = require('../util/loadContacts')
@@ -23,7 +22,7 @@ router.get('/', function (req, res, next){
 
 	User.findAll({
 		where: {
-			user_id: req.session.passport.user
+			user_id: req.user && req.user.id
 		}
 	})
 	.then(contacts => {
@@ -43,87 +42,6 @@ router.get('/', function (req, res, next){
 	})
 	.catch(console.error)
 })
-
-router.get('/sync', (req, res, next) => {
-
-
-	const child = exec('node util/sync.js', {maxBuffer: 1024 * 100000000000000000}, (error, stdout, stderr) => {
-
-		if (error) console.error(error)
-		// stdout.on('data', (data) => {console.log(data)})
-
-	})
-
-	child.stdout.on('data', (chunk) => {
-		console.log(chunk.toString())
-	})
-
-	child.stderr.on('data', (chunk) => {
-		console.error(chunk.toString())
-	})
-
-	// const child = childProcess.exec('node ./util/sync', {maxBuffer: 1024 * 10000000}, (error, something) => {
-	//   if (error) console.error(error)
-	// })
-	// exec('node ./util/sync', {maxBuffer: 1024 * 10000000}, (error, something) => {
-	//   if (error) console.error(error)
-	// })
-
-// This child.on function will first run the child function which uploads iMessage contacts and messages to our database
-// Afterwards, it will update the database with associations.
-	child.on('close', () => {
-		// console.log('finished syncing!!!!!!!!!!!!!')
-		User.findAll(
-			{
-				where: {user_id: null}
-			}
-		)
-		.then((yourContacts) => {
-
-			yourContacts.forEach((elem) => {
-				elem.update({user_id: req.user.id})
-			})
-		})
-		.catch(console.error)
-
-		Message.findAll(
-			{
-				where: {sender_id: null}
-			}
-		)
-		.then((yourMessages) => {
-			console.log('you are in the Message.findAll part')
-			yourMessages.forEach((elem) => {
-				User.findOne({
-					where: {ZFULLNUMBER: elem.ZFULLNUMBER}
-				})
-				.then((foundUser) => {
-					if(foundUser){
-						if(elem.is_sender){
-							elem.update({
-								sender_id: req.user.id,
-								recipient_id: foundUser.id
-							})
-						}
-						else{
-							elem.update({
-								sender_id: foundUser.id,
-								recipient_id: req.user.id
-							})
-						}
-					}
-				})
-				.catch(console.error)
-			})
-			console.log('suuupersyyyyync complete')
-		})
-		.then(() => {
-			res.redirect('/')
-		})
-		.catch(console.error)
-	})
-
-});
 
 router.get('/messages/all', function (req, res, next) {
 
