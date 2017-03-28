@@ -19,7 +19,8 @@ const exec = require('child_process').exec
 // iMESSAGE DB / get all contacts
 
 router.get('/', function (req, res, next){
-	console.log('Here in the get contacts route', req.session)
+
+let newContacts
 
 	User.findAll({
 		where: {
@@ -27,18 +28,25 @@ router.get('/', function (req, res, next){
 		}
 	})
 	.then(contacts => {
+		newContacts = contacts.map( contact => {
 
-		const newContacts = contacts.map( contact => {
-			return contact.getMessages()
+			return Message.findAll({
+        where: { uploader_id: req.user.guid, ZFULLNUMBER: contact.ZFULLNUMBER },
+        order: 'date DESC'
+				//TODO: the order: date DESC might cause problems because of the weird date thing being a string
+      })
 			.then(messageArray => {
-				contact.dataValues.latestMessage = messageArray[0]
-				return contact
+				if(messageArray){
+					contact.dataValues.latestMessage = messageArray[0]
+				}
+					return contact
 			})
 		})
-		return Promise.all(newContacts)
-	})
-	.then((modifiedContacts) => {
-		res.json(modifiedContacts)
+		Promise.all(newContacts)
+		.then((modifiedContacts) => {
+			res.json(modifiedContacts)
+		})
+
 	})
 	.catch(console.error)
 })
@@ -61,6 +69,9 @@ router.get('/sync', (req, res, next) => {
 		console.error(chunk.toString())
 	})
 
+
+
+
 	// const child = childProcess.exec('node ./util/sync', {maxBuffer: 1024 * 10000000}, (error, something) => {
 	//   if (error) console.error(error)
 	// })
@@ -72,6 +83,7 @@ router.get('/sync', (req, res, next) => {
 // Afterwards, it will update the database with associations.
 	child.on('close', () => {
 		// console.log('finished syncing!!!!!!!!!!!!!')
+
 		User.findAll(
 			{
 				where: {user_id: null}

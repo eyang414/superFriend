@@ -89,7 +89,8 @@ const loadMessages = (stateClient) => {
                       content: message.text,
                       date: message.date,
                       is_sender: message.is_sent,
-                      ZFULLNUMBER: message.id
+                      ZFULLNUMBER: message.id,
+                      uploader_id: message.account_guid
                     }
                   })
                   Message.bulkCreate(modifiedMessages)

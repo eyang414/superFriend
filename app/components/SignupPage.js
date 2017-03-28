@@ -43,46 +43,46 @@ class SignupPage extends Component {
   			<a target="_self" href="http://www.google.com">
                 Login with Google
               </a>
-          </button> 
-		  
+          </button>
+
 		  <form id="loginform" onSubmit={ this.handleSubmit } >
 
-		    <input 
-		    	name="firstName" 
+		    <input
+		    	name="firstName"
 		    	type="text"
 		    	className="form-control"
-		    	placeholder="First Name" 
-		    	value={ this.state.firstName } 
-		    	onChange={ this.handleChange }
-		    />
-
-		    <input 
-		    	name="lastName" 
-		    	type="text"
-		    	className="form-control"
-		    	placeholder="Last Name" 
-		    	value={ this.state.lastName } 
-		    	onChange={ this.handleChange }
-		    />
-
-		    <input 
-		    	name="email" 
-		    	type="text"
-		    	className="form-control"
-		    	placeholder="Email" 
-		    	value={ this.state.email } 
+		    	placeholder="First Name"
+		    	value={ this.state.firstName }
 		    	onChange={ this.handleChange }
 		    />
 
 		    <input
-		    	name="password" 
+		    	name="lastName"
+		    	type="text"
+		    	className="form-control"
+		    	placeholder="Last Name"
+		    	value={ this.state.lastName }
+		    	onChange={ this.handleChange }
+		    />
+
+		    <input
+		    	name="email"
+		    	type="text"
+		    	className="form-control"
+		    	placeholder="Email"
+		    	value={ this.state.email }
+		    	onChange={ this.handleChange }
+		    />
+
+		    <input
+		    	name="password"
 		    	type="password"
 		    	className="form-control"
-		    	placeholder="Password" 
+		    	placeholder="Password"
 		    	value={ this.state.password }
 		    	onChange={ this.handleChange }
 		    />
-		  
+
 		    <input
 		      className="btn btn-primary"
 		      type="submit"
@@ -116,4 +116,3 @@ class SignupPage extends Component {
 const mapDispatchToProps = { signup, login };
 
 export default connect(null, mapDispatchToProps)(SignupPage);
-

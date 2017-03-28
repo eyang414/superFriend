@@ -18,6 +18,10 @@ const Message = db.define('message', {
   is_sender: {
     type: Sequelize.INTEGER
   },
+  uploader_id:{
+    type: Sequelize.STRING,
+    defaultValue: null
+  },
   date: {
     type: Sequelize.STRING,
      set: function (dateValue) {

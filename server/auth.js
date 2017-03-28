@@ -4,13 +4,13 @@ const app = require('APP')
 const env = process.env
 const debug = require('debug')(`${app.name}:auth`)
 const passport = require('passport')
+const exec = require('child_process').exec
 
 const User = require('APP/db/models/user')
 const OAuth = require('APP/db/models/oauth')
 const auth = require('express').Router()
 
 const LocalStrategy = require('passport-local').Strategy;
-
 
 /*************************
  * Auth strategies
@@ -153,6 +153,31 @@ auth.post('/signup', function (req, res, next) {
       res.sendStatus(401)
     }
   }) // how I get this to log me in automaticall...
+
+  const child = exec('node util/getGuid.js', (error, stdout, stderr) => {
+
+		if (error) console.error(error)
+		// stdout.on('data', (data) => {console.log(data)})
+	})
+
+	child.stdout.on('data', (chunk) => {
+		console.log('===============HERE IS STDOUT=========',chunk.toString())
+    console.log('====here is the req', req.user.id)
+    User.findOne({
+      where: {
+        id: req.user.id
+      }
+    })
+    .then((foundUser) => {
+      foundUser.update({guid: chunk.toString()})
+    })
+	})
+
+	child.stderr.on('data', (chunk) => {
+		console.error(chunk.toString())
+	})
+
+
 })
 
 // POST requests for local login:
@@ -175,4 +200,3 @@ auth.post('/logout', (req, res, next) => {
 })
 
 module.exports = auth
-

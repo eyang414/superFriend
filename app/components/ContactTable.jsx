@@ -33,15 +33,8 @@ const ContactTable = (props) => {
     const instaIcon = "/images/insta-icon.png"
     const vchatIcon = "/images/vchat-icon.png"
 
-    console.log(contact.latestMessage);
-
-    messages.forEach(message => {
-      if(message.sender_id === contact.id || message.recipient_id === contact.id) {
-        if(!contact.message) {
-          contact.message = message.content
-        }
-      }
-    })
+    // console.log(contact.latestMessage);
+    console.log('here is a contact', contact)
 
     if (contact.id !== contact.user_id){
       return (
