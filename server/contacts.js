@@ -18,7 +18,8 @@ const simpleParser = require('mailparser').simpleParser
 // iMESSAGE DB / get all contacts
 
 router.get('/', function (req, res, next){
-	console.log('Here in the get contacts route', req.session)
+
+let newContacts
 
 	User.findAll({
 		where: {
@@ -26,22 +27,104 @@ router.get('/', function (req, res, next){
 		}
 	})
 	.then(contacts => {
+		newContacts = contacts.map( contact => {
 
-		const newContacts = contacts.map( contact => {
-			return contact.getMessages()
+			return Message.findAll({
+        where: { uploader_id: req.user.guid, ZFULLNUMBER: contact.ZFULLNUMBER },
+        order: 'date DESC'
+				//TODO: the order: date DESC might cause problems because of the weird date thing being a string
+      })
 			.then(messageArray => {
-				contact.dataValues.latestMessage = messageArray[0]
-				return contact
+				if(messageArray){
+					contact.dataValues.latestMessage = messageArray[0]
+				}
+					return contact
 			})
 		})
-		return Promise.all(newContacts)
-	})
-	.then((modifiedContacts) => {
-		console.log("MODIFIED CONTACTS", modifiedContacts)
-		res.json(modifiedContacts)
+		Promise.all(newContacts)
+		.then((modifiedContacts) => {
+			res.json(modifiedContacts)
+		})
+
 	})
 	.catch(console.error)
 })
+
+
+router.get('/sync', (req, res, next) => {
+
+
+	const child = exec('node util/sync.js', {maxBuffer: 1024 * 100000000000000000}, (error, stdout, stderr) => {
+
+		if (error) console.error(error)
+
+	})
+
+	child.stdout.on('data', (chunk) => {
+		console.log(chunk.toString())
+	})
+
+	child.stderr.on('data', (chunk) => {
+		console.error(chunk.toString())
+	})
+
+
+// This child.on function will first run the child function which uploads iMessage contacts and messages to our database
+// Afterwards, it will update the database with associations.
+	child.on('close', () => {
+
+		User.findAll(
+			{
+				where: {user_id: null}
+			}
+		)
+		.then((yourContacts) => {
+
+			yourContacts.forEach((elem) => {
+				elem.update({user_id: req.user.id})
+			})
+		})
+		.catch(console.error)
+
+		Message.findAll(
+			{
+				where: {sender_id: null}
+			}
+		)
+		.then((yourMessages) => {
+			console.log('you are in the Message.findAll part')
+			yourMessages.forEach((elem) => {
+				User.findOne({
+					where: {ZFULLNUMBER: elem.ZFULLNUMBER}
+				})
+				.then((foundUser) => {
+					if(foundUser){
+						if(elem.is_sender){
+							elem.update({
+								sender_id: req.user.id,
+								recipient_id: foundUser.id
+							})
+						}
+						else{
+							elem.update({
+								sender_id: foundUser.id,
+								recipient_id: req.user.id
+							})
+						}
+					}
+				})
+				.catch(console.error)
+			})
+			console.log('suuupersyyyyync complete')
+		})
+		.then(() => {
+			res.redirect('/')
+		})
+		.catch(console.error)
+	})
+
+});
+
 
 router.get('/messages/all', function (req, res, next) {
 
