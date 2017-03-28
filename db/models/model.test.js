@@ -3,9 +3,9 @@
 const request = require('supertest')
 const {expect} = require('chai')
 const db = require('APP/db')
-const User = require('../db/models/user')
-const Message = require('../db/models/message')
-const app = require('../server/start')
+const User = require('../models/user')
+const Message = require('../models/message')
+const app = require('../../server/start')
 
 describe('User Model tests', () => {
 
