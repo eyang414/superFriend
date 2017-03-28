@@ -29,11 +29,10 @@ const AppContainer = props => (
   </div>
     <div className="content">
       { props.children }
+       <hr />
+      <div id="footer" className="container text-muted">FOOTER</div>
     </div>
-    <hr />
-    <div id="footer" className="container text-muted">
-     FOOTER
-    </div>
+
   </div>
 );
 

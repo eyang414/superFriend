@@ -1,4 +1,4 @@
-
+ 
 
 
 import React from 'react';
@@ -7,20 +7,44 @@ import { Link } from 'react-router';
 import { fetchContacts } from '../reducers/contacts-reducer';
 import { fetchMessages } from '../reducers/messages-reducer';
 import axios from 'axios'
+var moment = require('moment');
+var duration = require('moment-duration-format');
+moment().format();
 
-
+const superSyncClick = () => {
+  console.log('SUPER SYYYNC')
+  axios.get('/api/contacts/sync')
+}
 function cleanDate(d) {
   return new Date(parseInt(d)).toString()
 }
 
+let lapsedMs = function(contact) {
+  if (contact.latestMessage) {
+    return (new Date().getTime() - parseInt(contact.latestMessage.date))
+  }
+}
+
+let sentOrReceived = function(message){
+    if (message.isSender===0){
+      return "Received: "
+    }else{
+      return "Sent: "
+    }
+}
+
 const ContactTable = (props) => {
-  console.log('THESE ARE JUST THE PROPS', props)
+  // console.log('THESE ARE JUST THE PROPS', props)
   const contacts = props.contacts.allContacts;
   const messages = props.messages.messages;
 
 
-  console.log('these are the messages props', messages)
+  // console.log('these are the messages props', messages)
+
+
   let contactRows = contacts.map(function(contact){
+    let overdueClass = "";
+    let overdueText = null;
 
     const thumbImage = "http://lorempixel.com/80/80/people/" //-->thumbnail placeholder for now
 
@@ -30,22 +54,20 @@ const ContactTable = (props) => {
     const emailIcon = "/images/email-icon.png"
     const instaIcon = "/images/insta-icon.png"
     const vchatIcon = "/images/vchat-icon.png"
+    console.log('these are the specific contact props', contact);
 
-    messages.forEach(message => {
-      if(message.sender_id === contact.id || message.recipient_id === contact.id) {
-        if(!contact.message) {
-          contact.message = message.content
-        }
-      }
-    })
+    if(lapsedMs(contact) >= 604800000) {
+        overdueClass = "overdue"
+        overdueText = "**Reach out!**"
+    }
 
     if (contact.id !== contact.user_id){
       return (
         <tr key = {contact.id}>
         <td> <Link to={`/contacttable/${contact.id}`} ><img className="thumbnail" src = {thumbImage}></img></Link></td>
-        <td><h5>{contact.ZFIRSTNAME} {contact.ZLASTNAME} {contact.id}</h5></td>
-        <td></td>
-        <td>{contact.message}</td>
+        <td><h5 className = {overdueClass}>{contact.ZFIRSTNAME} {contact.ZLASTNAME} <br></br><br></br>{overdueText}</h5></td>
+        <td>{contact.latestMessage && moment(contact.latestMessage.date,'x').format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
+        <td>{contact.latestMessage && sentOrReceived(contact.latestMessage)} "{contact.latestMessage && contact.latestMessage.content}"</td>
         <td>
           <img className="icon" src={textIcon}></img>
           <img className="icon" src={callIcon}></img>
@@ -57,8 +79,8 @@ const ContactTable = (props) => {
       )}
     })
 
+    
 return (
-  // const contactStats = contacts.map(function(contact){
   	<div className="container">
     <h1 className="header">Your Contacts</h1>
     <div className="contact-table-buttons">
