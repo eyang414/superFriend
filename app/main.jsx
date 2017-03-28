@@ -13,6 +13,7 @@ import AppContainer from './containers/AppContainer'
 import SignupPage from './components/SignupPage'
 import LoginPage from './components/LoginPage'
 import LandingPage from './components/Landing'
+import EditContactsFormContainer from './containers/EditContactsFormContainer'
 import ContactProfileContainer from './containers/ContactProfileContainer'
 import ContactTableContainer from './containers/ContactTableContainer'
 import Layout from '../util/layout'
@@ -23,6 +24,10 @@ const onAppContainerEnter = function () {
 	Layout.addResizeFixedWrappersListener();
 }
 
+const onEditContactsFormContainerEnter = function () {
+	console.log("FETCHING CONTACTS")
+	store.dispatch(fetchContacts())
+}
 
 const onContactTableContainerEnter = function () {
 	console.log("FETCHING CONTACTS")
@@ -41,6 +46,7 @@ render(
 	      <Route path="/" component={AppContainer} onEnter={onAppContainerEnter}>
 					<IndexRedirect to = "/home" />
 					<Route path="/home" component={LandingPage} />
+			<Route path="/editcontacts" component={EditContactsFormContainer} onEnter={onEditContactsFormContainerEnter}/>
 	        <Route path="/login" component={LoginPage} />
 	        <Route path="/signup" component={SignupPage} />
 			<Route path="/contacttable" component={ContactTableContainer} onEnter={onContactTableContainerEnter} />

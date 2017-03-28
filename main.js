@@ -6,6 +6,9 @@ const path = require('path')
 const url = require('url')
 const exec = require('child_process').exec
 
+
+
+
 require('electron-reload')(__dirname, {
   ignored: /node_modules|[\/\\]\.|resources/
 })

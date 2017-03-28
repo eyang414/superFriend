@@ -7,6 +7,8 @@ import { Link } from 'react-router';
 import { fetchContacts } from '../reducers/contacts-reducer';
 import { fetchMessages } from '../reducers/messages-reducer';
 import axios from 'axios'
+
+
 var moment = require('moment');
 var duration = require('moment-duration-format');
 moment().format();
@@ -46,7 +48,11 @@ const ContactTable = (props) => {
     let overdueClass = "";
     let overdueText = null;
 
-    const thumbImage = "http://lorempixel.com/80/80/people/" //-->thumbnail placeholder for now
+
+    
+
+    //profile thumbnail image
+    const thumbImage = "http://lorempixel.com/80/80/people/" //placeholder for now
 
     //social media icons:
     const textIcon = "/images/msg-icon.png"
@@ -54,27 +60,30 @@ const ContactTable = (props) => {
     const emailIcon = "/images/email-icon.png"
     const instaIcon = "/images/insta-icon.png"
     const vchatIcon = "/images/vchat-icon.png"
-    console.log('these are the specific contact props', contact);
+
+   
 
     if(lapsedMs(contact) >= 604800000) {
         overdueClass = "overdue"
         overdueText = "**Reach out!**"
+        contact.overdueBy = lapsedMs(contact);
     }
+
+    console.log('contact overdue by', contact.overdueBy);
 
     if (contact.id !== contact.user_id){
       return (
         <tr key = {contact.id}>
-        <td> <Link to={`/contacttable/${contact.id}`} ><img className="thumbnail" src = {thumbImage}></img></Link></td>
-        <td><h5 className = {overdueClass}>{contact.ZFIRSTNAME} {contact.ZLASTNAME} <br></br><br></br>{overdueText}</h5></td>
-        <td>{contact.latestMessage && moment(contact.latestMessage.date,'x').format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
-        <td>{contact.latestMessage && sentOrReceived(contact.latestMessage)} "{contact.latestMessage && contact.latestMessage.content}"</td>
-        <td>
-          <img className="icon" src={textIcon}></img>
+        <td> <Link to={`/contacttable/${contact.id}`} ><img className="img-circle" src = {thumbImage}></img></Link></td>
+        <td><h5 className = {overdueClass}>{contact.ZFIRSTNAME} {contact.ZLASTNAME} <br></br><br></br>{overdueText}</h5>
+          <Link to="sms:+919999999999"><img className="icon" src={textIcon}></img></Link>
           <img className="icon" src={callIcon}></img>
           <img className="icon" src={emailIcon}></img>
           <img className="icon" src={instaIcon}></img>
           <img className="icon" src={vchatIcon}></img>
         </td>
+        <td>{contact.latestMessage && moment(contact.latestMessage.date,'x').format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
+        <td>{contact.latestMessage && sentOrReceived(contact.latestMessage)} "{contact.latestMessage && contact.latestMessage.content}"</td>
         </tr>
       )
     }
@@ -85,7 +94,7 @@ return (
   	<div className="container">
     <h1 className="header">Your Contacts</h1>
     <div className="contact-table-buttons">
-    <button className="btn btn-primary">Edit Contacts</button>
+    <Link to="/editcontacts"><button className="btn btn-primary">Edit Contacts</button></Link>
     <button onClick={superSyncClick} className="btn btn-primary">SuperSync</button>
     </div>
   	  <table className="table">
@@ -95,7 +104,6 @@ return (
           <th>Name</th>
           <th>Last Spoke</th>
           <th>Last Message</th>
-          <th>Reach Out</th>
         </tr>
            {contactRows}
         </tbody>

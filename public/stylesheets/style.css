@@ -28,7 +28,7 @@ input {
 }
 
 .content {
-	padding: 10px;
+	padding: 50px;
   background-image: url("/images/crossword.png");
   align-content: space-between;
 }
