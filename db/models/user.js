@@ -13,9 +13,13 @@ const User = db.define('users', {
     type: Sequelize.STRING,
   },
 
+  guid: {
+    type: Sequelize.STRING
+  },
+
   email: {
     type: Sequelize.STRING,
-    unique: true, 
+    unique: true,
     validate: {
 			isEmail: true,
 			notEmpty: true,
@@ -82,14 +86,10 @@ const User = db.define('users', {
       )
     },
 
-    getMessages() {
+    getMessages(stateClientGuid) {
+      console.log('you are in the getmessages here is stateClientGuid', stateClientGuid)
       return Messages.findAll({
-        where: {
-          $or: {
-            sender_id: this.id,
-            recipient_id: this.id
-          }
-        },
+        where: { uploader_id: stateClientGuid },
         order: 'date DESC'
       })
     },
