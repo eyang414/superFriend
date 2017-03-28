@@ -14,7 +14,7 @@
     "build-watch": "npm run build -- -w",
     "build-dev": "cross-env NODE_ENV=development npm run build-watch",
     "build-branch": "bin/build-branch.sh",
-    "start": "node server/start.js",
+    "start": "z",
     "start-watch": "nodemon server/start.js --watch server --watch db",
     "start-dev": "cross-env NODE_ENV=development npm run start-watch",
     "lint": "esw --ext .js,.jsx --ignore-path .gitignore --cache --format node_modules/eslint-formatter-pretty",
