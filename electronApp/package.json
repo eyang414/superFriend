@@ -2,7 +2,7 @@
   "name": "superfriend",
   "version": "0.0.1",
   "description": "Where we stalk your friends",
-  "main": "server/start.js",
+  "main": "main.js",
   "scripts": {
     "validate": "check-node-version --node '>= 6.7.0'",
     "setup": "./bin/setup",
@@ -12,7 +12,7 @@
     "build-watch": "npm run build -- -w",
     "build-dev": "cross-env NODE_ENV=development npm run build-watch",
     "build-branch": "bin/build-branch.sh",
-    "start": "node server/start.js",
+    "start": "node main.js",
     "start-watch": "nodemon server/start.js --watch server --watch db",
     "start-dev": "cross-env NODE_ENV=development npm run start-watch",
     "test": "mocha --compilers js:babel-register app/**/*.test.js app/**/*.test.jsx db/**/*.test.js server/**/*.test.js",

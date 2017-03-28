@@ -1,5 +1,5 @@
 'use strict'
-const expressApp = require('./server/start')
+
 const seed = require('./db/seed')
 const { app, BrowserWindow } = require('electron')
 const path = require('path')

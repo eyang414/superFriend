@@ -1,7 +1,7 @@
 'use strict'; // eslint-disable-line semi
 
 const app = require('APP')
-const env = process.env
+const {env} = app
 const debug = require('debug')(`${app.name}:auth`)
 const passport = require('passport')
 
@@ -10,8 +10,6 @@ const OAuth = require('APP/db/models/oauth')
 const auth = require('express').Router()
 
 const LocalStrategy = require('passport-local').Strategy;
-
-console.log(env.GOOGLE_CLIENT_ID)
 
 /*************************
  * Auth strategies
@@ -72,9 +70,9 @@ OAuth.setupStrategy({
   provider: 'google',
   strategy: require('passport-google-oauth').OAuth2Strategy,
   config: {
-    clientID: '824500946475-cd5a40df47msqrflg6d53sojp9qbqhlu.apps.googleusercontent.com',
-    clientSecret: '4HeIyN2Y-J6vwWjPCZWnWcEK',
-    callbackURL: `http://localhost:1337/api/auth/login/google`,
+    clientID: env.GOOGLE_CLIENT_ID,
+    clientSecret: env.GOOGLE_CLIENT_SECRET,
+    callbackURL: `${app.baseUrl}/api/auth/login/google`,
   },
   passport
 })
