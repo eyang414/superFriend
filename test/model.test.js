@@ -13,17 +13,17 @@ describe('User Model tests', () => {
 
     return User.bulkCreate(
       [
-        {ZFIRSTNAME: 'dan', ZLASTNAME: 'lowe', ZFULLNUMBER: '1231231234'},
-        {ZFIRSTNAME: 'eric', ZLASTNAME: 'yang', ZFULLNUMBER: '3213214321', guid: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', isUser: true},
-        {ZFIRSTNAME: 'bambam', ZLASTNAME: 'bambam', ZFULLNUMBER: '1112223333'},
-        {ZFIRSTNAME: 'menaka', ZLASTNAME: 'sampath', ZFULLNUMBER: '2223334444'},
-        {ZFIRSTNAME: 'alex', ZLASTNAME: 'k', ZFULLNUMBER: '3334445555'},
+        {ZFIRSTNAME: 'dan', ZLASTNAME: 'lowe', ZFULLNUMBER: '+86-(123)-123-1234'},
+        {ZFIRSTNAME: 'eric', ZLASTNAME: 'yang', ZFULLNUMBER: '(321)-321-4321', guid: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', isUser: true},
+        {ZFIRSTNAME: 'bambam', ZLASTNAME: 'bambam', ZFULLNUMBER: '111-222-3333'},
+        {ZFIRSTNAME: 'menaka', ZLASTNAME: 'sampath', ZFULLNUMBER: '1-222-3334444'},
+        {ZFIRSTNAME: 'alex', ZLASTNAME: 'k', ZFULLNUMBER: '+13334445555'},
         {ZFIRSTNAME: 'ally', ZLASTNAME: 'cody', ZFULLNUMBER: '4445556666'},
-        {ZFIRSTNAME: 'd', ZLASTNAME: 'l', ZFULLNUMBER: '9998887777'},
-        {ZFIRSTNAME: 'b', ZLASTNAME: 'b', ZFULLNUMBER: '0009998888', guid: 'thiscanbeanything', isUser: true},
-        {ZFIRSTNAME: 'e', ZLASTNAME: 'y', ZFULLNUMBER: '5768476574'},
-        {ZFIRSTNAME: 'm', ZLASTNAME: 's', ZFULLNUMBER: '2344324324'},
-        {ZFIRSTNAME: 'a', ZLASTNAME: 'k', ZFULLNUMBER: '3337746584'},
+        {ZFIRSTNAME: 'd', ZLASTNAME: 'l', ZFULLNUMBER: '(999)8887777'},
+        {ZFIRSTNAME: 'b', ZLASTNAME: 'b', ZFULLNUMBER: '123-000-999-8888', guid: 'thiscanbeanything', isUser: true},
+        {ZFIRSTNAME: 'e', ZLASTNAME: 'y', ZFULLNUMBER: '57-684(765)74'},
+        {ZFIRSTNAME: 'm', ZLASTNAME: 's', ZFULLNUMBER: '++2344324324'},
+        {ZFIRSTNAME: 'a', ZLASTNAME: 'k', ZFULLNUMBER: '+(333)7746584'},
         { ZFIRSTNAME: 'a', ZLASTNAME: 'c', ZFULLNUMBER: '3845747293' }
       ]
     )
@@ -59,6 +59,41 @@ describe('User Model tests', () => {
     })
     .then(user => {
         expect(user.ZFIRSTNAME).to.equal('dan')
+    })
+  })
+
+  it('Should create 10-digit, numeric phone numbers, regardless of initial input', () => {
+    return User.findOne({
+      where: { ZFIRSTNAME: 'dan'}
+    })
+    .then(user => {
+        expect(user.ZFULLNUMBER).to.equal('1231231234')
+    })
+  })
+
+  it('Should be able to associate Users to other Users as contacts', () => {
+
+    let userRef = null
+    return User.findOne({
+      where: { ZFIRSTNAME: 'dan'}
+    })
+      .then(user => {
+        userRef = user
+        return User.findAll({ where: { id: { $ne: userRef.id } }})
+      })
+      .then(otherUsers => {
+        return Promise.all(otherUsers.map(user => {
+          return user.update({ user_id: userRef.id })
+        }))
+      })
+      .then(() => {
+        return User.findAll({ where: { id: { $ne: userRef.id } }})
+      })
+      .then(otherUsers => {
+        expect(userRef.user_id).to.equal(null)
+        otherUsers.forEach(user => {
+          expect(user.user_id).to.equal(userRef.id)
+        })
     })
   })
 })
