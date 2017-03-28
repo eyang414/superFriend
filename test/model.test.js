@@ -1,70 +1,64 @@
-const Promise = require('bluebird')
-const expect = require('chai').expect
+'use strict'; // eslint-disable-line semi
+
+const request = require('supertest')
+const {expect} = require('chai')
+const db = require('APP/db')
 const User = require('../db/models/user')
 const Message = require('../db/models/message')
-const db = require('APP/db')
+const app = require('../server/start')
 
+describe('User Model tests', () => {
 
-describe('The `User` model', function () {
-  before(() => db.sync({force:true}))
+  before('Sync and seed the database', () => {
 
-  //fake user
-  let fakeUser1;
+    return User.bulkCreate(
+      [
+        {ZFIRSTNAME: 'dan', ZLASTNAME: 'lowe', ZFULLNUMBER: '1231231234'},
+        {ZFIRSTNAME: 'eric', ZLASTNAME: 'yang', ZFULLNUMBER: '3213214321', guid: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', isUser: true},
+        {ZFIRSTNAME: 'bambam', ZLASTNAME: 'bambam', ZFULLNUMBER: '1112223333'},
+        {ZFIRSTNAME: 'menaka', ZLASTNAME: 'sampath', ZFULLNUMBER: '2223334444'},
+        {ZFIRSTNAME: 'alex', ZLASTNAME: 'k', ZFULLNUMBER: '3334445555'},
+        {ZFIRSTNAME: 'ally', ZLASTNAME: 'cody', ZFULLNUMBER: '4445556666'},
+        {ZFIRSTNAME: 'd', ZLASTNAME: 'l', ZFULLNUMBER: '9998887777'},
+        {ZFIRSTNAME: 'b', ZLASTNAME: 'b', ZFULLNUMBER: '0009998888', guid: 'thiscanbeanything', isUser: true},
+        {ZFIRSTNAME: 'e', ZLASTNAME: 'y', ZFULLNUMBER: '5768476574'},
+        {ZFIRSTNAME: 'm', ZLASTNAME: 's', ZFULLNUMBER: '2344324324'},
+        {ZFIRSTNAME: 'a', ZLASTNAME: 'k', ZFULLNUMBER: '3337746584'},
+        { ZFIRSTNAME: 'a', ZLASTNAME: 'c', ZFULLNUMBER: '3845747293' }
+      ]
+    )
+    .then(() => {
 
-  let fakeAdmin1 = {
-    email: "eyang@eyang.com",
-    ZFIRSTNAME: 'eric',
-    ZLASTNAME: 'yang',
-    password: '1234',
-    isAdmin: true,
-    imageUrl: 'http://respect-mag.com/wp-content/uploads/2016/07/011716-NBA-Thunder-Russell-Westbrook-PI-CH.vresize.1200.675.high_.84.jpg'
-  }
-
-  beforeEach(function(){
-    fakeUser1 = User.build({
-      email: "bambam@hello.com",
-      ZFIRSTNAME: 'bambam',
-      ZLASTNAME: 'sampath',
-      password: 'bambam'
+      return Message.bulkCreate(
+        [
+          {content: 'hi my name is dan', ZFULLNUMBER: '1231231234', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1481078441000'},
+          {content: 'LATEST MESSAGE dans latest message', ZFULLNUMBER: '1231231234', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1490713234000'},
+          {content: 'i am creating superfraanszzsdsz', ZFULLNUMBER: '1231231234', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1481078451000'},
+          {content: 'this is going to be the third messgae', ZFULLNUMBER: '1231231234', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1481878441000'},
+          {content: 'radioheaad', ZFULLNUMBER: '1231231234', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1581078441000'},
+          {content: 'uuuummm', ZFULLNUMBER: '1231231234', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1481073441000'},
+          {content: 'i eat pastrami from open market', ZFULLNUMBER: '1231231234', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '900000'},
+          {content: 'barkbark', ZFULLNUMBER: '1112223333', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1681078441000'},
+          {content: 'LATEST MESSAGE*looks at your food with ridic sad puppy eyes and furrowed eyebrows(latest message)', ZFULLNUMBER: '1112223333', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1490713234000'},
+          {content: '*sigh/*gaveuponfunfortheday', ZFULLNUMBER: '1112223333', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1481073441000'},
+          {content: 'you want some coffee?', ZFULLNUMBER: '2223334444', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '78441000'},
+          {content: 'bambam come here!', ZFULLNUMBER: '2223334444', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1481073441000'},
+          {content: 'LATEST MESSAGE-menaka: snacks for everyone!', ZFULLNUMBER: '2223334444', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1490713234000'},
+          {content: 'i am a DJ', ZFULLNUMBER: '3334445555', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '394857093487'},
+          {content: 'LATEST MESSAGE-alex: for some reason eric says i remind him of ben wyatt', ZFULLNUMBER: '3334445555', uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1490713234000'},
+          {content: 'LATEST MESSAGE-ally: i cant think of something for her to say', ZFULLNUMBER: '3845747293', uploader_id: 'thiscanbeanything', date: '1490713572000'},
+          { content: 'hi guys what things do i normally say... hahahaaa', ZFULLNUMBER: '3845747293', uploader_id: 'thiscanbeanything', date: '1490713234000' }
+        ]
+      )
     })
   })
 
-  afterEach(function () {
-    return Promise.all([
-      Article.truncate({ cascade: true }),
-      User.truncate({ cascade: true })
-    ])
-  })
-
-  describe('attributes definition', function(){
-
-    it('makes sure isAdmin is default false', function(){
-      return fakeUser1.save()
-      .then(function (savedFakeUser){
-        expect(savedFakeUser.isAdmin === false)
-      })
+  it('Should be able to find a user from the seed data', () => {
+    return User.findOne({
+      where: { ZFIRSTNAME: 'dan'}
     })
-
-    it('makes sure we dont have duplicate emails for users', function(){
-      return fakeUser1.save()
-      .then(function(){
-        User.create({})
-      })
+    .then(user => {
+        expect(user.ZFIRSTNAME).to.equal('dan')
     })
   })
 })
-
-describe('The `iMessageContacts` model', function(){
-  before(() => db.sync({force:true}))
-
-
-
-})
-
-/*
-- Make sure phone number format is good
-DONE- isAdmin is default false
-- Makes sure we dont have duplicate emails for users
-- What needs to be NOT null
-- state.auth.user or whatever is passed in and works.
-*/
