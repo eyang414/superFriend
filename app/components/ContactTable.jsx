@@ -76,9 +76,8 @@ const ContactTable = (props) => {
           <img className="icon" src={vchatIcon}></img>
         </td>
         </tr>
-      )
-    }
-  });
+      )}
+    })
 
     
 return (
@@ -86,7 +85,6 @@ return (
     <h1 className="header">Your Contacts</h1>
     <div className="contact-table-buttons">
     <button className="btn btn-primary">Edit Contacts</button>
-    <button onClick={superSyncClick} className="btn btn-primary">SuperSync</button>
     </div>
   	  <table className="table">
         <tbody>
@@ -103,7 +101,5 @@ return (
     </div>
   );
 }
-
-
 
 export default ContactTable;

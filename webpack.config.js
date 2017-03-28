@@ -26,11 +26,10 @@ const config = {
   node: {
     fs: 'empty'
   },
-  target: 'electron-main',
   module: {
     rules: [{
       test: /\.jsx?$/,
-      exclude: /(node_modules|bower_components)/,
+      exclude: /(node_modules|bower_components|electronApp)/,
       loader: 'babel-loader',
       options: {
         presets: ['react', 'es2015', 'stage-2']
