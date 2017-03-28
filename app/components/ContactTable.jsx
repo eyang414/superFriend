@@ -1,4 +1,4 @@
- 
+
 
 
 import React from 'react';
@@ -79,7 +79,7 @@ const ContactTable = (props) => {
       )}
     })
 
-    
+
 return (
   	<div className="container">
     <h1 className="header">Your Contacts</h1>
