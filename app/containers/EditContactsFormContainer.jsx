@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 
 const mapStateToProps = (state) => {
-	console.log(state)
+	console.log('EDIT CONTACTS FORM CONTAINER', state)
   return {
     contacts: state.contacts,
   }

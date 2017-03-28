@@ -7,7 +7,7 @@ import axios from 'axios'
 
 
 const EditContactsForm = (props) => {
-  // console.log('THESE ARE JUST THE PROPS', props)
+  console.log('PROPS on the edit contacts form', props)
   const contacts = props.contacts.allContacts;
   // console.log('these are the messages props', messages)
 
