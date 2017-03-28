@@ -174,7 +174,7 @@ auth.post('/login/local', passport.authenticate('local', { successRedirect: '/lo
 // GET requests for OAuth login:
 // Register this route as a callback URL with OAuth provider
 auth.get('/login/:strategy', (req, res, next) => {
-  console.log('HERE IN GOOGLE ROUTER')
+  
   passport.authenticate(req.params.strategy, {
     scope: ['email', 'profile', 'https://www.googleapis.com/auth/gmail.modify', 'https://www.googleapis.com/auth/gmail.compose'],
     successRedirect: '/login',
