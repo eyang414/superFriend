@@ -6,40 +6,64 @@ import { fetchContacts } from '../reducers/contacts-reducer';
 import axios from 'axios'
 
 
-const EditContactsForm = (props) => {
-  console.log('PROPS on the edit contacts form', props)
-  const contacts = props.contacts.allContacts;
+ 
+class EditContactsForm extends React.Component {
+  constructor (props) {
+    super (props) 
+      this.state = {
+        allChecked: false,
+        
+    }
+    this.toggle = this.toggle.bind(this)
+  }
   // console.log('these are the messages props', messages)
 
-  let contactRows = contacts.map(function(contact){
-    if (contact.id !== contact.user_id){
-      return (
-        <tr key = {contact.id}>
-        <td><input type="checkbox" /></td>
-        <td>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</td>
-        <td>{contact.ZFULLNUMBER}</td>
-        </tr>
-      )
-    }
-  });
+  // contactRows = contacts.map(function(contact){
+  //   if (contact.id !== contact.user_id){
+  //     return (
+  //       <tr key = {contact.id}>
+  //       <td><input type="checkbox" checked={isChecked} name="foo" /></td>
+  //       <td>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</td>
+  //       <td>{contact.ZFULLNUMBER}</td>
+  //       </tr>
+  //     )
+  //   }
+  // });
+toggle(){
+  this.setState({allChecked: !this.state.allChecked})
+}
 
-    
-return (
-  	<div className="container">
+render () {
+  let allChecked = this.state.allChecked;
+  return (
+    <div className="container">
     <h1 className="header">Your Address Book</h1>
 
-  	  <table className="table" sortable='sortable'>
+      <table className="table">
         <tbody>
         <tr>
-          <th></th>
+          <th><input type="checkbox" onClick={this.toggle}/></th>
           <th>Name</th>
           <th>Phone Number</th>
         </tr>
-           {contactRows}
+           {this.props.contacts && this.props.contacts.allContacts.map(function(contact){
+          if (contact.id !== contact.user_id){
+          return (
+            <tr key = {contact.id}>
+            <td><input type="checkbox" checked={allChecked} name="foo" /></td>
+            <td>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</td>
+            <td>{contact.ZFULLNUMBER}</td>
+            </tr>
+          )
+        }
+      })}
+           
         </tbody>
       </table>
     </div>
   );
+}
+
 }
 
 
