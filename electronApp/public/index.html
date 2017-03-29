@@ -9,24 +9,8 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
   </head>
   <body>
-    <iframe src="https://superfriend.herokuapp.com">
-
-    <script>window.addEventListener('message', (event) => {
-        const axios = require('axios')
-        const type = event.data.type
-        const data = JSON.parse(event.data.data)
-
-        if(type === 'contacts') {
-          axios.post('/api/contacts', data)
-        }
-
-        if(type === 'messages') {
-          axios.post('api/messages', data)
-        }
-      })
-    </script>
-
-    </iframe>
-    <script type="text/javascript" defer src="../util/run-sync.js"></script>
+    <button onclick="runSync()">Sync Contacts</button>
+    <iframe src="https://superfriend.herokuapp.com" name="webapp"></iframe>
+    <script type="text/javascript" src="../util/run-sync.js"></script>
   </body>
 </html>

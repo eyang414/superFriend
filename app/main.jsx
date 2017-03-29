@@ -17,6 +17,7 @@ import EditContactsFormContainer from './containers/EditContactsFormContainer'
 import ContactProfileContainer from './containers/ContactProfileContainer'
 import ContactTableContainer from './containers/ContactTableContainer'
 import Layout from '../util/layout'
+import '../util/electron-listener.js'
 
 const onAppContainerEnter = function () {
 	console.log ("OPENING APP")
