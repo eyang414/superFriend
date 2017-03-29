@@ -9,11 +9,23 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
   </head>
   <body>
-    <iframe src="https://superfriend.herokuapp.com"></iframe>
-    <script type="text/javascript" defer src="../util/run-sync.js"></script>
+    <iframe src="https://superfriend.herokuapp.com">
+
+    <!--PROOF OF CONEPT THAT WE CAN SEND TO HEROKU, AND RECEIVE BACK FROM HEROKU-->
+    <!--TODO: ACTUAL AXIOS POST REQUEST-->
     <script>window.addEventListener('message', (event) => {
-        console.log("EVENT HAPPENED!!!!!!", event.data)
+        window.postMessage(event.data, '*')
       })
     </script>
+    </iframe>
+    <script type="text/javascript" defer src="../util/run-sync.js"></script>
+
+
+    <!--PROOF OF CONEPT THAT WE CAN SEND TO HEROKU, AND RECEIVE BACK FROM HEROKU-->
+
+    <!--<script>window.addEventListener('message', (event) => {
+        console.log("WE'RE BACK WITH EVENT DATA... THAT WE SENT", event.data)
+      })
+    </script>-->
   </body>
 </html>
