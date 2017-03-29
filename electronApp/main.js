@@ -1,6 +1,5 @@
 'use strict'
 
-const seed = require('./db/seed')
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const url = require('url')
@@ -53,7 +52,6 @@ const createWindow = () => {
 
 // Create the window when the app is ready
 app.on('ready', () => {
-  seed()
   // exec('node util/sync', (error, stdout, stderr) => {
   //   console.log(stdout, stderr)
   //   if (error) console.error(error)
