@@ -6,6 +6,7 @@ import { selectContacts } from '../actions/contacts';
 import axios from 'axios'
 import ContactTable from '../components/ContactTable'
 import store from '../store'
+const Loading = require('react-loading')
 
 //WE COULD USE THIS TO TOGGLE ALL CHECKBOXES:
 // function toggle(source) {
@@ -66,9 +67,8 @@ class EditContactsForm extends React.Component {
     console.log(evt.target.value)
     this.setState({
       inputValue: evt.target.value
-    });
+    })
   }
-
 
 
   render() {
@@ -77,7 +77,7 @@ class EditContactsForm extends React.Component {
     const filteredContacts = this.props.contacts.allContacts.filter(contact => contact.ZLASTNAME.match(inputValue) || contact.ZFIRSTNAME.match(inputValue))
 
 
-    var self = this;
+    var self = this
     const contacts = filteredContacts
     let contactRows = contacts.map(function(contact){
       let isChecked = false
@@ -114,6 +114,7 @@ class EditContactsForm extends React.Component {
     </form>
 
     <button className="btn btn-primary" onClick={() => this.handleSubmit()}>Add to Tracked</button>
+      {/*<Loading type='spin' color='grey'></Loading>*/}
       <table className="table">
         <tbody>
         <tr>
