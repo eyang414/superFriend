@@ -23,6 +23,29 @@ router.get('/', function (req, res, next){
 	.catch(next)
 })
 
+router.post('/', (req, res, next) => {
+	const messages = req.body
+
+	for (let i=0;i<messages.length;i+=100){
+		let smallerMessages = messages.slice(i, i + 100)
+		let modifiedMessages = smallerMessages.map(message => {
+			return {
+				content: message.text,
+				date: message.date,
+				is_sender: message.is_sent,
+				ZFULLNUMBER: message.id,
+				uploader_id: message.account_guid
+			}
+		})
+		Message.bulkCreate(modifiedMessages)
+			.then(() => {
+				console.log(`=========== BATCH ${counter} CREATED ================`)
+			counter++
+		})
+			.catch(console.error)
+	}
+})
+
 
 
 
