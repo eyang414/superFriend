@@ -30,12 +30,13 @@ router.post('/', (req, res, next) => {
 					where: { ZFULLNUMBER: elem.ZFULLNUMBER.replace(/[^0-9]/g, '').slice(-10) }
 				}
 			)
+			.then((createdContact) => {
+				ourUser.addFriend(createdContact[0])
+				console.log('=====Finished Syncing Contacts====')
+			})
 		}
-
 	})) //closes the Promise.all
-		.then((allCreatedContacts) => {
-			console.log('=====Finished Syncing Contacts====')
-	})
+	.catch(next)
 })
 
 router.get('/', function (req, res, next){
