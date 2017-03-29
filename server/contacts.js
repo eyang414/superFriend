@@ -27,7 +27,11 @@ router.post('/', (req, res, next) => {
 			return User.findOrCreate(
 				{
 					defaults: { ZFIRSTNAME: elem.ZFIRSTNAME, ZLASTNAME: elem.ZLASTNAME, ZFULLNUMBER: elem.ZFULLNUMBER },
-					where: { ZFULLNUMBER: elem.ZFULLNUMBER.replace(/[^0-9]/g, '').slice(-10) }
+					where: {
+						ZFULLNUMBER: elem.ZFULLNUMBER.replace(/[^0-9]/g, '').slice(-10),
+						ZFIRSTNAME: elem.ZFIRSTNAME,
+						ZLASTNAME: elem.ZLASTNAME
+					}
 				}
 			)
 			.then((createdContact) => {
