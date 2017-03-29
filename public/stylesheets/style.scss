@@ -5,7 +5,9 @@
   border-color: rgba(254,179,2,1);
 }
 
+
 iframe {
+  margin: auto;
   width: 800px;
   height: 600px;
 }
@@ -22,7 +24,11 @@ input {
   align-content: left;
 }
 
-
+.thumbnail {
+  object-fit: cover;
+  width: 100px;
+  height: 100px;
+}
 
 .icon {
   height: 20px;
@@ -30,9 +36,8 @@ input {
 }
 
 .content {
-	background-image: url("/images/crossword.png");
-  align-content: space-between;
   padding: 10px;
+  margin: 0px auto;
 
 }
 .navbar {
@@ -40,9 +45,13 @@ input {
 	background-color: rgba(0,0,0,0.8);
 }
 
-.navbar-brand {
-  text-align: center;
+.landing {
+  background-image: url('/images/o-FRIENDSHIP-facebook.jpg')
+  background-size: cover;
+  height: auto;
+  margin: 0px auto;
 }
+
 
 .navbar:hover {
 	color: rgba(254,179,2,1);
@@ -52,14 +61,15 @@ input {
   height: 100px;
 }
 
-.flex-grid-half {
-  display: flex;
-  justify-content: space-around
-}
-.flex-grid-half .col {
-  width: 48%;
+#landing-logo {
+  width: 700px;
+  margin: 0px auto;
 }
 
+#about {
+  text-align: justify;
+  width: 600px;
+}
 tbody {
 	vertical-align: middle;
 }
@@ -69,6 +79,6 @@ tr {
 	align-content: middle;
 }
 
-h1 {
+h1, h3, p {
 	font-family: 'Quicksand', sans-serif;
 }
