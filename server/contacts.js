@@ -17,6 +17,28 @@ const simpleParser = require('mailparser').simpleParser
 
 // iMESSAGE DB / get all contacts
 
+router.post('/', (req, res, next) => {
+	const contacts = req.body
+	const ourUser = req.user
+
+	return Promise.all(contacts.map(elem => {
+
+		if (elem.ZFULLNUMBER) {
+			return User.findOrCreate(
+				{
+					defaults: { ZFIRSTNAME: elem.ZFIRSTNAME, ZLASTNAME: elem.ZLASTNAME, ZFULLNUMBER: elem.ZFULLNUMBER },
+					where: { ZFULLNUMBER: elem.ZFULLNUMBER.replace(/[^0-9]/g, '').slice(-10) }
+				}
+			)
+			.then((createdContact) => {
+				ourUser.addFriend(createdContact[0])
+				console.log('=====Finished Syncing Contacts====')
+			})
+		}
+	})) //closes the Promise.all
+	.catch(next)
+})
+
 router.get('/', function (req, res, next){
 
 let newContacts

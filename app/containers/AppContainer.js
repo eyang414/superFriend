@@ -19,6 +19,7 @@ const AppContainer = props => (
           </button>
           <Link className="navbar-brand" to="/"><img id="logo" src= {logo} /></Link>
         </div>
+        <h3>Say goodbye to "falling out of touch."</h3>
         <div id="nav-items" className="collapse navbar-collapse">
           <ul className="nav navbar-nav navbar-right">
             <li><Link to="/login">Login</Link></li>

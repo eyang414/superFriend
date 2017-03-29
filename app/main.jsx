@@ -17,6 +17,7 @@ import EditContactsFormContainer from './containers/EditContactsFormContainer'
 import ContactProfileContainer from './containers/ContactProfileContainer'
 import ContactTableContainer from './containers/ContactTableContainer'
 import Layout from '../util/layout'
+import '../util/electron-listener.js'
 
 const onAppContainerEnter = function () {
 	console.log ("OPENING APP")
@@ -43,9 +44,9 @@ const onContactProfileContainerEnter = function (nextRouterState) {
 render(
 	<Provider store={store}>
 	    <Router history={browserHistory}>
-	      <Route path="/" component={AppContainer} onEnter={onAppContainerEnter}>
+	      <Route path="/" component={LandingPage} />
+	      <Route path="/home" component={AppContainer} onEnter={onAppContainerEnter}>
 					<IndexRedirect to = "/home" />
-					<Route path="/home" component={LandingPage} />
 	        <Route path="/login" component={LoginPage} />
 	        <Route path="/editcontacts" component={EditContactsFormContainer} onEnter={onEditContactsFormContainerEnter}/>
 	        <Route path="/signup" component={SignupPage} />

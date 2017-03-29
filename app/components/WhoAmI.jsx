@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const WhoAmI = ({ user, logout }) => (
-  <div className="whoami">
+  <div className="container">
   	<h1 className="header">Hello, {user && user.username}</h1>
     <br></br>
     <br></br>

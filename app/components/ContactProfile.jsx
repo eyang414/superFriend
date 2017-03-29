@@ -52,7 +52,7 @@ if (currentContact && currentContact.latestMessage){
       <div className="container">
         <div className="col">
           <h1 className="header">You and {currentContact.ZFIRSTNAME}</h1>
-          <img className="profile-img" src="http://lorempixel.com/300/300/people/"></img>
+          <img className="profile-img" src={currentContact.imageUrl}></img>
         </div>
         <div className="col">
           <h3>It's been <big>{moment.duration(timePassed,'milliseconds').format("y [years]:m [months]:w [weeks]:dd [days]:hh [hours]")}</big> since you last checked in with {currentContact.ZFIRSTNAME} {currentContact.ZLASTNAME}.</h3>
