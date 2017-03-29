@@ -18,7 +18,6 @@ const contactsReducer = (state = initialState, action) => {
       break
 
     case SELECT_CONTACTS:
-    console.log("We made it here")
       newState.selectedContacts = action.selectedContacts
       break
 

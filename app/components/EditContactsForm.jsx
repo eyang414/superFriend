@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
-import selectContacts from '../reducers/contacts-reducer';
+import { selectContacts } from '../actions/contacts';
 import axios from 'axios'
 import ContactTable from '../components/ContactTable'
 import store from '../store'
@@ -51,8 +51,9 @@ class EditContactsForm extends React.Component {
   }
 
   handleSubmit(){
-    // store.dispatch(selectContacts(this.state.selected))
-    store.dispatch({type: 'SELECT_CONTACTS', selectedContacts: this.state.selected})
+    console.log(selectContacts)
+    store.dispatch(selectContacts(this.state.selected))
+    // store.dispatch({type: 'SELECT_CONTACTS', selectedContacts: this.state.selected})
     browserHistory.push('/contacttable') //redirects to contact table
   }
 
