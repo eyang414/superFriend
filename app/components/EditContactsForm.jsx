@@ -51,7 +51,7 @@ class EditContactsForm extends React.Component {
     if (contact.id !== contact.user_id){
       return (
         <tr key = {contact.id} name="bar">
-        <td><input type="checkbox" name="foo" onClick={() => self.handleSelect(contact.id)}/></td>
+        <td><input type="checkbox" name="foo" onClick={(self) => self.handleSelect(contact.id)}/></td>
         <td>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</td>
         <td>{contact.ZFULLNUMBER}</td>
         </tr>
