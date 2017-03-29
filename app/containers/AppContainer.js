@@ -32,7 +32,7 @@ const AppContainer = props => (
     <div className="content">
       { props.children }
        <hr />
-      <div id="footer" className="container text-muted">FOOTER</div>
+      <div id="footer" className="container text-muted">SuperFriend is a contact management application that allows you to track your interactions with selected contacts and receive gentle, friendly reminders when it's time to reach out again.</div>
     </div>
 
   </div>
