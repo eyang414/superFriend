@@ -10,7 +10,9 @@ require('electron-reload')(__dirname, {
   ignored: /node_modules|[\/\\]\.|resources/
 })
 
-
+ 
+// Needed for onTouchTap 
+// http://stackoverflow.com/a/34015469/988941 
 //////////////////
 // WINDOW
 /////////////////

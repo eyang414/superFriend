@@ -38,13 +38,11 @@ const seed = () => {
     .then(trace('DB Synced'))
 
   const seedingUsersAndMessages = clearingDb
+    .then(trace('Seeding users and messages'))
     .then(() => Promise.props({
-      users: seedUsers(),
-      messages: seedMessages()
+      users: seedUsers().then(trace(users => `seeded ${users.length} users`)),
+      messages: seedMessages().then(trace(messages => `seeded ${messages.length} messages`))
     }))
-    .then(trace(obj =>
-      `Seeded ${obj.users.length} users, ${obj.messages.length} messages`)
-    )
 
   const selectOurUser = users => users.find(user => user.username === 'ak123')
 
@@ -53,16 +51,18 @@ const seed = () => {
     .then(trace('Found selected user'))
 
   const addingFriends = findingOurUser
+    .then(trace('Adding friends to user'))
     .then(ourUser => {
-      const addingEachFriend = []
+      const friendIds = []
       for (let i = 0; i <= dummyUser.length; i++){
-        addingEachFriend.push(ourUser.addFriend(i))
+        friendIds.push(i)
       }
-      return Promise.all(addingEachFriend)
+      return ourUser.addFriend(friendIds)
     })
-    .then(trace(friends => `Added ${friends.length} friends`))
+    .then(trace(`Added ${dummyUser.length} friends to user`))
 
   const givingMessagesPeople = seedingUsersAndMessages
+    .then(trace('Assigning users to messages'))
     .then(({messages, users}) => {
       const ourUser = selectOurUser(users)
       let promises = []
