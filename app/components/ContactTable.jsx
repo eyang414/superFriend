@@ -32,7 +32,10 @@ let sentOrReceived = function(message){
 
 const ContactTable = (props) => {
   // console.log('THESE ARE JUST THE PROPS', props)
-  const contacts = props.contacts.allContacts;
+  const contacts = props.contacts.allContacts.filter((contact) => {
+    return props.contacts.selectedContacts.includes(contact.id)
+  });
+  
   const messages = props.messages.messages;
 
 

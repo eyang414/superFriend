@@ -1,9 +1,12 @@
  
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import { fetchContacts } from '../reducers/contacts-reducer';
+import { browserHistory, Link } from 'react-router';
+import selectContacts from '../reducers/contacts-reducer';
 import axios from 'axios'
+import ContactTable from '../components/ContactTable'
+import store from '../store'
+
 
 // function toggle(source) {
 //   let checkboxes = document.getElementsByName('foo');
@@ -20,6 +23,7 @@ class EditContactsForm extends React.Component {
       selected: []
     }
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSelect(contact) {
@@ -33,7 +37,14 @@ class EditContactsForm extends React.Component {
     this.setState({
       selected: selected
     })
-    console.log(selected);
+    console.log(selected)
+  }
+
+  handleSubmit(){
+    // store.dispatch(selectContacts(this.state.selected))
+    store.dispatch({type: 'SELECT_CONTACTS', selectedContacts: this.state.selected})
+    console.log(store)
+    browserHistory.push('/contacttable')
   }
 
   // const checkboxes = document.getElementsByName('foo');
@@ -44,14 +55,20 @@ class EditContactsForm extends React.Component {
   // console.log(checked);
   // console.log(checked);
   render() {
-    console.log(this);
     var self = this;
     const contacts = this.props.contacts.allContacts;
     let contactRows = contacts.map(function(contact){
+      // let isChecked = 'false'
+      // if(this.state.selectedContacts.includes(contact.id)) {
+      //   isChecked = 'true'
+      // }
     if (contact.id !== contact.user_id){
       return (
-        <tr key = {contact.id} name="bar">
-        <td><input type="checkbox" name="foo" onClick={(self) => self.handleSelect(contact.id)}/></td>
+        <tr key = {contact.id} >
+        <td><input 
+          type="checkbox"
+          // checked={isChecked} 
+          onClick={() => self.handleSelect(contact.id)}/></td>
         <td>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</td>
         <td>{contact.ZFULLNUMBER}</td>
         </tr>
@@ -61,7 +78,7 @@ class EditContactsForm extends React.Component {
   return (
     <div className="container">
     <h1 className="header">Your Address Book</h1>
-    <button className="btn btn-primary">Add to Tracked</button>
+    <button className="btn btn-primary" onClick={() => this.handleSubmit()}>Add to Tracked</button>
       <table className="table">
         <tbody>
         <tr>
@@ -76,5 +93,16 @@ class EditContactsForm extends React.Component {
     )
   }
 }
+
+// const mapStateToProps = (state) => {
+//   console.log(state)
+//   return {
+//     selectedContacts: state.selected,
+//   }
+// }
+
+// const EditContactsForm = connect(
+//   mapStateToProps
+// )(ContactTable)
 
 export default EditContactsForm

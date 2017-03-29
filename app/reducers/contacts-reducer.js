@@ -1,8 +1,9 @@
-import { GET_CONTACTS, GET_CONTACT} from '../actions/contacts'
+import { GET_CONTACTS, GET_CONTACT, SELECT_CONTACTS} from '../actions/contacts'
 
 let initialState = {
   allContacts: [],
-  currentContact: {}
+  currentContact: {},
+  selectedContacts: []
 }
 const contactsReducer = (state = initialState, action) => {
   let newState = Object.assign({}, state)
@@ -14,6 +15,11 @@ const contactsReducer = (state = initialState, action) => {
 
     case GET_CONTACT:
       newState.currentContact = action.receivedContact
+      break
+
+    case SELECT_CONTACTS:
+    console.log("We made it here")
+      newState.selectedContacts = action.selectedContacts
       break
 
     default:
