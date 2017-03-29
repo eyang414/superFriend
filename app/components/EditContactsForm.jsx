@@ -7,7 +7,7 @@ import axios from 'axios'
 import ContactTable from '../components/ContactTable'
 import store from '../store'
 
-
+//WE COULD USE THIS TO TOGGLE ALL CHECKBOXES:
 // function toggle(source) {
 //   let checkboxes = document.getElementsByName('foo');
 //   for(var i=0, n=checkboxes.length;i<n;i++) {
@@ -21,21 +21,26 @@ class EditContactsForm extends React.Component {
 
     this.state = {
       selected: [],
+      inputValue: '',
+
     }
     this.handleSelect = this.handleSelect.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
+  //LIFECYCLE COMPONENTS
   componentWillMount() {
     this.unsubscribe = store.subscribe(() => {
       this.setState({selected: store.getState().contacts.selectedContacts})
     })
   }
-
   componentWillUnmount() {
     this.unsubscribe()
   }
 
+
+  //EVENT HANDLERS
   handleSelect(contact) {
     const selected = Array.from(this.state.selected)
     const contactIndex = selected.indexOf(contact)
@@ -57,16 +62,23 @@ class EditContactsForm extends React.Component {
     browserHistory.push('/contacttable') //redirects to contact table
   }
 
-  // const checkboxes = document.getElementsByName('foo');
-  // const checkboxesArr = [].slice.call(checkboxes);
-  // console.log('these are the checkboxes', checkboxes);
-  // console.log('this is an array of checkboxes', checkboxesArr);
-  // let checked = checkboxesArr.filter((el) => (el.checked===true));
-  // console.log(checked);
-  // console.log(checked);
+  handleChange(evt) {
+    console.log(evt.target.value)
+    this.setState({
+      inputValue: evt.target.value
+    });
+  }
+
+
+
   render() {
+
+    const inputValue = this.state.inputValue
+    const filteredContacts = this.props.contacts.allContacts.filter(contact => contact.ZLASTNAME.match(inputValue) || contact.ZFIRSTNAME.match(inputValue))
+
+
     var self = this;
-    const contacts = this.props.contacts.allContacts;
+    const contacts = filteredContacts
     let contactRows = contacts.map(function(contact){
       let isChecked = false
       if(self && self.state.selected.includes(contact.id)) {
@@ -85,10 +97,22 @@ class EditContactsForm extends React.Component {
         </tr>
       )
     }
-  });
+  })
+
+
   return (
     <div className="container">
     <h1 className="header">Your Address Book</h1>
+
+    <form className='form-group' style={{marginTop: '20px'}}>
+      <input
+        onChange={this.handleChange}
+        value={this.state.inputValue}
+        className='form-control'
+        placeholder="Enter Friend's Name"
+      />
+    </form>
+
     <button className="btn btn-primary" onClick={() => this.handleSubmit()}>Add to Tracked</button>
       <table className="table">
         <tbody>
@@ -104,16 +128,5 @@ class EditContactsForm extends React.Component {
     )
   }
 }
-
-// const mapStateToProps = (state) => {
-//   console.log(state)
-//   return {
-//     selectedContacts: state.selected,
-//   }
-// }
-
-// const EditContactsForm = connect(
-//   mapStateToProps
-// )(ContactTable)
 
 export default EditContactsForm
