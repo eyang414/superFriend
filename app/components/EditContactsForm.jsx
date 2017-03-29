@@ -44,12 +44,14 @@ class EditContactsForm extends React.Component {
   // console.log(checked);
   // console.log(checked);
   render() {
+    console.log(this);
+    var self = this;
     const contacts = this.props.contacts.allContacts;
     let contactRows = contacts.map(function(contact){
     if (contact.id !== contact.user_id){
       return (
         <tr key = {contact.id} name="bar">
-        <td><input type="checkbox" name="foo" onClick={() => handleSelect(contact.id)}/></td>
+        <td><input type="checkbox" name="foo" onClick={() => self.handleSelect(contact.id)}/></td>
         <td>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</td>
         <td>{contact.ZFULLNUMBER}</td>
         </tr>
