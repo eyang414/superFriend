@@ -11,10 +11,7 @@ var moment = require('moment');
 var duration = require('moment-duration-format');
 moment().format();
 
-const superSyncClick = () => {
-  console.log('SUPER SYYYNC')
-  axios.get('/api/contacts/sync')
-}
+
 function cleanDate(d) {
   return new Date(parseInt(d)).toString()
 }
