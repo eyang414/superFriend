@@ -46,7 +46,7 @@ const ContactTable = (props) => {
     let overdueClass = "";
     let overdueText = null;
 
-    const thumbImage = "http://lorempixel.com/80/80/people/" //-->thumbnail placeholder for now
+    let thumbImage = "https://placeimg.com/100/100/people" //-->thumbnail placeholder for now
 
     //social media icons:
     const textIcon = "/images/msg-icon.png"
