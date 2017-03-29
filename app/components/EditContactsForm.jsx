@@ -1,4 +1,4 @@
- 
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
@@ -20,10 +20,20 @@ class EditContactsForm extends React.Component {
     super(props)
 
     this.state = {
-      selected: []
+      selected: [],
     }
     this.handleSelect = this.handleSelect.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    this.unsubscribe = store.subscribe(() => {
+      this.setState({selected: store.getState().contacts.selectedContacts})
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
   }
 
   handleSelect(contact) {
@@ -43,8 +53,7 @@ class EditContactsForm extends React.Component {
   handleSubmit(){
     // store.dispatch(selectContacts(this.state.selected))
     store.dispatch({type: 'SELECT_CONTACTS', selectedContacts: this.state.selected})
-    console.log(store)
-    browserHistory.push('/contacttable')
+    browserHistory.push('/contacttable') //redirects to contact table
   }
 
   // const checkboxes = document.getElementsByName('foo');
@@ -58,16 +67,17 @@ class EditContactsForm extends React.Component {
     var self = this;
     const contacts = this.props.contacts.allContacts;
     let contactRows = contacts.map(function(contact){
-      // let isChecked = 'false'
-      // if(this.state.selectedContacts.includes(contact.id)) {
-      //   isChecked = 'true'
-      // }
+      let isChecked = false
+      if(self && self.state.selected.includes(contact.id)) {
+        isChecked = true
+      }
+
     if (contact.id !== contact.user_id){
       return (
         <tr key = {contact.id} >
         <td><input 
           type="checkbox"
-          // checked={isChecked} 
+          checked={isChecked} 
           onClick={() => self.handleSelect(contact.id)}/></td>
         <td>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</td>
         <td>{contact.ZFULLNUMBER}</td>
