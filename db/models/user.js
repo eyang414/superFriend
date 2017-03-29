@@ -47,7 +47,8 @@ const User = db.define('users', {
 
   imageUrl: {
     type: Sequelize.STRING,
-    isUrl: true
+    isUrl: true,
+    defaultValue: "https://placeimg.com/100/100/people"
   },
 
   ZFIRSTNAME: {

@@ -64,7 +64,7 @@ const ContactTable = (props) => {
     if (contact.id !== contact.user_id){
       return (
         <tr key = {contact.id}>
-        <td> <Link to={`/contacttable/${contact.id}`} ><img className="thumbnail" src = {thumbImage}></img></Link></td>
+        <td> <Link to={`/contacttable/${contact.id}`} ><img className="thumbnail" src = {contact.imageUrl}></img></Link></td>
         <td><h5 className = {overdueClass}>{contact.ZFIRSTNAME} {contact.ZLASTNAME} <br></br><br></br>{overdueText}</h5></td>
         <td>{contact.latestMessage && moment(contact.latestMessage.date,'x').format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
         <td>{contact.latestMessage && sentOrReceived(contact.latestMessage)} "{contact.latestMessage && contact.latestMessage.content}"</td>

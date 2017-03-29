@@ -2,7 +2,7 @@
 
 const dummyUser = [{"username":"ak123","ZFIRSTNAME":"a","ZLASTNAME":"k","email":"ak123@ak123.com","ZFULLNUMBER":"111-111-1111","isUser":true,"imageUrl":"https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAikAAAAJGNkZGExNzM1LWRhYTUtNGQ3ZC05MTA5LWMwNzY0MWQxMmRjYw.jpg","password":"1234", "guid":"7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED"},
 {"username":"dammdaniel","ZFIRSTNAME":"damm","ZLASTNAME":"daniel","email":"dammdaniel@whatarethose.com","ZFULLNUMBER":"222-222-2222","isUser":true,"isAdmin":true,"imageUrl":"http://i.dailymail.co.uk/i/pix/2016/02/26/21/31734FC200000578-0-Popular_The_original_clip_has_been_retweeted_over_260_000_times_-m-67_1456522238590.jpg","password":"1234"},
-{"username":"menaka","ZFIRSTNAME":"menaka","ZLASTNAME":"menaka","email":"menaka@idareyoutosaymynamewrong.lol","ZFULLNUMBER":"333-333-3333","isUser":true,"imageUrl":"https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAASDAAAAJGY4MmFjNTg5LTEzMzItNDAwYy1hMzJkLTczNjM4NTgwMmJjNw.jpg","password":"1234"},
+{"username":"menaka","ZFIRSTNAME":"Menaka","ZLASTNAME":"Sampath","email":"menakasampath@gmail.com","ZFULLNUMBER":"215-280-1707","isUser":true,"imageUrl":"https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAASDAAAAJGY4MmFjNTg5LTEzMzItNDAwYy1hMzJkLTczNjM4NTgwMmJjNw.jpg","password":"1234"},
 {"username":"bambam","ZFIRSTNAME":"bambam","ZLASTNAME":"bambam","email":"bambam@bambam.com","ZFULLNUMBER":"555-555-5555","isUser":true,"imageUrl":"http://dummyimage.com/153x114.bmp/ff4444/ffffff","password":"bambam"},
 {"ZFIRSTNAME":"Leila","ZLASTNAME":"Karalanian","email":"Leila@issodarncute.com","ZFULLNUMBER":"777-777-7777","isUser":false},
 {"ZFIRSTNAME":"Rachel","ZLASTNAME":"Armstrong","ZFULLNUMBER":"55-(222)608-4605"},
