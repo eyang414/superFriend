@@ -53,17 +53,20 @@ input {
 
 .navbar {
   padding-top: 30px;
-  background-color: rgba(0, 0, 0, 0.8); }
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #FFF; }
 
 .landing {
   background-image: url("/images/o-FRIENDSHIP-facebook.jpg");
-  background-postition: center;
+  background-position: center;
   background-size: cover;
   background-blend-mode: overlay;
   height: 100%; }
 
 #logo {
-  height: 100px; }
+  height: 100px;
+  margin-left: 30px;
+  margin-bottom: 10px; }
 
 .frontpage {
   margin-top: 100px;
