@@ -4,13 +4,11 @@ const axios = require('axios')
 let contactsBuffer = ''
 let messagesBuffer = ''
 
-const runSync = () => {
+const runSyncContacts = () => {
   console.log('you clicked sync contacts')
   const childContacts = exec('node util/syncContacts', { maxBuffer: 1024 * 1000000000 }, (error, stdout, stderr) => {
     if (error) console.error(error)
   })
-
-
 
   childContacts.stdout.on('data', (chunk) => {
     contactsBuffer += chunk
