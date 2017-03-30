@@ -9,6 +9,6 @@ window.addEventListener('message', (event) => {
   }
 
   if (type === 'messages') {
-    axios.post('api/messages', data)
+    axios.post('api/messages', event.data.data)
   }
 })
