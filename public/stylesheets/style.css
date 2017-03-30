@@ -1,8 +1,27 @@
+/*animations*/
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.1);
+    opacity: 0; }
+  60% {
+    transform: scale(1.1);
+    opacity: 1; }
+  100% {
+    transform: scale(1); } }
+
+#main {
+  width: 100vw;
+  height: 100vh; }
+
 .btn {
   margin-bottom: 10px;
   margin-right: 5px;
   background-color: #feb302;
   border-color: #feb302; }
+
+#loginfromlanding {
+  margin-top: 10%;
+  size: 0px; }
 
 iframe {
   margin: auto;
@@ -29,29 +48,42 @@ input {
   margin: 5px; }
 
 .content {
-  padding: 10px; }
+  padding: 10px;
+  margin: 0px auto; }
 
 .navbar {
   padding-top: 30px;
-  background-color: rgba(0, 0, 0, 0.8); }
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #FFF; }
 
 .landing {
-  background-image: url("/images/o-FRIENDSHIP-facebook.jpg"); }
-
-.navbar:hover {
-  color: #feb302; }
+  background-image: url("/images/o-FRIENDSHIP-facebook.jpg");
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: overlay;
+  height: 100%; }
 
 #logo {
-  height: 100px; }
+  height: 100px;
+  margin-left: 30px;
+  margin-bottom: 10px; }
 
-#landing-logo {
-  width: 600px;
+.frontpage {
+  margin-top: 100px;
   margin-left: auto;
   margin-right: auto; }
 
+#landing-logo {
+  width: 80%;
+  margin: 0 auto;
+  animation: bounceIn 4s; }
+
 #about {
   text-align: justify;
-  width: 600px; }
+  width: 80%;
+  font-size: 40px;
+  color: #000;
+  margin: 0 auto; }
 
 tbody {
   vertical-align: middle; }
@@ -60,5 +92,5 @@ tr {
   vertical-align: middle;
   align-content: middle; }
 
-h1 {
+h1, h3, p {
   font-family: 'Quicksand', sans-serif; }
