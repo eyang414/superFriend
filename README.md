@@ -10,3 +10,4 @@ BETA mode restrictions for users:
 4. so far, we won't auto-sync and push you notifications yet.  It will just be a user-driven sync
 5. you need manually connect imessage contacts with gmail contacts
 6. you can only sync messages from a phone number that you have contact info about (in reality, the messages will be in our database, but there we will not be able to use it because we can't attach a sender/recipient id to it)
+7. your contacts can Not have quotes(") in the name
