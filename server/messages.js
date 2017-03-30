@@ -30,11 +30,11 @@ router.post('/', (req, res, next) => {
 		let smallerMessages = messages.slice(i, i + 100)
 		let modifiedMessages = smallerMessages.map(message => {
 			return {
-				content: message.text,
-				date: message.date,
+				content: message.ZTEXT,
+				date: message.ZDATE,
 				is_sender: message.is_sent,
-				ZFULLNUMBER: message.id,
-				uploader_id: message.account_guid
+				ZFULLNUMBER: message.ZFULLNUMBER,
+				uploader_id: message.accountGU
 			}
 		})
 		Message.bulkCreate(modifiedMessages)
@@ -50,4 +50,3 @@ router.post('/', (req, res, next) => {
 
 
 module.exports = router
-
