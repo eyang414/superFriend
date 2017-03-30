@@ -34,9 +34,6 @@ const ContactProfile = (props) => {
   }
   // console.log('these are the props', props)
 
-  axios.get(`/api/contacts/messages/latest/${props.contacts.currentContact.id}`)
-  .then(res => {message = res.data})
-
 if (currentContact && currentContact.latestMessage){
   latestMessage = props.contacts.currentContact.latestMessage;
   dateOfMessage = (cleanDate(latestMessage.date));
@@ -57,7 +54,7 @@ if (currentContact && currentContact.latestMessage){
         <div className="col">
           <h3>It's been <big>{moment.duration(timePassed,'milliseconds').format("y [years]:m [months]:w [weeks]:dd [days]:hh [hours]")}</big> since you last checked in with {currentContact.ZFIRSTNAME} {currentContact.ZLASTNAME}.</h3>
           <h4>Last message: "{latestMessage && latestMessage.content}"</h4>
-          <h4>{latestMessage && <p>{sentOrReceived(latestMessage)} {messageMoment}</p>}</h4>
+          <h4>{latestMessage && <p>{sentOrReceived(latestMessage.content)} {messageMoment}</p>}</h4>
         </div>
       </div>
   )};

@@ -1,4 +1,4 @@
-import { GET_CONTACTS, GET_CONTACT, SELECT_CONTACTS} from '../actions/contacts'
+import { GET_CONTACTS, GET_CONTACT, SELECT_CONTACTS, SET_CONTACT} from '../actions/contacts'
 
 let initialState = {
   allContacts: [],

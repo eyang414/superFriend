@@ -92,11 +92,17 @@ const User = db.define('users', {
       )
     },
 
-    getMessages(stateClientGuid) {
-      console.log('you are in the getmessages here is stateClientGuid', stateClientGuid)
+    getMessages(stateClientId) {
+      console.log('you are in the getmessages here is stateClientGuid', stateClientId)
       return Messages.findAll({
-        where: { uploader_id: stateClientGuid },
-        order: 'date DESC'
+            where: { 
+            $or: 
+            [
+              {$and: {sender_id: stateClientId, recipient_id: this.id}},
+              {$and: {sender_id: this.id, recipient_id: stateClientId}}
+            ] 
+            },
+            order: 'date DESC'
       })
     },
 
