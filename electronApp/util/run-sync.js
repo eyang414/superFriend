@@ -32,8 +32,10 @@ const runSyncContacts = () => {
     formattedString = "[" + formattedString + "]"
     const formattedBuffer = JSON.parse(formattedString)
     console.log(formattedBuffer)
-    window.frames.webapp.postMessage({ type: 'contacts', data: formattedBuffer}, '*')
-
+    for (let i=0;i<formattedBuffer.length;i+=100){
+      let smallerContacts = formattedBuffer.slice(i, i + 100)
+    window.frames.webapp.postMessage({ type: 'contacts', data: smallerContacts}, '*')
+    }
   })
 }
 

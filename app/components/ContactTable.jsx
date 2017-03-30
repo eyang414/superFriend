@@ -86,7 +86,6 @@ return (
     <div className="contact-table-buttons">
     <Link to='/editcontacts'><button className="btn btn-primary">Edit Contacts</button></Link>
     </div>
-    <Loading type='balls' color='blue'></Loading>
   	  <table className="table">
         <tbody>
         <tr>
