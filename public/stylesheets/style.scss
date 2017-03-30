@@ -19,6 +19,17 @@
   height: 100vh;
 }
 
+#right-nav{
+  margin-right: 25px
+}
+
+#profile-img{
+  border-radius: 100%;
+  object-fit: cover;
+  width: 260px;
+  height: 260px;
+}
+
 .btn {
   margin-bottom: 10px;
   margin-right: 5px;
@@ -31,10 +42,9 @@
   margin-top: 10%;
   size: 0px;
 }
-iframe {
-  margin: auto;
-  width: 800px;
-  height: 600px;
+
+.overdue {
+  color: red;
 }
 
 input {
