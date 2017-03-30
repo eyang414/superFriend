@@ -59,7 +59,7 @@ class EditContactsForm extends React.Component {
   handleSubmit(){
     console.log(selectContacts)
     store.dispatch(selectContacts(this.state.selected))
-    // store.dispatch({type: 'SELECT_CONTACTS', selectedContacts: this.state.selected})
+    axios.post('/api/contacts/track/all', this.state.selected)
     browserHistory.push('/contacttable') //redirects to contact table
   }
 
