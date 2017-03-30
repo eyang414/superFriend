@@ -52,7 +52,7 @@ const runSyncMessages = () => {
     console.log('childMessages is closed, here is the messagesBuffer', messagesBuffer)
 
     let formattedString = messagesBuffer
-      .replace(/"/, '\"')
+      .replace(/"/, '')
       .replace(/'/gi, '"')
       .replace(/account_guid/gi, '"accountGU"')
       .replace(/ZTEXT/gi, '"ZTEXT"')
