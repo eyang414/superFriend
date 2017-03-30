@@ -10,8 +10,8 @@ const dummyUser = [
 
 {"ZFIRSTNAME":"Eric","ZLASTNAME":"Yang","ZFULLNUMBER":"(321)-321-4321","isUser":true,"imageUrl": "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAdDAAAAJGVlNWFiMDUwLTg2ZGQtNDgwMS05NmIxLWUyNTJmMDc3MTllOQ.jpg","password":"1234"},
 
-{"ZFIRSTNAME":"Andrew","ZLASTNAME":"Kahn","ZFULLNUMBER":"(215)-555-5555","isUser":true,"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png","password":"1234"},
-]
+{"ZFIRSTNAME":"Andrew","ZLASTNAME":"Kahn","ZFULLNUMBER":"(215)-555-5555","isUser":true,"imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png","password":"1234"}
+] 
 
 const dummyMessages = [
           {content: 'Hey, Dan here.', ZFULLNUMBER: '864-710-7357', is_sender: 0, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1481078441000'},
