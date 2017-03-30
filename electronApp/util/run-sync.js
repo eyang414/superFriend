@@ -6,7 +6,7 @@ let messagesBuffer = ''
 
 const runSync = () => {
   console.log('you clicked sync contacts')
-  const childContacts = exec('node util/syncContacts', (error, stdout, stderr) => {
+  const childContacts = exec('node util/syncContacts', { maxBuffer: 1024 * 1000000000 }, (error, stdout, stderr) => {
     if (error) console.error(error)
   })
 

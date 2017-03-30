@@ -73,12 +73,16 @@ class EditContactsForm extends React.Component {
 
   render() {
 
+    let filteredContacts = []
     const inputValue = this.state.inputValue
-    const filteredContacts = this.props.contacts.allContacts.filter(contact => contact.ZLASTNAME.match(inputValue) || contact.ZFIRSTNAME.match(inputValue))
 
+    // if(this.props.contacts) {
+      filteredContacts = this.props.contacts.allContacts.filter(contact => (contact.ZLASTNAME && contact.ZLASTNAME.match(inputValue)) || (contact.ZFIRSTNAME && contact.ZFIRSTNAME.match(inputValue)))
+    // }
 
     var self = this;
     const contacts = filteredContacts
+    // const contacts = this.props.contacts.allContacts
     let contactRows = contacts.map(function(contact){
       let isChecked = false
       if(self && self.state.selected.includes(contact.id)) {
@@ -88,9 +92,9 @@ class EditContactsForm extends React.Component {
     if (contact.id !== contact.user_id){
       return (
         <tr key = {contact.id} >
-        <td><input 
+        <td><input
           type="checkbox"
-          checked={isChecked} 
+          checked={isChecked}
           onClick={() => self.handleSelect(contact.id)}/></td>
         <td>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</td>
         <td>{contact.ZFULLNUMBER}</td>
