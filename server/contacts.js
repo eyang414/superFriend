@@ -41,7 +41,7 @@ router.post('/', (req, res, next) => {
 		}
 	})) //closes the Promise.all
 	.then(() => {
-		res.send(201)
+		res.sendStatus(201)
 	})
 	.catch(next)
 })
@@ -344,6 +344,24 @@ router.get('/:id', (req, res) => {
 	.catch(console.error)
 })
 
+router.post('/track/all', (req, res, next) => {
+	console.log(req.body)
 
+	return User.findAll({
+		where: {
+			$any: {
+				id: req.body
+			}
+		}
+	})
+	.then(contacts => {
+		console.log(contacts)
+		return Promise.all(contacts.map(contact => {
+			return contact.update({ isTracked: 1 })
+		}))
+	})
+	.then(() => res.sendStatus(201))
+	.catch(console.error)
+})
 
 module.exports = router
