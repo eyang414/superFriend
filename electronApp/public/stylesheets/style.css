@@ -16,27 +16,25 @@ input {
   margin-top: 15px;
 }
 
-
-
 .profile-img {
   border-radius: 150px;
   align-content: left;
 }
-
+ 
 .icon {
   height: 20px;
   margin: 5px;
 }
 
 .content {
-	background-image: url("/images/crossword.png");
+  background-image: url("/images/crossword.png");
   align-content: space-between;
   padding: 10px;
 
 }
 .navbar {
-	padding-top: 30px;
-	background-color: rgba(0,0,0,0.8);
+  padding-top: 30px;
+  background-color: rgba(0,0,0,0.8);
 }
 
 .navbar-brand {
@@ -44,7 +42,7 @@ input {
 }
 
 .navbar:hover {
-	color: rgba(254,179,2,1);
+  color: rgba(254,179,2,1);
 }
 
 #logo {
@@ -60,14 +58,14 @@ input {
 }
 
 tbody {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 tr {
-	vertical-align: middle;
-	align-content: middle;
+  vertical-align: middle;
+  align-content: middle;
 }
 
 h1 {
-	font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', sans-serif;
 }

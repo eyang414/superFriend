@@ -11,6 +11,7 @@ const getContact = (contact) => ({ type: GET_CONTACT, receivedContact: contact})
 export const selectContacts = (contacts) => ({ type: SELECT_CONTACTS, selectedContacts: contacts});
 
 /* ------------       DISPATCHERS     ------------------ */
+
 export const fetchContacts = () => dispatch => {
         axios.get('/api/contacts')
         .then(res => dispatch(getContacts(res.data)))

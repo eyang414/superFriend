@@ -59,23 +59,47 @@ let newContacts
 		newContacts = contacts.map( contact => {
 
 			return Message.findAll({
-        where: { uploader_id: req.user.guid, ZFULLNUMBER: contact.ZFULLNUMBER },
-        order: 'date DESC'
-				//TODO: the order: date DESC might cause problems because of the weird date thing being a string
-      })
+        		where: { 
+			    	$or: 
+			    	[
+			    		{$and: {sender_id: req.user.id, recipient_id: contact.id}},
+			    		{$and: {sender_id: contact.id, recipient_id: req.user.id}}
+			    	] 
+        		},
+        		order: 'date DESC'
+			})
 			.then(messageArray => {
-				if(messageArray){
+				if (messageArray){
+					contact.dataValues.allMessages = messageArray
 					contact.dataValues.latestMessage = messageArray[0]
 				}
+
 					return contact
 			})
 		})
 		Promise.all(newContacts)
 		.then((modifiedContacts) => {
+			console.log(modifiedContacts)
 			res.json(modifiedContacts)
 		})
 
 	})
+	.catch(console.error)
+})
+
+router.get('/:id', (req, res, next) => {
+	let contact = null
+
+	return User.findById(req.params.id)
+		.then(foundContact => {
+			contact = foundContact
+			return contact.getMessages(req.user.id)
+		})
+		.then(contactMessages => {
+			contact.dataValues.allMessages = contactMessages
+			contact.dataValues.latestMessage = contactMessages[0]
+			res.json(contact)
+		})
 	.catch(console.error)
 })
 
@@ -159,7 +183,7 @@ router.get('/messages/all', function (req, res, next) {
 
 	User.findById(req.session.passport.user)
 	.then(user => {
-		return user.getMessages()
+		return user.getMessages(req.user.id)
 	})
 	.then(userMessages => {
 		console.log("USER MESSAGES", userMessages)
@@ -172,7 +196,7 @@ router.get('/messages/latest/:contactId', function (req, res, next) {
 
 	User.findById(req.params.contactId)
 	.then(contact => {
-		return contact.getMessages()
+		return contact.getMessages(req.user.id)
 	})
 	.then(contactMessageswithUser => {
 		console.log("CONTACT MESSAGES", contactMessageswithUser[0])
@@ -180,169 +204,6 @@ router.get('/messages/latest/:contactId', function (req, res, next) {
 	})
 })
 
-
-router.get('/gmail', function(req, res, next){
-
-	// Find User
-	Oauth.findOne({
-		where: {
-			user_id: req.user.id
-		}
-	})
-	.then(authUser => {
-
-		// Get list of new message IDs
-		axios.get('https://www.googleapis.com/gmail/v1/users/me/messages', {
-			headers: {
-				Authorization: 'Bearer ' + authUser.accessToken
-			}
-		})
-		.then(allMails => {
-			console.log('ALL MAILS OBJECT :', allMails)
-
-			const emailPromises = allMails.data.messages.map( message => {
-				return axios.get(`https://www.googleapis.com/gmail/v1/users/me/messages/${message.id}/?format=metadata`, {
-					headers: {
-						Authorization: 'Bearer ' + authUser.accessToken
-					}
-				})
-			})
-			return Promise.all(emailPromises)
-			// need to pass down the next page token
-		})
-		.then(emailsArray => {
-
-			function findSender (array) {
-				return array.name === "From"
-			}
-
-			function findSubject (array) {
-				return array.name === "Subject"
-			}
-
-			function findDate(array) {
-				return array.name === "Date"
-			}
-
-			const emailMap = emailsArray.map( email => {
-				const snippet  = email.data.snippet.replace(/&#39;/g, '').replace(/&amp;/g, '&').trim()
-				const headers = email.data.payload.headers
-
-				const senderEmail = headers.find(findSender).value.trim()
-				let emailAddress = senderEmail.slice(senderEmail.indexOf('<') +1, senderEmail.length -1)
-
-				const senderName = headers.find(findSender).value.trim()
-				let name = senderName.slice(0, senderEmail.indexOf('<')-1).replace(/"/g, '').trim()
-
-				const subject = headers.find(findSubject).value
-				const date = headers.find(findDate).value
-				return {
-					name,
-					emailAddress,
-					subject,
-					snippet,
-					date
-				}
-			})
-			res.json(emailMap)
-		})
-		.catch(error => {
-			console.log(error)
-			next(error)
-		})
-	})
-})
-
-router.get('/googleprofile/:id', (req, res, next) => {
-
-	Oauth.findOne({
-	    where: {user_id: req.user.id}
-	})
-	.then(authUser => {
-
-	    return axios.get(`https://www.googleapis.com/plus/v1/people/me`, {
-			headers: {
-				Authorization: 'Bearer ' + authUser.accessToken
-			}
-	    })
-	})
-	.then(profile => {
-		res.json(profile)
-	})
-	.catch(next)
-})
-
-
-router.get('/gmail/:id', function(req, res, next){
-
-	Oauth.findOne({
-		where: {user_id: req.user.id}
-	})
-	.then(authUser => {
-
-		axios.get(`https://www.googleapis.com/gmail/v1/users/me/messages/${req.params.id}`, {
-			headers: {
-				Authorization: 'Bearer ' + authUser.accessToken
-			}
-		})
-		.then(response => {
-
-			if (response.payload.body.size === 0) {
-
-				let bodyArray = []
-
-				response.payload.parts.forEach( i => {
-
-					let base64 = i.body.data
-					let buff = Buffer.from(base64, 'base64')
-					bodyArray.push(simpleParser(buff))
-				})
-
-				Promise.all(bodyArray)
-				.then(bodyarray => {
-					res.json(bodyarray)
-				})
-				.catch(error => {
-					console.log(error)
-					next(error)
-				})
-
-			} else {
-
-				let base64 = response.payload.body.data
-				let buff = Buffer.from(base64, 'base64')
-				simpleParser(buff)
-				.then( results => {
-					console.log(results)
-					res.json(results)
-				})
-				.catch(error => {
-					console.log(error)
-					next(error)
-				})
-			}
-		})
-		.catch(error => {
-			console.log(error)
-			next(error)
-		})
-	})
-})
-
-router.get('/:id', (req, res) => {
-	let contact = null
-
-	return User.findById(req.params.id)
-		.then(foundContact => {
-			contact = foundContact
-			return contact.getMessages()
-		})
-		.then(contactMessages => {
-			contact.dataValues.latestMessage = contactMessages[0]
-			res.json(contact)
-		})
-	.catch(console.error)
-})
 
 router.post('/track/all', (req, res, next) => {
 	console.log(req.body)
