@@ -61,26 +61,26 @@ const seed = () => {
     })
     .then(trace(`Added ${dummyUser.length} friends to user`))
 
-  // const givingMessagesPeople = seedingUsersAndMessages
-  //   .then(trace('Assigning users to messages'))
-  //   .then(({messages, users}) => {
-  //     const ourUser = selectOurUser(users)
-  //     let promises = []
-  //     for (let i = 0; i < 100; i++){
-  //       let randomUserId = Math.floor(Math.random() * dummyUser.length)
-  //       if (randomUserId === ourUser.id || randomUserId === 0) randomUserId = 1
-  //       promises.push(messages[i].update({sender_id: ourUser.id}))
-  //       promises.push(messages[i].update({recipient_id: randomUserId}))
-  //     }
-  //     for (let i = 101; i < 200; i++){
-  //       let randomUserId = Math.floor(Math.random() * dummyUser.length)
-  //       if (randomUserId === ourUser.id || randomUserId === 0) randomUserId = 1
-  //       promises.push(messages[i].update({recipient_id: ourUser.id}))
-  //       promises.push(messages[i].update({sender_id: randomUserId}))
-  //     }
-  //     return Promise.all(promises)
-  //   })
-  //   .then(trace(messages => `Modified ${messages.length} messages`))
+  const givingMessagesPeople = seedingUsersAndMessages
+    .then(trace('Assigning users to messages'))
+    .then(({messages, users}) => {
+      const ourUser = selectOurUser(users)
+      let promises = []
+      for (let i = 0; i < 3; i++){
+        let randomUserId = Math.floor(Math.random() * dummyUser.length)
+        if (randomUserId === ourUser.id || randomUserId === 0) randomUserId = 1
+        promises.push(messages[i].update({sender_id: ourUser.id}))
+        promises.push(messages[i].update({recipient_id: randomUserId}))
+      }
+      for (let i = 3; i < 6; i++){
+        let randomUserId = Math.floor(Math.random() * dummyUser.length)
+        if (randomUserId === ourUser.id || randomUserId === 0) randomUserId = 1
+        promises.push(messages[i].update({recipient_id: ourUser.id}))
+        promises.push(messages[i].update({sender_id: randomUserId}))
+      }
+      return Promise.all(promises)
+    })
+    .then(trace(messages => `Modified ${messages.length} messages`))
 
   Promise.all([addingFriends])
   .catch(error => console.error(error))

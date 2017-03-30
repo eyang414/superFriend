@@ -14,12 +14,12 @@ const dummyUser = [
 ] 
 
 const dummyMessages = [
-          {content: 'Hey, Dan here.', ZFULLNUMBER: '864-710-7357', is_sender: 0, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1481078441000'},
-          {content: 'Did you like the property I showed you?', ZFULLNUMBER: "(215)-555-5555", is_sender: 1, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1581078441000'},
-          {content: 'I just got the pastrami from Open Market, so gooooood!!!!!!', ZFULLNUMBER: '864-710-7357', is_sender: 0, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '900000'},
-          {content: 'Dude, where have you been??', ZFULLNUMBER: "(321)-321-4321", is_sender: 0, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '78441000'},
+          {content: 'Hey, Dan here.', ZFULLNUMBER: '864-710-7357', is_sender: 0, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1490901767467'},
+          {content: 'Did you like the property I showed you?', ZFULLNUMBER: "(215)-555-5555", is_sender: 1, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1488344400666'},
+          {content: 'I just got the pastrami from Open Market, so gooooood!!!!!!', ZFULLNUMBER: '864-710-7357', is_sender: 0, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1490901767467'},
+          {content: 'Dude, where have you been??', ZFULLNUMBER: "(321)-321-4321", is_sender: 0, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1490901767467'},
           {content: 'I baked banana bread!', ZFULLNUMBER: "215-280-1707", is_sender: 0, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1490713234000'},
-          {content: 'For some reason eric says i remind him of ben wyatt', ZFULLNUMBER: '864-710-7357', is_sender: 0, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1490713234000'},
+          {content: 'For some reason eric says i remind him of ben wyatt', ZFULLNUMBER: '864-710-7357', is_sender: 0, uploader_id: '7A6AABC4-BC1E-4A9F-8F37-E4B0F59661ED', date: '1488344400000'},
         ]
 
 
