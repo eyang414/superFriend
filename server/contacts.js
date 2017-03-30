@@ -40,6 +40,9 @@ router.post('/', (req, res, next) => {
 			})
 		}
 	})) //closes the Promise.all
+	.then(() => {
+		res.send(201)
+	})
 	.catch(next)
 })
 

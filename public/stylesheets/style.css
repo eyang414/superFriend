@@ -57,7 +57,7 @@ input {
 
 .landing {
   background-image: url("/images/o-FRIENDSHIP-facebook.jpg");
-  background-postition: center;
+  background-position: center;
   background-size: cover;
   background-blend-mode: overlay;
   height: 100%; }
