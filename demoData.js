@@ -8,7 +8,7 @@ const dummyUser = [
 
 {"ZFIRSTNAME":"Menaka","ZLASTNAME":"Sampath","email":"menakasampath@gmail.com","ZFULLNUMBER":"215-280-1707","isUser":true,"imageUrl":"https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAASDAAAAJGY4MmFjNTg5LTEzMzItNDAwYy1hMzJkLTczNjM4NTgwMmJjNw.jpg","password":"1234"},
 
-{"ZFIRSTNAME":"Eric","ZLASTNAME":"Yang","ZFULLNUMBER":"(321)-321-4321","isUser":true,"https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAdDAAAAJGVlNWFiMDUwLTg2ZGQtNDgwMS05NmIxLWUyNTJmMDc3MTllOQ.jpg","password":"1234"},
+{"ZFIRSTNAME":"Eric","ZLASTNAME":"Yang","ZFULLNUMBER":"(321)-321-4321","isUser":true,"imageUrl": "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAdDAAAAJGVlNWFiMDUwLTg2ZGQtNDgwMS05NmIxLWUyNTJmMDc3MTllOQ.jpg","password":"1234"},
 
 {"ZFIRSTNAME":"Andrew","ZLASTNAME":"Kahn","ZFULLNUMBER":"(215)-555-5555","isUser":true,"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png","password":"1234"},
 ]
