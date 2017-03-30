@@ -23,10 +23,9 @@
   margin-top: 10%;
   size: 0px; }
 
-iframe {
-  margin: auto;
-  width: 800px;
-  height: 600px; }
+#right-nav{
+  margin-right: 25px;
+}
 
 input {
   margin-bottom: 10px; }
