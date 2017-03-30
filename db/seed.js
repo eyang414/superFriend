@@ -1,8 +1,8 @@
 const db = require('APP/db')
 const Promise = require('bluebird')
 
-const dummyUser = require('../dummyData').dummyUser
-const dummyMessages = require('../dummyData').dummyMessages
+const dummyUser = require('../demoData').dummyUser
+const dummyMessages = require('../demoData').dummyMessages
 
 const trace = tracer => data => {
   console.log(typeof tracer === 'function' ? tracer(data) : tracer)
