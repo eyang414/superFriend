@@ -37,8 +37,10 @@ const ContactProfile = (props) => {
 if (currentContact && currentContact.latestMessage){
   latestMessage = props.contacts.currentContact.latestMessage;
   dateOfMessage = (cleanDate(latestMessage.date));
+  console.log(dateOfMessage);
   messageMoment = moment(latestMessage.date,'x').format("dddd, MMMM Do YYYY, h:mm:ss a");
   dateInt = parseInt(latestMessage.date);
+  console.log(dateInt);
   timePassed = new Date().getTime() - dateInt;
 
 
@@ -52,7 +54,7 @@ if (currentContact && currentContact.latestMessage){
           <img className="profile-img" src={currentContact.imageUrl}></img>
         </div>
         <div className="col">
-          <h3>It's been <big>{moment.duration(timePassed,'milliseconds').format("y [years]:m [months]:w [weeks]:dd [days]:hh [hours]")}</big> since you last checked in with {currentContact.ZFIRSTNAME} {currentContact.ZLASTNAME}.</h3>
+          <h3>It's been <big>{moment.duration(timePassed,'milliseconds').format("dd [days]:hh [hours]: mm [minutes]")}</big> since you last checked in with {currentContact.ZFIRSTNAME} {currentContact.ZLASTNAME}.</h3>
           <h4>Last message: "{latestMessage && latestMessage.content}"</h4>
           <h4>{latestMessage && <p>{sentOrReceived(latestMessage.content)} {messageMoment}</p>}</h4>
         </div>
