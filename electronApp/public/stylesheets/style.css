@@ -5,11 +5,6 @@
   border-color: rgba(254,179,2,1);
 }
 
-iframe {
-  width: 800px;
-  height: 600px;
-}
-
 input {
   margin-bottom: 10px; }
 
@@ -17,12 +12,16 @@ input {
   padding-top: 30px;
 }
 
+.sync {
+  margin-top: 15px;
+}
+
+
+
 .profile-img {
   border-radius: 150px;
   align-content: left;
 }
-
-
 
 .icon {
   height: 20px;

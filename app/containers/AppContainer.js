@@ -22,7 +22,7 @@ const AppContainer = props => (
         <div id="nav-items" className="collapse navbar-collapse">
           <ul className="nav navbar-nav navbar-right">
             <li><Link to="/login">Login</Link></li>
-            <li><Link to="/contacttable">Contacts</Link></li>
+            <li id="right-nav"><Link to="/contacttable">Contacts</Link></li>
           </ul>
         </div>
       </div>
