@@ -348,11 +348,7 @@ router.post('/track/all', (req, res, next) => {
 	console.log(req.body)
 
 	return User.findAll({
-		where: {
-			$any: {
-				id: req.body
-			}
-		}
+		where: { id: { $in: req.body } }
 	})
 	.then(contacts => {
 		console.log(contacts)
