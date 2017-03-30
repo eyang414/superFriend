@@ -2,7 +2,7 @@ import React from 'react'
 
 export const WhoAmI = ({ user, logout }) => (
   <div className="container">
-  	<h1 className="header">Hello, {user && user.username}</h1>
+  	<h1 className="header">Hello, {user && user.ZFIRSTNAME}!</h1>
     <br></br>
     <br></br>
     <button className="logout btn btn-primary" onClick={logout}>Logout</button>
