@@ -9,11 +9,6 @@
   100% {
     transform: scale(1); } }
 
-#nav-items {
-  margin-right: 25px
-}
-
-
 #main {
   width: 100vw;
   height: 100vh; }
@@ -27,6 +22,11 @@
 #loginfromlanding {
   margin-top: 10%;
   size: 0px; }
+
+iframe {
+  margin: auto;
+  width: 800px;
+  height: 600px; }
 
 input {
   margin-bottom: 10px; }

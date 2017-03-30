@@ -91,7 +91,7 @@ const seed = () => {
   .then(trace('Seeding complete'))
 
 }
-
+ 
 if (module === require.main) {
   console.log('Running seed script directly')
   seed()
