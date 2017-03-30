@@ -69,7 +69,7 @@ const User = db.define('users', {
 
   isTracked: {
     type: Sequelize.BOOLEAN,
-    defaultValue: 0
+    defaultValue: false
   },
 
   // We support oauth, so users may or may not have passwords.
