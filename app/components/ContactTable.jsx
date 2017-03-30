@@ -1,12 +1,11 @@
-
-
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchContacts } from '../reducers/contacts-reducer';
 import { fetchMessages } from '../reducers/messages-reducer';
 import axios from 'axios'
+
+const Loading = require('react-loading');
 var moment = require('moment');
 var duration = require('moment-duration-format');
 moment().format();
@@ -81,11 +80,13 @@ const ContactTable = (props) => {
 
 
 return (
+    
   	<div className="container">
     <h1 className="header">Your Contacts</h1>
     <div className="contact-table-buttons">
     <Link to='/editcontacts'><button className="btn btn-primary">Edit Contacts</button></Link>
     </div>
+    <Loading type='balls' color='blue'></Loading>
   	  <table className="table">
         <tbody>
         <tr>
