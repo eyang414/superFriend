@@ -44,7 +44,7 @@ const seed = () => {
       messages: seedMessages().then(trace(messages => `seeded ${messages.length} messages`))
     }))
 
-  const selectOurUser = users => users.find(user => user.username === 'ak123')
+  const selectOurUser = users => users.find(user => user.email === 'ak123@ak123.com')
 
   const findingOurUser = seedingUsersAndMessages
     .then(({users}) => selectOurUser(users))
@@ -61,28 +61,28 @@ const seed = () => {
     })
     .then(trace(`Added ${dummyUser.length} friends to user`))
 
-  const givingMessagesPeople = seedingUsersAndMessages
-    .then(trace('Assigning users to messages'))
-    .then(({messages, users}) => {
-      const ourUser = selectOurUser(users)
-      let promises = []
-      for (let i = 0; i < 100; i++){
-        let randomUserId = Math.floor(Math.random() * dummyUser.length)
-        if (randomUserId === ourUser.id || randomUserId === 0) randomUserId = 1
-        promises.push(messages[i].update({sender_id: ourUser.id}))
-        promises.push(messages[i].update({recipient_id: randomUserId}))
-      }
-      for (let i = 101; i < 200; i++){
-        let randomUserId = Math.floor(Math.random() * dummyUser.length)
-        if (randomUserId === ourUser.id || randomUserId === 0) randomUserId = 1
-        promises.push(messages[i].update({recipient_id: ourUser.id}))
-        promises.push(messages[i].update({sender_id: randomUserId}))
-      }
-      return Promise.all(promises)
-    })
-    .then(trace(messages => `Modified ${messages.length} messages`))
+  // const givingMessagesPeople = seedingUsersAndMessages
+  //   .then(trace('Assigning users to messages'))
+  //   .then(({messages, users}) => {
+  //     const ourUser = selectOurUser(users)
+  //     let promises = []
+  //     for (let i = 0; i < 100; i++){
+  //       let randomUserId = Math.floor(Math.random() * dummyUser.length)
+  //       if (randomUserId === ourUser.id || randomUserId === 0) randomUserId = 1
+  //       promises.push(messages[i].update({sender_id: ourUser.id}))
+  //       promises.push(messages[i].update({recipient_id: randomUserId}))
+  //     }
+  //     for (let i = 101; i < 200; i++){
+  //       let randomUserId = Math.floor(Math.random() * dummyUser.length)
+  //       if (randomUserId === ourUser.id || randomUserId === 0) randomUserId = 1
+  //       promises.push(messages[i].update({recipient_id: ourUser.id}))
+  //       promises.push(messages[i].update({sender_id: randomUserId}))
+  //     }
+  //     return Promise.all(promises)
+  //   })
+  //   .then(trace(messages => `Modified ${messages.length} messages`))
 
-  Promise.all([addingFriends, givingMessagesPeople])
+  Promise.all([addingFriends])
   .catch(error => console.error(error))
   .finally(() => {
     db.close()
