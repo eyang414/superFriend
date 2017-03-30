@@ -24,12 +24,11 @@ const Message = db.define('message', {
   },
   date: {
     type: Sequelize.STRING,
-     set: function (dateValue) {
-       //const date = new Date((dateValue + APPLE_DATE_MODIFIER) * 1000).toString()
-       const date = ((parseInt(dateValue) + APPLE_DATE_MODIFIER) * 1000).toString()
-       this.setDataValue('date', dateValue = date)
+     // set: function (dateValue) {
+     //   //const date = new Date((dateValue + APPLE_DATE_MODIFIER) * 1000).toString()
+     //   const date = ((parseInt(dateValue) + APPLE_DATE_MODIFIER) * 1000).toString()
+     //   this.setDataValue('date', dateValue = date)
     }
-  }
 }, {
     classMethods: {
       getAllFrom: function (senderId) {
