@@ -46,7 +46,12 @@ class EditContactsForm extends React.Component {
     const selected = Array.from(this.state.selected)
     const contactIndex = selected.indexOf(contact)
     if (contactIndex === -1){
-      selected.push(contact)
+      if (selected.length<20){
+        selected.push(contact)
+      }else{
+        window.alert("We're sorry! At this time, you can only select 20 contacts to track.")
+        console.log('this is the this', this)
+      }
     }else{
       selected.splice(contactIndex, 1)
     }
