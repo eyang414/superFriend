@@ -34,9 +34,11 @@ describe('<Login />', () => {
     const root2 = shallow(<Login login={login} />)
     const submitEvent = {
       preventDefault: spy(),
-      target: {
-        username: {value: 'bones@example.com'},
-        password: {value: '12345'},
+      evt: {
+        target: {
+          username: { value: 'ak123@ak123.com' },
+          password: { value: '1234' },
+        }
       }
     }
 
