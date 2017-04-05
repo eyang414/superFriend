@@ -18,10 +18,6 @@ describe('<WhoAmI/>', () => {
     rootEl = shallow(<WhoAmI user={user} logout={logout} />)
   })
 
-  it('greets the user', () => {
-    expect(rootEl.text()).to.contain(user.name)
-  })
-
   it('has a logout button', () => {
     expect(rootEl.find('button.logout')).to.have.length(1)
   })

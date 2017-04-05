@@ -6,6 +6,8 @@ const db = require('APP/db')
 const User = require('../models/user')
 const Message = require('../models/message')
 const app = require('../../server/start')
+const dummyUsers = require('../../demoData').dummyUser
+const dummyMessages = require('../../demoData').dummyMessages
 
 describe('User Model tests', () => {
 
@@ -95,9 +97,5 @@ describe('User Model tests', () => {
           expect(user.user_id).to.equal(userRef.id)
         })
     })
-  })
-
-  it('Should have tests for messages soon....', () => {
-    console.log("They're coooooommmmming....")
   })
 })

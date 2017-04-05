@@ -31,7 +31,7 @@ describe('/api/auth', () => {
         .send(alice)
         .expect(302)
         .expect('Set-Cookie', /session=.*/)
-        .expect('Location', '/')
+        .expect('Location', '/login')
       )
 
     it('fails with an invalid username and password', () =>
