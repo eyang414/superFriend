@@ -8,13 +8,6 @@ import ContactTable from '../components/ContactTable'
 import store from '../store'
 const Loading = require('react-loading')
 
-//WE COULD USE THIS TO TOGGLE ALL CHECKBOXES:
-// function toggle(source) {
-//   let checkboxes = document.getElementsByName('foo');
-//   for(var i=0, n=checkboxes.length;i<n;i++) {
-//     checkboxes[i].checked = source.checked;
-//   }
-// }
 
 class EditContactsForm extends React.Component {
   constructor(props) {
@@ -40,16 +33,19 @@ class EditContactsForm extends React.Component {
     this.unsubscribe()
   }
 
+//EVENT HANDLERS:
 
-  //EVENT HANDLERS
+
+  //TOGGLES A CHECKBOX, SELECTS OR DESELECTS AN INDIVIDUAL CONTACT:
   handleSelect(contact) {
     const selected = Array.from(this.state.selected)
     const contactIndex = selected.indexOf(contact)
     if (contactIndex === -1){
       if (selected.length<20){
         selected.push(contact)
+        console.log('this is the this', this)
       }else{
-        window.alert("We're sorry! At this time, you can only select 20 contacts to track.")
+        window.alert("We're sorry! At this time, you can only select 20 contacts to track.");
         console.log('this is the this', this)
       }
     }else{
@@ -61,12 +57,8 @@ class EditContactsForm extends React.Component {
     console.log(selected)
   }
 
-  handleSubmit(){
-    console.log(selectContacts)
-    store.dispatch(selectContacts(this.state.selected))
-    axios.post('/api/contacts/track/all', this.state.selected)
-    browserHistory.push('/contacttable') //redirects to contact table
-  }
+
+
 
   handleChange(evt) {
     console.log(evt.target.value)
@@ -74,6 +66,16 @@ class EditContactsForm extends React.Component {
       inputValue: evt.target.value
     })
   }
+
+  //SUBMIT WHICH CONTACTS ARE SELECTED:
+  handleSubmit(){
+    console.log(selectContacts)
+    store.dispatch(selectContacts(this.state.selected))
+    axios.post('/api/contacts/track/all', this.state.selected)
+    browserHistory.push('/contacttable') //redirects to contact table
+  }
+
+
 
 
   render() {
@@ -85,28 +87,32 @@ class EditContactsForm extends React.Component {
       filteredContacts = this.props.contacts.allContacts.filter(contact => (contact.ZLASTNAME && contact.ZLASTNAME.match(inputValue)) || (contact.ZFIRSTNAME && contact.ZFIRSTNAME.match(inputValue)))
     // }
 
-    var self = this
-    const contacts = filteredContacts
-    // const contacts = this.props.contacts.allContacts
+    var self = this;
+    const contacts = filteredContacts;
+
+    //THIS IS THE MAP FUNCTION THAT GIVES US EACH CONTACT'S INFO IN JSX
     let contactRows = contacts.map(function(contact){
-      let isChecked = false
+      let isChecked = false;
       if(self && self.state.selected.includes(contact.id)) {
         isChecked = true
       }
 
-    if (contact.id !== contact.user_id){
-      return (
-        <tr key = {contact.id} >
-        <td><input
-          type="checkbox"
-          checked={isChecked}
-          onClick={() => self.handleSelect(contact.id)}/></td>
-        <td>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</td>
-        <td>{contact.ZFULLNUMBER}</td>
-        </tr>
-      )
-    }
-  })
+      if (contact.id !== contact.user_id){
+        return (
+          <tr key = {contact.id} >
+            <td>
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onClick={() => self.handleSelect(contact.id)}
+            />
+            </td>
+            <td>{contact.ZFIRSTNAME} {contact.ZLASTNAME}</td>
+            <td>{contact.ZFULLNUMBER}</td>
+          </tr>
+        )
+      }
+    })
 
 
   return (
@@ -127,7 +133,7 @@ class EditContactsForm extends React.Component {
       <table className="table">
         <tbody>
         <tr>
-          <th><input type="checkbox" /></th>
+          <th></th>
           <th>Name</th>
           <th>Phone Number</th>
         </tr>
